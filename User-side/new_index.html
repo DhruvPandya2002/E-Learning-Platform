@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="png" href="Logo/Circle_1980x1980.png" />
+    <link rel="stylesheet" href="style.css" />
+    <title>DevTown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
+    <style>
+      /* swiper */
+      .swiper {
+        width: 100%;
+        height: 100%;
+      }
+      .swiper-slide {
+        /* text-align: center;
+        font-size: 18px; */
+        /* background: #fff; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 230px;
+        height: 290px;
+      }
+      .swiper-wrapper {
+        padding-bottom: 30px;
+      }
+
+      .swiper-container-horizontal > .swiper-pagination-bullets,
+      .swiper-pagination-custom,
+      .swiper-pagination-fraction {
+        bottom: 0px !important;
+      }
+      /* 
+      .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .swiper {
+        margin-left: auto;
+        margin-right: auto;
+      } */
+      /* swiper */
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .outer_wheel div:first-child {
+        top: -1.75rem;
+        left: 7rem;
+      }
+
+      .outer_wheel div:nth-child(2) {
+        top: 2.5rem;
+        left: -0.5rem;
+      }
+
+      .outer_wheel div:nth-child(3) {
+        top: 11rem;
+        left: -1.25rem;
+      }
+
+      .outer_wheel div:nth-child(4) {
+        top: 11rem;
+        left: 15rem;
+      }
+
+      .outer_wheel div:nth-child(5) {
+        top: 2.5rem;
+        left: 15rem;
+      }
+
+      .outer_wheel div:nth-child(6) {
+        top: 16rem;
+        left: 8rem;
+      }
+
+      .inner_cicle div:first-child {
+        top: 1.25rem;
+        left: 75px;
+      }
+
+      .inner_cicle div:nth-child(2) {
+        top: 5rem;
+        left: 0.75rem;
+      }
+
+      .inner_cicle div:nth-child(3) {
+        top: 9rem;
+        left: 5rem;
+      }
+
+      .inner_cicle div:nth-child(4) {
+        top: 5rem;
+        left: 135px;
+      }
+
+      .circle_animation {
+        animation-name: spin;
+        animation-duration: 55s;
+        animation-timing-function: linear;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: normal;
+        animation-fill-mode: none;
+        animation-play-state: running;
+      }
+
+      .crotate {
+        animation-name: spin;
+        animation-duration: 55s;
+        animation-timing-function: linear;
+        animation-delay: 0s;
+        animation-iteration-count: infinite;
+        animation-direction: reverse;
+        animation-fill-mode: none;
+        animation-play-state: running;
+      }
+
+      .crotate2 {
+        animation: spin 45s linear infinite;
+      }
+
+      .circle_animation2 {
+        animation: spin 25s linear infinite reverse;
+      }
+
+      .card {
+        position: relative;
+        width: 230px;
+        height: 290px;
+        background: lightgrey;
+        box-shadow: #d11bff42 0 15px 40px -5px;
+        z-index: 1;
+        border-radius: 21px;
+        overflow: hidden;
+      }
+
+      .card__content {
+        background: linear-gradient(
+          rgba(255, 255, 255, 0.473),
+          rgba(150, 150, 150, 0.25)
+        );
+        z-index: 1;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 21px;
+      }
+
+      .card .blob {
+        position: absolute;
+        z-index: -1;
+        border-radius: 5em;
+        width: 200px;
+        height: 200px;
+      }
+
+      .card .blob:nth-child(2) {
+        left: -50px;
+        top: -90px;
+        background: #ff930f;
+      }
+
+      .card .blob:nth-child(3) {
+        left: 110px;
+        top: -20px;
+        z-index: -1;
+        background: #bf0fff;
+      }
+
+      .card .blob:nth-child(4) {
+        left: -40px;
+        top: 100px;
+        background: #ff1b6b;
+      }
+
+      .card .blob:nth-child(5) {
+        left: 100px;
+        top: 180px;
+        background: #0061ff;
+      }
+    </style>
+  </head>
+
+  <body
+    class="bg-white scroll-smooth"
+    style="
+      -webkit-tap-highlight-color: transparent;
+      font-family: 'Rubik', sans-serif;
+    "
+  >
+    <div class="overflow-hidden">
+      <div class="fixed z-[9999] w-full">
+        <!-- Navbar -->
+        <nav
+          class="navbar h-16 backdrop-blur-sm"
+          style="box-shadow: rgba(157, 157, 157, 0.3) 0 4px 10px"
+        >
+          <ul class="flex justify-between items-center">
+            <li class="flex justify-center items-center">
+              <img
+                src="Logo/Circle_1980x1980.png"
+                alt="DevTown"
+                class="w-14 m-1 p-1"
+              />
+              <p
+                class="text-3xl text-[#30559E]"
+                style="font-family: 'Lobster', cursive"
+              >
+                DevTown
+              </p>
+            </li>
+            <li class="flex justify-center items-center">
+              <input type="hidden" value="0" id="menu_toggle" />
+              <div
+                class="relative flex h-[40px] w-[40px] cursor-pointer flex-col items-end justify-between p-[0.4rem] md:hidden"
+                style="-webkit-tap-highlight-color: transparent"
+                id="menu"
+              >
+                <span
+                  class="w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300"
+                  id="first"
+                ></span>
+                <span
+                  class="w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300"
+                  id="second"
+                ></span>
+                <span
+                  class="w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300"
+                  id="third"
+                ></span>
+              </div>
+              <div
+                class="mx-2 cursor-pointer"
+                style="-webkit-tap-highlight-color: transparent"
+              >
+                <svg
+                  width="40px"
+                  height="40px"
+                  viewBox="0 0 24.00 24.00"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  stroke="#30559E"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke="#CCCCCC"
+                    stroke-width="0.336"
+                  />
+                  <g id="SVGRepo_iconCarrier">
+                    <g id="Environment / Moon">
+                      <path
+                        id="Vector"
+                        d="M9 6C9 10.9706 13.0294 15 18 15C18.9093 15 19.787 14.8655 20.6144 14.6147C19.4943 18.3103 16.0613 20.9999 12 20.9999C7.02944 20.9999 3 16.9707 3 12.0001C3 7.93883 5.69007 4.50583 9.38561 3.38574C9.13484 4.21311 9 5.09074 9 6Z"
+                        stroke="#30559E"
+                        stroke-width="2.4"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+            </li>
+          </ul>
+        </nav>
+        <div
+          class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[10vh] pb-[8vh] font-rubik md:hidden opacity-1 pointer-events-auto visible transition-all duration-300 menu"
+          style="
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px;
+            display: none;
+          "
+        >
+          <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
+            <li class="text-center text-xl"><a href="#">About Us</a></li>
+            <li class="text-center text-xl"><a href="">Courses</a></li>
+            <li class="text-center text-xl">
+              <a href="">Programming Compiler</a>
+            </li>
+            <li class="text-center text-xl">
+              <a href="">Web Design Compiler</a>
+            </li>
+            <li class="text-center text-xl"><a href="">Contact</a></li>
+            <li>
+              <button
+                class="bg-[#30559E] text-xl w-fit px-8 py-2 text-white rounded-lg flex justify-center items-center shadow-lg"
+              >
+                Login<img
+                  src="Logo/icons8-login-64.png"
+                  alt="Login"
+                  width="38px"
+                />
+              </button>
+            </li>
+          </ul>
+          <div
+            class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Main Image -->
+      <div class="main_image mt-28 mb-10">
+        <div class="flex justify-center items-center">
+          <img src="Logo/home_Page_image.png" alt="home_image" />
+        </div>
+      </div>
+      <!-- Hero Text -->
+      <div
+        class="hero_text flex flex-col gap-y-3 md:min-w-[400px] lg:min-w-[600px] ml-3 mb-8"
+      >
+        <div class="main_text">
+          <h1
+            class="text-3xl font-bold md:text-4xl xl:text-6xl text-[#759DEA]"
+            style="font-family: 'Rubik', sans-serif"
+          >
+            Learn <span class="text-[#30559E]">With </span
+            ><span class="auto-type" style="color: #30559e"></span>
+          </h1>
+        </div>
+        <div
+          class="sub_text flex justify-start"
+          data-aos="fade-right"
+          data-aos-delay="50"
+        >
+          <h3 class="text-xl font-semibold text-[#4A4F5C]">
+            Empowering your education,anytime,anywhere.
+          </h3>
+        </div>
+        <div
+          class="button flex items-center gap-x-6"
+          data-aos="fade-right"
+          data-aos-delay="100"
+        >
+          <a href="">
+            <button
+              class="active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2 cursor-pointer rounded-md bg-[#30559E] text-[#fff] border-[#30559E] xl:text-lg text-sm border xl:px-9 px-5 xl:py-4 py-2"
+              style="font-family: 'Rubik', sans-serif"
+            >
+              View Courses
+            </button>
+          </a>
+          <a href="">
+            <button
+              class="active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2 cursor-pointer place-items-center rounded-md border xl:text-lg text-sm text-[#011229] font-rubik border-[#30559E] xl:px-9 px-5 xl:py-4 py-2 w-28"
+            >
+              Practice
+            </button>
+          </a>
+        </div>
+      </div>
+      <!-- Counter -->
+      <div class="bg-[#30559E] grid grid-rows-2" id="counter_section">
+        <div
+          class="grid grid-cols-2 px-8 pt-12 pb-6 gap-x-6 text-center text-white"
+          style="
+            background-image: url(Logo/counter_design_2.svg);
+            background-repeat: no-repeat;
+            background-position-x: right;
+          "
+        >
+          <div class="text-4xl">
+            <span class="courses">500</span>+
+            <div class="text-xl">Courses</div>
+          </div>
+          <div class="text-4xl">
+            <span class="companies">500</span>+
+            <div class="text-xl">Companies</div>
+          </div>
+        </div>
+        <div
+          class="grid grid-cols-2 px-8 pb-12 pt-6 gap-x-6 text-white"
+          style="
+            background-image: url(Logo/counter_design.svg);
+            background-repeat: no-repeat;
+            background-position-y: bottom;
+          "
+        >
+          <div class="text-4xl text-center">
+            <span class="users">1000</span>+
+            <div class="text-xl">Active User</div>
+          </div>
+          <div class="text-4xl text-center">
+            <span class="watch">1000</span>Hr
+            <div class="text-xl">Watch Time</div>
+          </div>
+        </div>
+      </div>
+      <!-- Why Devtown Section -->
+      <div class="p-6 pt-10 bg-[#f7f8fc]">
+        <h3 class="text-xl text-center font-medium text-[#30559E]">
+          Why DevTown?
+        </h3>
+        <h1 class="text-2xl text-center font-medium text-[#011229]">
+          Making learning easier and more convenient for you.
+        </h1>
+        <!-- Cards -->
+        <div
+          class="flex flex-col justify-center items-center mt-8 py-4 gap-y-10"
+        >
+          <!-- Expert Trainer -->
+          <div
+            class="flex flex-col items-center justify-center px-6 py-10 bg-white rounded-xl border-b-[6px] border-[#f5afb4] shadow-md"
+            data-aos="fade-right"
+          >
+            <img
+              src="Logo/manager.png"
+              alt="Expert Trainer"
+              class="w-20 h-20"
+            />
+            <h3 class="text-xl font-medium text-[#000000] mt-3">
+              Expert Trainers
+            </h3>
+            <h5 class="text-lg text-gray-700 text-center mt-2">
+              We Constantly evalute our trainers and only the “Best” Provides
+              the Training
+            </h5>
+          </div>
+          <!-- Flexible Schedule -->
+          <div
+            class="flex flex-col items-center justify-center px-6 py-10 bg-white rounded-xl border-b-[6px] border-[#9cdbd3] shadow-md"
+            data-aos="fade-up"
+          >
+            <img
+              src="Logo/clock.png"
+              alt="Flexible Schedule"
+              class="w-20 h-20"
+            />
+            <h3 class="text-xl font-medium text-[#000000] mt-3">
+              Flexible Schedule
+            </h3>
+            <h5 class="text-lg text-gray-700 text-center mt-2">
+              Do not hesitate to ask... because we will work according to your
+              calendar
+            </h5>
+          </div>
+          <!-- Instructor Training Sessions -->
+          <div
+            class="flex flex-col items-center justify-center px-6 py-8 bg-white rounded-xl border-b-[6px] border-[#b1a3fe] shadow-md"
+            data-aos="fade-left"
+          >
+            <img
+              src="Logo/programmer.png"
+              alt="Instructor Training Sessions"
+              class="w-20 h-20"
+            />
+            <h3 class="text-xl font-medium text-[#000000] mt-3 text-center">
+              Instructor Training Sessions
+            </h3>
+            <h5 class="text-lg text-gray-700 text-center mt-2">
+              We believe to provide our students the Best interactive experience
+              as part of their learning
+            </h5>
+          </div>
+          <!-- Industry Specific Scenarios -->
+          <div
+            class="flex flex-col items-center justify-center px-6 py-10 bg-white rounded-xl border-b-[6px] border-[#a3cbe0] shadow-md"
+            data-aos="fade-right"
+          >
+            <img
+              src="Logo/OIP.jfif"
+              alt="Industry Specific Scenarios"
+              class="w-20 h-20"
+            />
+            <h3 class="text-xl font-medium text-[#000000] mt-3 text-center">
+              Industry Specific Scenarios
+            </h3>
+            <h5 class="text-lg text-gray-700 text-center mt-2">
+              Students are provided with all the Rea-Time and Relevant Scenarios
+            </h5>
+          </div>
+          <!-- E-Learning Session -->
+          <div
+            class="flex flex-col items-center justify-center px-6 py-10 bg-white rounded-xl border-b-[6px] border-[#fdc8a4] shadow-md"
+            data-aos="fade-up"
+          >
+            <img
+              src="Logo/online-lesson.png"
+              alt="E-Learning Session"
+              class="w-20 h-20"
+            />
+            <h3 class="text-xl font-medium text-[#000000] mt-3">
+              E-Learning Session
+            </h3>
+            <h5 class="text-lg text-gray-700 text-center mt-2">
+              Online training sessions are held Live and we provide students
+              with the Training Videos
+            </h5>
+          </div>
+          <!-- 24/7 Support -->
+          <div
+            class="flex flex-col items-center justify-center px-6 py-10 bg-white rounded-xl border-b-[6px] border-[#a6d9fe] shadow-md"
+            data-aos="fade-left"
+          >
+            <img
+              src="Logo/24-hours-support.png"
+              alt="24/7 Support"
+              class="w-20 h-20"
+            />
+            <h3 class="text-xl font-medium text-[#000000] mt-3">
+              24/7 Support
+            </h3>
+            <h5 class="text-lg text-gray-700 text-center mt-2">
+              No Problem@all...!!! Your Question will be answers by Us at any
+              hour of the time
+            </h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <!-- Course Cards -->
+      <div class="bg-[#f7f8fc]">
+        <div
+          class="flex flex-col justify-center pt-10 px-20 text-2xl font-medium"
+          data-aos="fade-up"
+        >
+          <p class="text-[#000000] text-center">
+            What would you like to
+            <span class="text-[#759DEA]">learn?</span>
+          </p>
+        </div>
+        <div>
+          <div
+            class="py-14 px-5 gap-x-5 flex flex-col justify-center items-center gap-y-8"
+          >
+            <div class="swiper">
+              <!-- Additional required wrapper -->
+              <div class="swiper-wrapper">
+                <div class="card swiper-slide">
+                  <div
+                    class="card__content py-10 flex flex-col justify-center items-center gap-y-3"
+                  >
+                    <img
+                      src="Logo/course/c.svg"
+                      alt="cpp"
+                      width="100px"
+                      height="80px"
+                    />
+                    <p class="text-center text-white font-medium text-lg">
+                      Learn C with <br />tutorial and docs
+                    </p>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-7 py-1 shadow-md"
+                    >
+                      Start tutorial
+                    </button>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-5 py-1 shadow-md"
+                    >
+                      Documentation
+                    </button>
+                  </div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                </div>
+                <div class="card swiper-slide">
+                  <div
+                    class="card__content flex flex-col justify-center items-center gap-y-3"
+                  >
+                    <img
+                      src="Logo/course/c++.svg"
+                      alt="cpp"
+                      width="90px"
+                      height="80px"
+                    />
+                    <p class="text-center text-white font-medium text-lg">
+                      Learn C++ with <br />
+                      tutorial and docs
+                    </p>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-7 py-1 shadow-md"
+                    >
+                      Start tutorial
+                    </button>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-5 py-1 shadow-md"
+                    >
+                      Documentation
+                    </button>
+                  </div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                </div>
+                <div class="card swiper-slide">
+                  <div
+                    class="card__content py-10 flex flex-col justify-center items-center gap-y-3"
+                  >
+                    <img
+                      src="Logo/course/java.svg"
+                      alt="cpp"
+                      width="100px"
+                      height="80px"
+                    />
+                    <p class="text-center text-white font-medium text-lg">
+                      Learn Java with <br />
+                      tutorial and docs
+                    </p>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-7 py-1 shadow-md"
+                    >
+                      Start tutorial
+                    </button>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-5 py-1 shadow-md"
+                    >
+                      Documentation
+                    </button>
+                  </div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                </div>
+                <div class="card swiper-slide">
+                  <div
+                    class="card__content py-10 flex flex-col justify-center items-center gap-y-3"
+                  >
+                    <img
+                      src="Logo/course/python.svg"
+                      alt="cpp"
+                      width="80px"
+                      height="80px"
+                    />
+                    <p class="text-center text-white font-medium text-lg">
+                      Learn Python with <br />
+                      tutorial and docs
+                    </p>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-7 py-1 shadow-md"
+                    >
+                      Start tutorial
+                    </button>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-5 py-1 shadow-md"
+                    >
+                      Documentation
+                    </button>
+                  </div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                </div>
+                <div class="card swiper-slide">
+                  <div
+                    class="card__content py-10 flex flex-col justify-center items-center gap-y-3"
+                  >
+                    <img
+                      src="Logo/course/php.svg"
+                      alt="cpp"
+                      width="100px"
+                      height="80px"
+                    />
+                    <p class="text-center text-white font-medium text-lg">
+                      Learn PHP with <br />
+                      tutorial and docs
+                    </p>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-7 py-1 shadow-md"
+                    >
+                      Start tutorial
+                    </button>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-5 py-1 shadow-md"
+                    >
+                      Documentation
+                    </button>
+                  </div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                </div>
+                <div class="card swiper-slide">
+                  <div
+                    class="card__content py-10 flex flex-col justify-center items-center gap-y-3"
+                  >
+                    <img
+                      src="Logo/course/javascript.svg"
+                      alt="cpp"
+                      width="80px"
+                      height="80px"
+                    />
+                    <p class="text-center text-white font-medium text-lg">
+                      Learn Javascript with <br />
+                      tutorial and docs
+                    </p>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-7 py-1 shadow-md"
+                    >
+                      Start tutorial
+                    </button>
+                    <button
+                      class="bg-[#BED4FF] text-black font-medium text-center rounded-md px-5 py-1 shadow-md"
+                    >
+                      Documentation
+                    </button>
+                  </div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                  <div class="blob"></div>
+                </div>
+              </div>
+              <!-- If we need navigation buttons -->
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-pagination"></div>
+              <!-- If we need scrollbar -->
+              <div class="swiper-scrollbar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+      <!-- Companies circle animation section -->
+
+      <!-- Companies circle animation section -->
+      <div>
+        <div class="flex flex-col justify-start pt-10 pb-4">
+          <div class="px-8">
+            <p
+              class="text-lg uppercase font-semibold text-[#30559E]"
+              data-aos="fade-right"
+            >
+              <span>placements</span>
+            </p>
+            <p
+              class="mt-3 mb-5 text-2xl font-medium"
+              data-aos="fade-right"
+              data-aos-delay="100"
+            >
+              <span
+                >Get Offers from <br />
+                Top Companies</span
+              >
+            </p>
+          </div>
+          <div class="relative grid place-content-center py-16 px-10 md:py-0">
+            <div
+              class="outer_wheel circle_animation relative grid h-72 w-72 place-content-center rounded-full border border-purple-100 transition-all sm:h-96 sm:w-96"
+            >
+              <div class="crotate absolute h-16 w-16">
+                <span
+                  style="
+                    box-sizing: border-box;
+                    display: block;
+                    overflow: hidden;
+                    width: initial;
+                    height: initial;
+                    background: none;
+                    opacity: 1;
+                    border: 0px;
+                    margin: 0px;
+                    padding: 0px;
+                    position: relative;
+                  "
+                >
+                  <span
+                    style="
+                      box-sizing: border-box;
+                      display: block;
+                      width: initial;
+                      height: initial;
+                      background: none;
+                      opacity: 1;
+                      border: 0px;
+                      margin: 0px;
+                      padding: 100% 0px 0px;
+                    "
+                  ></span>
+                  <img
+                    src="Logo/circle/apple.png"
+                    alt="circle logo"
+                    data-nimg="responsive"
+                    class="scale-[2.2]"
+                    sizes="100vw"
+                    style="
+                      position: absolute;
+                      inset: 0px;
+                      box-sizing: border-box;
+                      padding: 0px;
+                      border: none;
+                      margin: auto;
+                      display: block;
+                      width: 0px;
+                      height: 0px;
+                      min-width: 100%;
+                      max-width: 100%;
+                      min-height: 100%;
+                      max-height: 100%;
+                    "
+                  />
+                </span>
+              </div>
+              <div class="crotate absolute h-16 w-16">
+                <span
+                  style="
+                    box-sizing: border-box;
+                    display: block;
+                    overflow: hidden;
+                    width: initial;
+                    height: initial;
+                    background: none;
+                    opacity: 1;
+                    border: 0px;
+                    margin: 0px;
+                    padding: 0px;
+                    position: relative;
+                  "
+                >
+                  <span
+                    style="
+                      box-sizing: border-box;
+                      display: block;
+                      width: initial;
+                      height: initial;
+                      background: none;
+                      opacity: 1;
+                      border: 0px;
+                      margin: 0px;
+                      padding: 100% 0px 0px;
+                    "
+                  ></span>
+                  <img
+                    src="Logo/circle/amazon.png"
+                    alt="circle logo"
+                    data-nimg="responsive"
+                    class="scale-[2.2]"
+                    sizes="100vw"
+                    style="
+                      position: absolute;
+                      inset: 0px;
+                      box-sizing: border-box;
+                      padding: 0px;
+                      border: none;
+                      margin: auto;
+                      display: block;
+                      width: 0px;
+                      height: 0px;
+                      min-width: 100%;
+                      max-width: 100%;
+                      min-height: 100%;
+                      max-height: 100%;
+                    "
+                  />
+                </span>
+              </div>
+              <div class="crotate absolute h-16 w-16">
+                <span
+                  style="
+                    box-sizing: border-box;
+                    display: block;
+                    overflow: hidden;
+                    width: initial;
+                    height: initial;
+                    background: none;
+                    opacity: 1;
+                    border: 0px;
+                    margin: 0px;
+                    padding: 0px;
+                    position: relative;
+                  "
+                >
+                  <span
+                    style="
+                      box-sizing: border-box;
+                      display: block;
+                      width: initial;
+                      height: initial;
+                      background: none;
+                      opacity: 1;
+                      border: 0px;
+                      margin: 0px;
+                      padding: 100% 0px 0px;
+                    "
+                  ></span>
+                  <img
+                    src="Logo/circle/meta.png"
+                    alt="circle logo"
+                    data-nimg="responsive"
+                    class="scale-[2.2]"
+                    sizes="100vw"
+                    style="
+                      position: absolute;
+                      inset: 0px;
+                      box-sizing: border-box;
+                      padding: 0px;
+                      border: none;
+                      margin: auto;
+                      display: block;
+                      width: 0px;
+                      height: 0px;
+                      min-width: 100%;
+                      max-width: 100%;
+                      min-height: 100%;
+                      max-height: 100%;
+                    "
+                  />
+                </span>
+              </div>
+              <div class="crotate absolute h-16 w-16">
+                <span
+                  style="
+                    box-sizing: border-box;
+                    display: block;
+                    overflow: hidden;
+                    width: initial;
+                    height: initial;
+                    background: none;
+                    opacity: 1;
+                    border: 0px;
+                    margin: 0px;
+                    padding: 0px;
+                    position: relative;
+                  "
+                >
+                  <span
+                    style="
+                      box-sizing: border-box;
+                      display: block;
+                      width: initial;
+                      height: initial;
+                      background: none;
+                      opacity: 1;
+                      border: 0px;
+                      margin: 0px;
+                      padding: 100% 0px 0px;
+                    "
+                  ></span>
+                  <img
+                    src="Logo/circle/netflix.png"
+                    alt="circle logo"
+                    data-nimg="responsive"
+                    class="scale-[2.2]"
+                    sizes="100vw"
+                    style="
+                      position: absolute;
+                      inset: 0px;
+                      box-sizing: border-box;
+                      padding: 0px;
+                      border: none;
+                      margin: auto;
+                      display: block;
+                      width: 0px;
+                      height: 0px;
+                      min-width: 100%;
+                      max-width: 100%;
+                      min-height: 100%;
+                      max-height: 100%;
+                    "
+                  />
+                </span>
+              </div>
+              <div class="crotate absolute h-16 w-16">
+                <span
+                  style="
+                    box-sizing: border-box;
+                    display: block;
+                    overflow: hidden;
+                    width: initial;
+                    height: initial;
+                    background: none;
+                    opacity: 1;
+                    border: 0px;
+                    margin: 0px;
+                    padding: 0px;
+                    position: relative;
+                  "
+                >
+                  <span
+                    style="
+                      box-sizing: border-box;
+                      display: block;
+                      width: initial;
+                      height: initial;
+                      background: none;
+                      opacity: 1;
+                      border: 0px;
+                      margin: 0px;
+                      padding: 100% 0px 0px;
+                    "
+                  ></span>
+                  <img
+                    src="Logo/circle/google.png"
+                    alt="circle logo"
+                    data-nimg="responsive"
+                    class="scale-[2.2]"
+                    sizes="100vw"
+                    style="
+                      position: absolute;
+                      inset: 0px;
+                      box-sizing: border-box;
+                      padding: 0px;
+                      border: none;
+                      margin: auto;
+                      display: block;
+                      width: 0px;
+                      height: 0px;
+                      min-width: 100%;
+                      max-width: 100%;
+                      min-height: 100%;
+                      max-height: 100%;
+                    "
+                  />
+                </span>
+              </div>
+              <div class="crotate absolute h-16 w-16">
+                <span
+                  style="
+                    box-sizing: border-box;
+                    display: block;
+                    overflow: hidden;
+                    width: initial;
+                    height: initial;
+                    background: none;
+                    opacity: 1;
+                    border: 0px;
+                    margin: 0px;
+                    padding: 0px;
+                    position: relative;
+                  "
+                >
+                  <span
+                    style="
+                      box-sizing: border-box;
+                      display: block;
+                      width: initial;
+                      height: initial;
+                      background: none;
+                      opacity: 1;
+                      border: 0px;
+                      margin: 0px;
+                      padding: 100% 0px 0px;
+                    "
+                  ></span>
+                  <img
+                    src="Logo/circle/microsoft.png"
+                    alt="circle logo"
+                    data-nimg="responsive"
+                    class="scale-[2.2]"
+                    sizes="100vw"
+                    style="
+                      position: absolute;
+                      inset: 0px;
+                      box-sizing: border-box;
+                      padding: 0px;
+                      border: none;
+                      margin: auto;
+                      display: block;
+                      width: 0px;
+                      height: 0px;
+                      min-width: 100%;
+                      max-width: 100%;
+                      min-height: 100%;
+                      max-height: 100%;
+                    "
+                  />
+                </span>
+              </div>
+              <div
+                class="circle_animation2 relative grid h-52 w-52 place-content-center rounded-full bg-purple-100 sm:h-72 sm:w-72"
+              >
+                <div
+                  class="inner_cicle h-32 w-32 rounded-full bg-[#fff] sm:h-40 sm:w-40"
+                >
+                  <div class="crotate2 absolute h-16 w-16">
+                    <span
+                      style="
+                        box-sizing: border-box;
+                        display: block;
+                        overflow: hidden;
+                        width: initial;
+                        height: initial;
+                        background: none;
+                        opacity: 1;
+                        border: 0px;
+                        margin: 0px;
+                        padding: 0px;
+                        position: relative;
+                      "
+                    >
+                      <span
+                        style="
+                          box-sizing: border-box;
+                          display: block;
+                          width: initial;
+                          height: initial;
+                          background: none;
+                          opacity: 1;
+                          border: 0px;
+                          margin: 0px;
+                          padding: 100% 0px 0px;
+                        "
+                      ></span>
+                      <img
+                        src="Logo/circle/ola.png"
+                        alt="circle logo"
+                        decoding="async"
+                        data-nimg="responsive"
+                        class="scale-[2.2]"
+                        sizes="100vw"
+                        style="
+                          position: absolute;
+                          inset: 0px;
+                          box-sizing: border-box;
+                          padding: 0px;
+                          border: none;
+                          margin: auto;
+                          display: block;
+                          width: 0px;
+                          height: 0px;
+                          min-width: 100%;
+                          max-width: 100%;
+                          min-height: 100%;
+                          max-height: 100%;
+                        "
+                      />
+                    </span>
+                  </div>
+                  <div class="crotate2 absolute h-16 w-16">
+                    <span
+                      style="
+                        box-sizing: border-box;
+                        display: block;
+                        overflow: hidden;
+                        width: initial;
+                        height: initial;
+                        background: none;
+                        opacity: 1;
+                        border: 0px;
+                        margin: 0px;
+                        padding: 0px;
+                        position: relative;
+                      "
+                    >
+                      <span
+                        style="
+                          box-sizing: border-box;
+                          display: block;
+                          width: initial;
+                          height: initial;
+                          background: none;
+                          opacity: 1;
+                          border: 0px;
+                          margin: 0px;
+                          padding: 100% 0px 0px;
+                        "
+                      ></span>
+                      <img
+                        src="Logo/circle/adobe.png"
+                        alt="circle logo"
+                        decoding="async"
+                        data-nimg="responsive"
+                        class="scale-[2.2]"
+                        sizes="100vw"
+                        style="
+                          position: absolute;
+                          inset: 0px;
+                          box-sizing: border-box;
+                          padding: 0px;
+                          border: none;
+                          margin: auto;
+                          display: block;
+                          width: 0px;
+                          height: 0px;
+                          min-width: 100%;
+                          max-width: 100%;
+                          min-height: 100%;
+                          max-height: 100%;
+                        "
+                      />
+                    </span>
+                  </div>
+                  <div class="crotate2 absolute h-16 w-16">
+                    <span
+                      style="
+                        box-sizing: border-box;
+                        display: block;
+                        overflow: hidden;
+                        width: initial;
+                        height: initial;
+                        background: none;
+                        opacity: 1;
+                        border: 0px;
+                        margin: 0px;
+                        padding: 0px;
+                        position: relative;
+                      "
+                    >
+                      <span
+                        style="
+                          box-sizing: border-box;
+                          display: block;
+                          width: initial;
+                          height: initial;
+                          background: none;
+                          opacity: 1;
+                          border: 0px;
+                          margin: 0px;
+                          padding: 100% 0px 0px;
+                        "
+                      ></span>
+                      <img
+                        src="Logo/circle/flipkart.png"
+                        alt="circle logo"
+                        decoding="async"
+                        data-nimg="responsive"
+                        class="scale-[2.2]"
+                        sizes="100vw"
+                        style="
+                          position: absolute;
+                          inset: 0px;
+                          box-sizing: border-box;
+                          padding: 0px;
+                          border: none;
+                          margin: auto;
+                          display: block;
+                          width: 0px;
+                          height: 0px;
+                          min-width: 100%;
+                          max-width: 100%;
+                          min-height: 100%;
+                          max-height: 100%;
+                        "
+                      />
+                    </span>
+                  </div>
+                  <div class="crotate2 absolute h-16 w-16">
+                    <span
+                      style="
+                        box-sizing: border-box;
+                        display: block;
+                        overflow: hidden;
+                        width: initial;
+                        height: initial;
+                        background: none;
+                        opacity: 1;
+                        border: 0px;
+                        margin: 0px;
+                        padding: 0px;
+                        position: relative;
+                      "
+                    >
+                      <span
+                        style="
+                          box-sizing: border-box;
+                          display: block;
+                          width: initial;
+                          height: initial;
+                          background: none;
+                          opacity: 1;
+                          border: 0px;
+                          margin: 0px;
+                          padding: 100% 0px 0px;
+                        "
+                      ></span>
+                      <img
+                        src="Logo/circle/linkedin.png"
+                        alt="circle logo"
+                        decoding="async"
+                        data-nimg="responsive"
+                        class="scale-[2.2]"
+                        sizes="100vw"
+                        style="
+                          position: absolute;
+                          inset: 0px;
+                          box-sizing: border-box;
+                          padding: 0px;
+                          border: none;
+                          margin: auto;
+                          display: block;
+                          width: 0px;
+                          height: 0px;
+                          min-width: 100%;
+                          max-width: 100%;
+                          min-height: 100%;
+                          max-height: 100%;
+                        "
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- interview preparation -->
+      <div class="bg-[#f7f8fc]">
+        <div
+          class="flex flex-col justify-center pt-10 px-10 text-2xl font-medium"
+          data-aos="fade-up"
+        >
+          <p class="text-[#000000] text-center">
+            Crack the Interview of
+            <span class="text-[#759DEA]">Top Companies</span>
+          </p>
+        </div>
+        <div
+          class="py-8 px-4 flex flex-col justify-center items-center gap-y-6"
+        >
+          <div class="bg-white rounded-md shadow-xl">
+            <div class="p-4">
+              <img src="Logo/dsa1.png" alt="DSA" class="rounded-md" />
+              <h3 class="text-lg pt-1 font-medium">
+                Learn <br />
+                Data Structure & Algorithm
+              </h3>
+              <button
+                class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal rounded-md shadow-md"
+              >
+                Start Tutorial
+              </button>
+            </div>
+          </div>
+          <div class="bg-white rounded-md shadow-xl">
+            <div class="p-4">
+              <img src="Logo/dsa.jpg" alt="DSA" class="rounded-md" />
+              <h3 class="text-lg pt-1 font-medium">
+                Learn <br />
+                Operating System
+              </h3>
+              <button
+                class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal rounded-md shadow-md"
+              >
+                Start Tutorial
+              </button>
+            </div>
+          </div>
+          <div class="bg-white rounded-md shadow-xl">
+            <div class="p-4">
+              <img src="Logo/dsa.jpg" alt="DSA" class="rounded-md" />
+              <h3 class="text-lg pt-1 font-medium">
+                Learn <br />
+                Database Management System
+              </h3>
+              <button
+                class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal rounded-md shadow-md"
+              >
+                Start Tutorial
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.js"
+      integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://unpkg.com/typed.js@2.0.14/dist/typed.umd.js"></script>
+    <script>
+      // Hamburger Menu Animate
+      $(document).ready(function () {
+        $("#menu").click(function () {
+          var menu_toggle_click = $("#menu_toggle").val();
+          if (menu_toggle_click == 0) {
+            $("#first").removeClass();
+            $("#second").removeClass();
+            $("#third").removeClass();
+            $("#first").addClass(
+              "w-10 rounded-md py-[2px] absolute top-1/2 rotate-45 bg-[#011229] transition-all duration-300"
+            );
+            $("#second").addClass(
+              "w-10 absolute top-1/2 py-0 opacity-0 rounded-md bg-[#011229] transition-all duration-300"
+            );
+            $("#third").addClass(
+              "w-10 absolute top-1/2 -rotate-45 bg-[#011229] rounded-md py-[2px] transition-all duration-300"
+            );
+            menu_toggle_click = $("#menu_toggle").val("1");
+            $(".menu").css("display", "block");
+          } else {
+            $("#first").removeClass();
+            $("#second").removeClass();
+            $("#third").removeClass();
+            $("#first").addClass(
+              "w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300"
+            );
+            $("#second").addClass(
+              "w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300"
+            );
+            $("#third").addClass(
+              "w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300"
+            );
+            menu_toggle_click = $("#menu_toggle").val("0");
+            $(".menu").css("display", "none");
+          }
+        });
+      });
+
+      // typing effect on text
+      var typed = new Typed(".auto-type", {
+        strings: ["DevTown"],
+        typeSpeed: 150,
+        backSpeed: 150,
+        loop: true,
+      });
+      $(".typed-cursor").addClass("text-[#30559E]");
+
+      // counter
+      var selector = document.querySelector("#counter_section");
+      var courses = document.querySelector(".courses");
+      var companies = document.querySelector(".companies");
+      var users = document.querySelector(".users");
+      var watch = document.querySelector(".watch");
+      let CounterObserver = new IntersectionObserver(
+        (entries, observer) => {
+          let [entry] = entries;
+          if (!entry.isIntersecting) return;
+
+          let counter_courses = 1;
+          let counter_companies = 1;
+          let counter_users = 1;
+          let counter_watch = 1;
+          setInterval(() => {
+            if (counter_courses < 500) {
+              counter_courses++;
+              courses.innerText = counter_courses;
+            }
+            if (counter_companies < 350) {
+              counter_companies++;
+              companies.innerText = counter_companies;
+            }
+            if (counter_users < 300) {
+              counter_users++;
+              users.innerText = counter_users;
+            }
+            if (counter_watch < 400) {
+              counter_watch++;
+              watch.innerText = counter_watch;
+            }
+          }, 1);
+        },
+        {
+          root: null,
+          threshold: 0.4,
+        }
+      );
+      CounterObserver.observe(selector);
+    </script>
+
+    <!-- AOS animation -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        once: true,
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".swiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "final_compiler",
+  "version": "1.0.0",
+  "description": "This is an Online Compiler For Windows Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.2.7"
+  }
+}
