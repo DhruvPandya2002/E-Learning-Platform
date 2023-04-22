@@ -1,5 +1,5 @@
 <?php
-	$CC="C:\Users\dayma\AppData\Local\Programs\Python\Python311\python.exe";
+	$CC="C:\Users\Deepak_Rawal\AppData\Local\Programs\Python\Python311\python.exe";
 	//$out="./a.out";
 	$code=$_POST["code"];
 	$input=$_POST["input"];

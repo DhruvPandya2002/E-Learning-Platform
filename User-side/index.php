@@ -1,3 +1,76 @@
+<?php
+session_start();
+error_reporting(0);
+$con = new mysqli('localhost', 'root', '', 'devtown');
+if (!$con)
+    die(mysqli_error($con));
+
+// echo $_SESSION['User'];
+
+// if (!isset($_SESSION['UID'])) {
+//     header('location:index.php');
+//     die();
+// }
+$uid = $_SESSION['UID'];
+$status = 0;
+// echo $_SESSION['email'];
+if (isset($_POST['logout'])) {
+    $_SESSION['email'];
+    $email = $_SESSION['email'];
+    $_SESSION['date'];
+    $_SESSION['UID'];
+    $_SESSION['User'];
+    $username = $_SESSION['User'];
+    $today_date = $_SESSION['date'];
+    $sql  = "UPDATE `users` SET `user_status`='$status' WHERE `user_id`='$uid'";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        $username = $_SESSION['User'];
+        $today_date = $_SESSION['date'];
+
+        // Check if a row exists for current user and today's date with no logout time 
+        $query = "SELECT * FROM `user_status` WHERE `user_name`='$username' AND `date`='$today_date'";
+        $result_logout = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result_logout) > 0) {
+
+            // Updateing the existing row with the logout time
+
+            $logout_time = date("H:i:s"); // getting the current logout time
+            $update_query = "UPDATE `user_status` SET `logout`='$logout_time' WHERE `user_name`='$username' AND `date`='$today_date'";
+            mysqli_query($con, $update_query);
+
+            // get the user's login , logout times and difference from the user table
+            $sql = "SELECT `login` , `logout` , `difference` FROM `user_status` WHERE `user_name` = '$username' AND `date`='$today_date'";
+            $result = mysqli_query($con, $sql);
+
+            // calculate the total time difference
+            if (mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $login_time = strtotime($row["login"]);
+                $logout_time = strtotime($row["logout"]);
+
+                // total time difference calculation
+                $diff = $row["difference"];
+                $total_time = $logout_time - $login_time;
+                // $new_total_time = strtotime($total_time);
+                // $new_diff = $total_time + $diff;
+
+                // update the user's total time difference into the difference column of the user table
+                // $sql = "UPDATE `user_status` SET `difference` = '$new_diff' WHERE `user_name` = '$username' AND `date`='$today_date'";
+                // if (mysqli_query($con, $sql)) {
+                //     echo "Total time difference updated successfully";
+                // } else {
+                //     echo "Error updating total time difference: " . mysqli_error($con);
+                // }
+            }
+        } else {
+            // No row found for current user and today's date with logout , do nothing
+        }
+        header('location:logout.php');
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -215,7 +288,7 @@
             <nav class="navbar h-16 sm:h-20 backdrop-blur-sm" style="box-shadow: rgba(157, 157, 157, 0.3) 0 4px 10px">
                 <ul class="flex justify-between items-center">
                     <li class="flex justify-center items-center">
-                        <img src="Logo/Circle_1980x1980.png" alt="DevTown" class="w-14 m-1 p-1 sm:w-[74px]" />
+                        <a href="index.php"><img src="Logo/Circle_1980x1980.png" alt="DevTown" class="w-14 m-1 p-1 sm:w-[74px]" /></a>
                         <p class="text-3xl sm:text-[40px] text-[#30559E]" style="font-family: 'Lobster', cursive;">
                             DevTown
                         </p>
@@ -232,8 +305,16 @@
                             </ul>
                         </div>
                     </li> -->
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="final_compiler/home.php" class="list-none">Compiler</a></li>
-                    <li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>
+                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li>
+                    <?php 
+                        if(!$_SESSION['User']){
+                            echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
+                        }else{
+                            echo '<li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
+                        }
+                    
+                    ?>
+                    <!-- <li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><a href="login.php"><button type="submit" class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Logout<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></form></li> -->
                     <li class="flex justify-center items-center">
                         <input type="hidden" value="0" id="menu_toggle" />
                         <div class="relative flex h-[40px] w-[40px] cursor-pointer flex-col items-end justify-between p-[0.4rem] md:hidden" style="-webkit-tap-highlight-color: transparent" id="menu">
@@ -241,9 +322,9 @@
                             <span class="w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300" id="second"></span>
                             <span class="w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300" id="third"></span>
                         </div>
-                        <!-- <div class="mx-2 cursor-pointer" style="-webkit-tap-highlight-color: transparent">
-                            <div class="moon">
-                                <svg width="40px" height="40px" viewBox="0 0 24.00 24.00" fill="none"
+                        <div class="mx-2 cursor-pointer" style="-webkit-tap-highlight-color: transparent">
+                            <div class="moon" id="theme-toggle">
+                                <!-- <svg width="40px" height="40px" viewBox="0 0 24.00 24.00" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" stroke="#30559E">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0" />
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
@@ -256,12 +337,12 @@
                                                 stroke-linejoin="round" />
                                         </g>
                                     </g>
-                                </svg>
+                                </svg> -->
                             </div>
-                            <div class="sun hidden">
+                            <!-- <div class="sun hidden">
                                 <img src="Logo/sun.svg" alt="Sun" width="40px" height="40px">
-                            </div>
-                        </div> -->
+                            </div> -->
+                        </div>
                     </li>
                 </ul>
             </nav>
@@ -273,8 +354,14 @@
                     <li class="text-center text-xl sm:text-2xl"><a href="#">Programming Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="#">Web Design Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="#">Contact</a></li>
-                    <li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
-                    </li>
+                    <?php
+                        if(!$_SESSION['User']){
+                            echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
+                            </li>';
+                        }else{
+                            echo '<li class="flex md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
+                        }
+                    ?>
                 </ul>
                 <div class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden">
 
@@ -293,7 +380,7 @@
         <div class="tablet lg:flex lg:flex-row-reverse lg:justify-between lg:items-center xl:w-full">
             <div class="main_image mt-28 mb-10 xl:pr-16">
                 <div class="flex flex-col justify-center items-center">
-                    <img src="Logo/home_Page_image.png" alt="home_image" class="main_photo sm:w-5/6 md:w-9/12 xl:w-[720px]">
+                    <img src="Logo/home_Page_image.svg" alt="home_image" class="main_photo sm:w-5/6 md:w-9/12 xl:w-[720px]">
                 </div>
             </div>
             <!-- Hero Text -->
@@ -764,7 +851,7 @@
                     <span class="text-[#759DEA]">Top Companies</span>
                 </p>
             </div>
-            <div class="py-8 px-4 flex flex-col justify-center items-center gap-y-6 sm:py-12 sm:px-12 md:px-28 lg:grid lg:grid-cols-2 lg:gap-7 xl:mt-10 xl:gap-20">
+            <!-- <div class="py-8 px-4 flex flex-col justify-center items-center gap-y-6 sm:py-12 sm:px-12 md:px-28 lg:grid lg:grid-cols-2 lg:gap-7 xl:mt-10 xl:gap-20">
                 <div class="bg-white rounded-lg shadow-xl">
                     <div class="p-4 sm:p-8 xl:p-10">
                         <img src="Logo/dsa1.png" alt="DSA" class="rounded-xl">
@@ -789,6 +876,43 @@
                         </h3>
                         <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:h-12 sm:font-medium rounded-md shadow-md md:text-2xl md:h-14">Start
                             Tutorial</button>
+                    </div>
+                </div>
+            </div> -->
+            <div class="py-8 px-4 flex flex-col justify-center items-center gap-y-6 sm:py-12 sm:px-12 md:px-28 lg:grid lg:grid-cols-2 lg:gap-7 xl:mt-10 xl:gap-20">
+                <div class="bg-white rounded-lg shadow-xl">
+                    <div class="p-4 sm:p-8 xl:p-10">
+                        <img src="Logo/dsa1.png" alt="DSA" class="rounded-xl">
+                        <div class="flex justify-between">
+                        <h3 class="text-lg sm:pt-3 sm:text-2xl md:text-3xl md:pt-6 md:pb-4 lg:text-xl pt-1 font-medium xl:text-2xl">Learn <br> 
+                        <div><p id="product_name"> Data Structure & Algorithm </p></div>
+                        </h3><div>
+                        <h2 class="mt-5">₹<p id="amount">5999</p></h2>
+                        <!-- <input type="number" name="amount" class="amount"> -->
+                        </div>
+                        </div>
+                        <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:font-medium sm:h-12 md:text-2xl md:h-14 rounded-md shadow-md" onclick="pay_now()" value="Pay Now">Buy Now</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl">
+                    <div class="p-4 sm:p-8">
+                        <img src="Logo/5994421.jpg" alt="Os" class="rounded-xl lg:h-[174.21px] xl:h-[280px] w-full">
+                        <div class="flex justify-between">
+                        <h3 class="product_name text-lg pt-1 sm:pt-3 sm:text-2xl font-medium md:text-3xl md:pt-6 md:pb-4 lg:text-xl xl:text-2xl">Learn <br> Operating System </h3>
+                        <h2 class="amount mt-5">₹3999</h2>
+                        </div>
+                        <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:h-12 sm:font-medium rounded-md shadow-md md:text-2xl md:h-14">Buy Now</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl">
+                    <div class="p-4 sm:p-8">
+                        <img src="Logo/1032.jpg" alt="DSA" class="rounded-xl lg:h-[174.21px] xl:h-[280px] w-full">
+                        <div class="flex justify-between">
+                        <h3 class="product_name text-lg pt-1 sm:text-xl sm:pt-3 font-medium md:text-3xl md:pt-6 md:pb-4 lg:text-xl xl:text-2xl">Learn <br> Database Management System
+                        </h3>
+                        <h2 class="amount mt-5">₹2999</h2>
+                        </div>
+                        <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:h-12 sm:font-medium rounded-md shadow-md md:text-2xl md:h-14">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -825,9 +949,9 @@
                         </ul>
                     </div>
                     <div class="space-y-3">
-                        <h3 class="tracking-wide font-semibold text-lg uppercase text-white sm:text-2xl xl:text-3xl">
+                        <h3 class="tracking-wide text-[#30559E] font-semibold text-lg uppercase sm:text-2xl xl:text-3xl">
                             Compilers</h3>
-                        <ul class="space-y-1 text-[#30559E] text-md sm:space-y-3 sm:text-lg xl:text-2xl">
+                        <ul class="space-y-1 text-white text-md sm:space-y-3 sm:text-lg xl:text-2xl">
                             <li>
                                 <a rel="noopener noreferrer" href="#">Programming</a>
                             </li>
@@ -844,6 +968,8 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/typed.js@2.0.14/dist/typed.umd.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- <script src="dark_light.js"></script> -->
     <!-- <script src="dark_light.js"></script> -->
     <script>
         // Dark - Light Mode
@@ -946,6 +1072,57 @@
             threshold: 0.4,
         });
         CounterObserver.observe(selector);
+    </script>
+
+    <!-- Payment System Code -->
+    <script>
+        function pay_now(){
+			
+            var pro_name= document.getElementById('product_name');
+            var product_name=pro_name.textContent;
+            var user= '<?php echo $_SESSION['User']; ?>';
+            var email= '<?php echo $_SESSION['email']; ?>';
+            var amt= document.getElementById('amount');
+            var amount = amt.textContent;
+            // alert(amount);
+            // alert(product_name);
+            // alert(user);
+            // alert(email);
+			jQuery.ajax({
+				url: 'payment-proccess.php',
+				type: 'post',
+				// dataType: 'json',
+				data:"&product_name="+product_name+"&amount="+amount+"&user="+user+"&email="+email,
+				success: function(msg) {
+					var options = {
+						"key": "rzp_test_uZ1lSqeEpMsKxl",
+						"amount": amount * 100,
+						"name": "DevTown",
+						"description": "Payment",
+						"image": "Logo/Square_1980x1980.png",
+						"handler": function(response) {
+							console.log(response);
+							jQuery.ajax({
+								url: 'payment-proccess.php',
+								type: 'post',
+								// dataType: 'json',
+								data:"payment_id="+response.razorpay_payment_id,
+								success: function(msg) {
+									window.location.href = 'success.php';
+								}
+							});
+						},
+						"theme": {
+							"color": "#528FF0"
+						}
+					};
+					var rzp1 = new Razorpay(options);
+					rzp1.open();
+				}
+			});
+
+            
+        }
     </script>
 
     <!-- AOS animation -->
