@@ -8,4 +8,4 @@ session_start();
 unset($_SESSION['UID']);
 unset($_SESSION['User']);
 header('location:index.php');
-session_destroy();
+die();

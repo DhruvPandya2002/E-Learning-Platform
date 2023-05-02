@@ -1,4 +1,5 @@
 <?php
+session_start();
 error_reporting(0)
 ?>
 <!DOCTYPE html>
@@ -92,13 +93,13 @@ error_reporting(0)
                         </div>
                     </li> -->
                     <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="final_compiler/home.php" class="list-none">Compiler</a></li>
-                    <?php 
-                        if(!$_SESSION['User']){
-                            echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
-                        }else{
-                            echo '<li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
-                        }
-                    
+                    <?php
+                    if (!$_SESSION['User']) {
+                        echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
+                    } else {
+                        echo '<li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
+                    }
+
                     ?>
                     <!-- <li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li> -->
                     <li class="flex justify-center items-center">
@@ -143,12 +144,12 @@ error_reporting(0)
                     <!-- <li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
                     </li> -->
                     <?php
-                        if(!$_SESSION['User']){
-                            echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
+                    if (!$_SESSION['User']) {
+                        echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
                             </li>';
-                        }else{
-                            echo '<li class="flex md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
-                        }
+                    } else {
+                        echo '<li class="flex md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
+                    }
                     ?>
                 </ul>
                 <div class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden">
@@ -162,7 +163,8 @@ error_reporting(0)
     <div class="flex flex-col justify-center items-center mt-24 sm:mt-32">
         <div class="grid grid-cols-2 gap-y-6 gap-x-6 sm:gap-y-10 sm:gap-x-10 md:gap-y-14 md:gap-x-14 lg:grid-cols-3 lg:gap-x-10 lg:gap-y-10 xl:gap-x-24 xl:gap-y-20 2xl:grid-cols-4 2xl:gap-y-16 2xl:gap-x-16">
             <?php
-            function course_documwentation(){
+            function course_documwentation()
+            {
                 header('location: documentation.php');
             }
             $conn = new mysqli('localhost', 'root', '', 'devtown');
@@ -173,9 +175,9 @@ error_reporting(0)
             while ($row = mysqli_fetch_assoc($result)) {
             ?>
                 <div class="card w-[160px] h-[254px] flex flex-col justify-center items-center px-4 gap-y-4 sm:w-[250px] sm:h-[344px] sm:gap-y-6 sm:px-5 md:w-[300px] md:h-[394px] 2xl:w-[270px] 2xl:h-[364px] 2xl:px-7 2xl:gap-y-7" data-aos="zoom-in-up">
-                    <img src="Logo/course/<?php echo $row['c_Photo'];?>" alt="Course" class="z-[1] w-24 sm:w-32 md:w-40 lg:w-36 2xl:w-28">
-                    <a href="tutorial.php?course_id=<?php echo $row['c_Id'];?>" class="z-[1] bg-[#759DEA] text-center w-full text-md rounded-lg sm:text-xl md:text-2xl 2xl:text-xl"><button class="bg-[#759DEA] text-center w-full text-md rounded-lg p-1 sm:p-3 sm:text-xl md:text-2xl 2xl:text-xl 2xl:p-2">Start Tutorial</button></a>
-                    <a href="documentation.php?course_id=<?php echo $row['c_Id'];?>" class="z-[1] bg-[#759DEA] text-center w-full text-md rounded-lg sm:text-xl md:text-2xl 2xl:text-xl"><button class="bg-[#759DEA] text-center w-full text-md rounded-lg p-1 sm:p-3 sm:text-xl md:text-2xl 2xl:text-xl 2xl:p-2">Documentation</button></a>
+                    <img src="Logo/course/<?php echo $row['c_Photo']; ?>" alt="Course" class="z-[1] w-24 sm:w-32 md:w-40 lg:w-36 2xl:w-28">
+                    <a href="tutorial.php?course_id=<?php echo $row['c_Id']; ?>" class="z-[1] bg-[#759DEA] text-center w-full text-md rounded-lg sm:text-xl md:text-2xl 2xl:text-xl"><button class="bg-[#759DEA] text-center w-full text-md rounded-lg p-1 sm:p-3 sm:text-xl md:text-2xl 2xl:text-xl 2xl:p-2">Start Tutorial</button></a>
+                    <a href="documentation.php?course_id=<?php echo $row['c_Id']; ?>" class="z-[1] bg-[#759DEA] text-center w-full text-md rounded-lg sm:text-xl md:text-2xl 2xl:text-xl"><button class="bg-[#759DEA] text-center w-full text-md rounded-lg p-1 sm:p-3 sm:text-xl md:text-2xl 2xl:text-xl 2xl:p-2">Documentation</button></a>
                 </div>
             <?php
             }

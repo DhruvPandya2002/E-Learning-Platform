@@ -1076,8 +1076,7 @@ if (isset($_POST['logout'])) {
 
     <!-- Payment System Code -->
     <script>
-        function pay_now(){
-			
+        function pay_now(){	
             var pro_name= document.getElementById('product_name');
             var product_name=pro_name.textContent;
             var user= '<?php echo $_SESSION['User']; ?>';
