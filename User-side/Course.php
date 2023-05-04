@@ -1,6 +1,7 @@
 <?php
 session_start();
-error_reporting(0)
+error_reporting(0);
+$_SESSION['redirect'] = "Course.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">

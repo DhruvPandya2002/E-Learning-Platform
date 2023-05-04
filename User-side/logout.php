@@ -7,5 +7,6 @@ session_start();
 // echo $_SESSION['second'];
 unset($_SESSION['UID']);
 unset($_SESSION['User']);
+unset($_SESSION['email']);
 header('location:index.php');
 die();

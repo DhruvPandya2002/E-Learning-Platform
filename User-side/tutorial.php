@@ -3,29 +3,15 @@ include("letter_image.php");
 include("comment_server.php");
 error_reporting(0);
 session_start();
+if(!$_SESSION['User']){
+    header('location:login.php');
+}
 $course_id = $_GET['course_id'];
 $conn = new mysqli('localhost', 'root', '', 'devtown');
 if (!$conn)
     die(mysqli_error($conn));
 
-$reply_flag = 0;
-// if(isset($_POST['comment_send'])){
-//     if(!empty($_SESSION['User']) && !empty($_POST['comment'])){
-//         $content_id = $_SESSION['content_id'];
-//         $course_id = $_GET['course_id'];
-//         $comment = $_POST['comment'];
-//         $sender = $_SESSION['User'];
-//         $parent_id = $_POST['parent_id'];
-//         $sql = "INSERT INTO `comment`(`parent_id`,`content_id`,`course_id`,`comment`,`sender`,`flag`) VALUES ('$parent_id','$content_id','$course_id','$comment','$sender','0')";
-//         mysqli_query($conn,$sql);
-//         throw new Exception("this is not work");
-//     }
-//     echo $_SESSION['content_id'];
-// echo $_GET['course_id'];
-// echo $_POST['comment'];
-// echo $_SESSION['User'];
-// echo $_POST['parent_id'];  
-// }    
+$reply_flag = 0; 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +24,7 @@ $reply_flag = 0;
     <link rel="stylesheet" href="style.css" />
     <title>DevTown Courses</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
@@ -163,7 +150,7 @@ $reply_flag = 0;
                     </li>
                 </ul>
             </nav>
-            <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
+            <div class="animate_animated animatefadeIn animate_faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
                 <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
                     <li class="text-center text-xl sm:text-2xl"><a href="#">About Us</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
@@ -198,6 +185,8 @@ $reply_flag = 0;
                     $result = mysqli_query($conn, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
                         $_SESSION['content_id'] = $row['content_id'];
+                        $_SESSION['course_id'] = $row['course_id'];
+                        
                 ?>
                         <div class="h-[35vh] w-[380px] sm:my-5 sm:mx-2 sm:w-[620px] md:w-[460vh] md:h-[40vh] lg:w-[110vh] lg:h-[60vh] lg:my-3 lg:mx-2 xl:h-[60vh] xl:w-[110vh] xl:my-0 xl:mx-0 2xl:w-[130vh] 2xl:h-[70vh] shadow-lg"><?php echo $row['content']; ?></div>
                     <?php
@@ -244,67 +233,132 @@ $reply_flag = 0;
                 <?php
                 letters_images();
                 ?>
-                <form action="" method="post" id="commentForm" class="flex input-container relative w-full ml-2">
-                    <input type="text" id="input_comment" name="enter_comment" required="" class="text-xl sm:text-2xl w-full border-b-2 border-b-gray-300 pt-[14px] bg-transparent outline-none">
+                <form id="comment-form" action="" method="post" id="commentForm" class="flex input-container relative w-full ml-10">
+                    <input type="text" id="input_comment" name="enter_comment" required="" class="comment_inserted text-xl sm:text-2xl w-full border-b-2 border-b-gray-300 pt-[14px] bg-transparent outline-none">
                     <label for="input" class="text-xl sm:text-2xl label absolute top-3 left-2 text-gray-400 transition-all duration-300 pointer-events-none">Add a Comment...</label>
                     <div class="underline"></div>
                     <input type="hidden" id="commentId" value="0" name="parent_id">
                     <button class="comment_send" type="submit" id="send" onclick="send_data()"><img src="Logo/send.svg" alt="" class="w-10 ml-1"></button>
                 </form>
             </div>
-            <script>
-                function send_data() {
-                    var sender = '<?php echo $_SESSION['User']; ?>';
-                    var parent_id = document.getElementsByName(parent_id);
-                    var content_id = '<?php echo $_SESSION['content_id']; ?>';
-                    var course_id = '<?php echo $_GET['course_id']; ?>';
-                    var comment = document.getElementsByName(enter_comment);
-                    alert(sender);
-                    alert(parent_id);
-                    alert(content_id);
-                    alert(course_id);
-                    alert(comment);
-                    jQuery.ajax({
-                        url: 'comment_server.php',
-                        type: 'post',
-                        // dataType: 'json',
-                        data: "&sender=" + sender + "&parent_id=" + parent_id + "&content_id=" + content_id + "&course_id=" + course_id + "&comment=" + comment,
-                        success: function(response) {
-                            if(!response.error()){
-                                $('#commentForm')[0].reset();
-                            }
-                        }
-                    });
-                }
-            </script>
-            <?php
-            $course_id = $_GET['course_id'];
-            $sql = "SELECT * FROM `comment` WHERE `content_id` = '$_SESSION[content_id]' and `course_id` = '$course_id' and `flag` = 0";
-            $result = mysqli_query($conn, $sql);
-            while ($row = mysqli_fetch_assoc($result)) {
-                $reply_flag = $row['parent_id'];
-            ?>
-                <div class="flex mt-3">
-                    <div class="w-[35px] md:w-[55px] lg:w-[40px] xl:w-[40px] 2xl:w-[40px]"><?php echo all_comment_letters_images($row['sender']); ?></div>
+        <div id="comments"></div>
+          
+
+<!-- getting comments using ajax Hemant -->
+<script>
+    //session variables
+    var content_id = '<?php echo $_SESSION['content_id']; ?>';
+    var course_id = '<?php echo $_GET['course_id']; ?>';
+    var sender = '<?php echo $_SESSION['User']; ?>';
+    
+  $(function() {
+  $('#comment-form').submit(function(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+    
+    // Get the form data
+    var formData = $(this).serialize();
+    formData += '&content_id=' + content_id;
+    formData += '&course_id=' + course_id;
+    formData += '&sender=' + sender;
+    formData += '&comment=' + $('#input_comment').val();
+    formData += '&parent_id' + $('#commentId').val();
+    
+    // Send an AJAX request to store the comment in the database
+    $.ajax({
+      url: 'store_comment.php',
+      type: 'POST',
+      data: formData,
+      success: function(data) {
+        // If the comment was stored successfully, update the comments section on the page
+        // $('input[name=enter_comment]').val('');
+        $('#comment-form')[0].reset();
+        getComments();
+      }
+    });
+  });
+
+  
+  function getComments() {
+    // Send an AJAX request to retrieve the list of comments from the server
+    $.get('get_comments.php', function(data) {
+      // Update the comments section on the page with the new comment
+      $('#comments').html(data);
+    });
+  }
+  
+  // Call the getComments function when the page is loaded
+  getComments();
+});
+
+</script>
+
+<!-- <script>
+    $(document).ready(function() {
+    $('#myForm').on('submit', function(event) {
+    event.preventDefault(); // prevent form submission
+
+    var sender = '<?php //echo $_SESSION['User']; ?>';
+    var parent_id = null;
+    var parent_id = document.getElementsByName(parent_id);
+    var content_id = '<?php //echo $_SESSION['content_id']; ?>';
+    var course_id = '<?php //echo $_GET['course_id']; ?>';
+    var comment = jQuery('.comment_inserted').val();
+
+    // var formData = $('#myForm').serialize();
+    // formData += "&sender="+sender+"&parent_id="+parent_id+"&content_id="+content_id+"&course_id="+course_id+"&comment="+comment;
+    
+
+    // send form data to insert.php using Ajax
+    $.ajax({
+      url: 'insert.php',
+      type: 'post',
+    //   data: $('#myForm').serialize(),
+        data: "&sender="+sender+"&parent_id="+parent_id+"&content_id="+content_id+"&course_id="+course_id+"&comment="+comment,
+        success: function(response) {
+        // fetch newly added data from database using fetch.php
+        $.ajax({
+          url: 'fetch.php',
+          type: 'get',
+          success: function(data) {
+            // format data and append it to result div
+            $('#result').html(data);
+          }
+        });
+      }
+    });
+  });
+});
+</script> -->
+
+            <!-- <?php
+            // $course_id = $_GET['course_id'];
+            // $sql = "SELECT * FROM `comment` WHERE `content_id` = '$_SESSION[content_id]' and `course_id` = '$course_id' and `flag` = 0";
+            // $result = mysqli_query($conn, $sql);
+            // while ($row = mysqli_fetch_assoc($result)) {
+            //     $reply_flag = $row['parent_id'];
+            // ?>
+                <div class="flex mt-3" id="result">
+                    <div class="w-[35px] md:w-[55px] lg:w-[40px] xl:w-[40px] 2xl:w-[40px]"><?php //echo all_comment_letters_images($row['sender']); ?></div>
                     <div class="flex flex-col items-start">
-                        <h2 class="text-lg ml-3 text-[#30559E] font-medium"><?php echo $row['sender']; ?><span class="text-sm ml-2"><?php echo $row['date']; ?></span></h2>
-                        <p class="text-xl ml-3"><?php echo $row['comment']; ?></p>
+                        <h2 class="text-lg ml-3 text-[#30559E] font-medium"><?php // echo $row['sender']; ?><span class="text-sm ml-2"><?php //echo $row['date']; ?></span></h2>
+                        <p class="text-xl ml-3"><?php //echo $row['comment']; ?></p>
                         <div>
-                            <button class="reply_btn ml-1 mt-3 bg-[#DCE1F9] px-4 py-2 rounded-full font-medium text-[#30559E]" comment-id="<?php echo $row['id']; ?>" id="replyComment">Reply</button>
+                            <button class="reply_btn ml-1 mt-3 bg-[#DCE1F9] px-4 py-2 rounded-full font-medium text-[#30559E]" comment-id="<?php //echo $row['id']; ?>" id="replyComment">Reply</button>
                             <?php
-                            if ($reply_flag > 0) {
+  //                          if ($reply_flag > 0) {
                             ?>
                                 <button class="ml-5 px-4 py-2 bg-[#DCE1F9] rounded-full hover:bg-[#CBD2F6]"><i class="fa-solid fa-caret-down" style="color: #30559e;"></i> 3 Replies</button>
                             <?php
-                            }
+  //                          }
                             ?>
                         </div>
                     </div>
                 </div>
             <?php
-            }
-            ?>
-        </div>
+   //         }
+            ?> -->
+        <!-- </div> -->
     </div>
     <div>
     </div>
@@ -410,13 +464,90 @@ $reply_flag = 0;
                 wid = width;
             }
         });
+
+    //     $('#replyComment').click(function(){
+    //         alert("hnhfnfnfg");
+    // $('#input_comment').focus();
+  //});
     </script>
     
+
     <!-- AOS animation -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init({
             once: true
         });
+    </script>
+    <!-- video monitoring system -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var id = "<?php echo $video_id; ?>";
+        // var username = document.getElementById("username");
+        // console.log("dhruv");
+        var video = {
+            id: id,
+            // username: username,
+            iframeId: "player",
+            watched: false,
+            player: null,
+        };
+
+        function onYouTubeIframeAPIReady() {
+            video.player = new YT.Player(video.iframeId, {
+                videoId: video.id,
+                events: {
+                    onStateChange: onPlayerStateChange,
+                },
+            });
+        }
+
+        // function onYouTubeIframeAPIReadyuser() {
+        //     video.player = new YT.Player(video.iframeId, {
+        //         videousername: video.username,
+        //         events: {
+        //             onStateChange: onPlayerStateChange,
+        //         },
+        //     });
+        // }
+
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                video.watched = false;
+            }
+            if (event.data == YT.PlayerState.ENDED) {
+                video.watched = true;
+                saveWatchedState();
+            }
+        }
+
+        function saveWatchedState() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "save_watched_state.php");
+            xhr.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+            );
+            xhr.onload = function() {
+                if (xhr.status === 200 && xhr.responseText !== "OK") {
+                    alert("Error saving watched state: " + xhr.responseText);
+                }
+            };
+            xhr.send(
+                "video_id=" +
+                encodeURIComponent(video.id) +
+                "&watched=" +
+                encodeURIComponent(video.watched)
+                // "&username=" + encodeURIComponent(video.username)
+            );
+        }
+
+        function nextVideo() {
+            // TODO: Implement logic to get the next video ID from the database and load it
+            alert("Load next video!");
+        }
+
+        onYouTubeIframeAPIReady();
+        // onYouTubeIframeAPIReadyuser();
     </script>
 </body>

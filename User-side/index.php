@@ -1,10 +1,13 @@
 <?php
-session_start();
+include("letter_image.php");
+include("comment_server.php");
+// session_start();
 error_reporting(0);
 $con = new mysqli('localhost', 'root', '', 'devtown');
 if (!$con)
     die(mysqli_error($con));
 
+$_SESSION['redirect'] = "index.php";
 // echo $_SESSION['User'];
 
 // if (!isset($_SESSION['UID'])) {
@@ -295,24 +298,85 @@ if (isset($_POST['logout'])) {
                     </li>
                     <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl">About us</li>
                     <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Course.php">Courses</a></li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl">Contact</li>
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
-                    <!-- <li class="flex justify-center items-center hidden md:block md:text-xl">Labs <i class="fa-solid fa-angle-down" style="color: #000000;" class></i>
-                        <div class="compiler bg-white shadow-lg rounded-2xl ml-10 mt-10" style="display : none;">
+                    <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
+                        <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
                             <ul class="flex flex-col justify-start">
-                                <li class="text-sm px-5 pt-5 text-gray-600"><span class="text-xl font-medium text-gray-700 hover:text-black">Programming Compiler</span><br><span>Write and run code in multiple <br>programming language from anywhere.</span></li>
-                                <li class="text-sm p-5 text-gray-600"><span class="text-xl font-medium text-gray-700">Web Designing</span><br><span>Write and run code for Web <br>Designing from anywhere.</span></li>
+                                <li class="text-sm px-5 pt-5 text-gray-600"><a href="final_compiler/home.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Programming Compiler</span><br><span>Write and run code in multiple <br>programming language from anywhere.</span></a></li>
+                                <li class="text-sm p-5 text-gray-600"><a href="codeeditor/index.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Web Designing</span><br><span>Write and run code for Web <br>Designing from anywhere.</span></a></li>
+                            </ul>
+                        </div> -->
+                        <div class="hover-container">
+                            <h1 id="labs" class="cursor-pointer">Labs</h1>
+                            <div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler" style="display: none;">
+                                <ul class="flex flex-col justify-start">
+                                    <li class="text-sm px-5 pt-5 text-gray-600"><a href="final_compiler/home.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Programming Compiler</span><br><span>Write and run code in multiple <br>programming language from anywhere.</span></a></li>
+                                    <li class="text-sm p-5 text-gray-600"><a href="codeeditor/index.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Web Designing</span><br><span>Write and run code for Web <br>Designing from anywhere.</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
+                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl">Contact</li>
+                    <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
+                    <?php
+                    if (!$_SESSION['User']) {
+                        echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
+                    } else {
+                        echo '<li>
+                        <div class="avatar cursor-pointer flex items-center text-xl gap-3 capitalize bg-[#759DEa] py-2 px-3 font-medium rounded-full" id="avatar">';
+                            echo letters_images();
+                            echo $_SESSION['User'];
+                        echo '</div>
+                        <div class="avatar-dropdown bg-[#e0f1ff] shadow-lg rounded-2xl w-60 -ml-2 mt-5 absolute animate__animated" id="avatar-dropdown" style="display: none;">
+                            <ul class="flex flex-col justify-start">
+                                <li class="px-5 pt-3 flex justify-start items-center">
+                                    <div>';
+                                    echo letters_images();
+                                    echo '</div>
+                                    <div class="ml-2 flex flex-col items-start">
+                                        <h1 class="capitalize text-lg text-gray-900">';
+                                        echo $_SESSION['User'];
+                                        echo '</h1>
+                                        <small class="text-gray-700">';
+                                        echo $_SESSION['email'];
+                                        echo '</small>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="border-b-2 border-gray-400 mx-3 mt-2 h-1"></div>
+                                </li>
+                                <li>
+                                    <a href="dashboard/index.php" class="hover:bg-gray-500">
+                                    <div class="flex justify-center items-center gap-3 py-3">
+                                        <img src="Logo/dashboard.svg" alt="" class="w-7">
+                                        <h1 class="text-lg font-medium text-gray-700 hover:text-gray-950">Dashboard</h1>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="dashboard/my_courses.php" class="hover:bg-gray-500">
+                                    <div class="flex justify-center items-center gap-3 pb-3">
+                                        <img src="Logo/profile.svg" alt="" class="w-8">
+                                        <h1 class="text-lg font-medium text-gray-700 hover:text-gray-950">My Profile</h1>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="border-b-2 border-gray-400 mx-3 h-1"></div>
+                                </li>
+                                <li>
+                                <a href="logout.php" class="hover:bg-gray-500">
+                                    <div class="flex justify-center items-center gap-3 py-3">
+                                        <img src="Logo/power.svg" alt="" class="w-7">
+                                        <h1 class="text-lg font-medium text-gray-700 hover:text-gray-950">Logout</h1>
+                                    </div>
+                                    </a>
+                                </li>
                             </ul>
                         </div>
-                    </li> -->
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li>
-                    <?php 
-                        if(!$_SESSION['User']){
-                            echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
-                        }else{
-                            echo '<li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
-                        }
-                    
+                    </li>';
+                    }
+
                     ?>
                     <!-- <li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><a href="login.php"><button type="submit" class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Logout<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></form></li> -->
                     <li class="flex justify-center items-center">
@@ -351,16 +415,16 @@ if (isset($_POST['logout'])) {
                     <li class="text-center text-xl sm:text-2xl"><a href="#">About Us</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="#">Blogs</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Programming Compiler</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="final_compiler/home.php">Programming Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="#">Web Design Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="#">Contact</a></li>
                     <?php
-                        if(!$_SESSION['User']){
-                            echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
+                    if (!$_SESSION['User']) {
+                        echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
                             </li>';
-                        }else{
-                            echo '<li class="flex md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
-                        }
+                    } else {
+                        echo '<li class="flex md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
+                    }
                     ?>
                 </ul>
                 <div class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden">
@@ -879,289 +943,333 @@ if (isset($_POST['logout'])) {
                     </div>
                 </div>
             </div> -->
-            <div class="py-8 px-4 flex flex-col justify-center items-center gap-y-6 sm:py-12 sm:px-12 md:px-28 lg:grid lg:grid-cols-2 lg:gap-7 xl:mt-10 xl:gap-20">
-                <div class="bg-white rounded-lg shadow-xl">
-                    <div class="p-4 sm:p-8 xl:p-10">
-                        <img src="Logo/dsa1.png" alt="DSA" class="rounded-xl">
-                        <div class="flex justify-between">
-                        <h3 class="text-lg sm:pt-3 sm:text-2xl md:text-3xl md:pt-6 md:pb-4 lg:text-xl pt-1 font-medium xl:text-2xl">Learn <br> 
-                        <div><p id="product_name"> Data Structure & Algorithm </p></div>
-                        </h3><div>
-                        <h2 class="mt-5">₹<p id="amount">5999</p></h2>
-                        <!-- <input type="number" name="amount" class="amount"> -->
+            <div class="py-8 px-4 flex flex-col justify-center items-center gap-y-6 sm:py-12 sm:px-12 md:px-28 lg:grid lg:grid-cols-2 lg:gap-7 lg:place-items-center xl:my-10 xl:gap-20">
+                <?php
+                $sql = "SELECT * FROM `premium` WHERE `flag` = 0";
+                $result = mysqli_query($con, $sql);
+                while ($record_data = mysqli_fetch_assoc($result)) {
+                ?>
+                    <a href="purchase_card/<?php echo $record_data['course_name']; ?>.php?premium_course_id=<?php echo $record_data['id']; ?>">
+                        <div class="bg-white rounded-lg shadow-xl 2xl:w-[34rem] flex flex-col justify-center items-center">
+                            <div class="p-4 sm:p-8">
+                                <img src="Logo/<?php echo $record_data['image']; ?>" alt="<?php echo $record_data['image']; ?>" class="rounded-xl">
+                                <div class="flex justify-between">
+                                    <h3 class="text-lg sm:pt-3 sm:text-2xl md:text-3xl md:pt-6 md:pb-4 lg:text-xl pt-1 font-medium xl:text-2xl">Learn <br>
+                                        <div>
+                                            <p id="product_name"> <?php echo htmlspecialchars_decode($record_data['course_name']); ?> </p>
+                                        </div>
+                                    </h3>
+                                    <div>
+                                        <h2 class="mt-5 text-xl font-medium flex items-center">₹<p id="amount"><?php echo $record_data['price']; ?></p>
+                                        </h2>
+                                    </div>
+                                </div>
+                                <!-- <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:font-medium sm:h-12 md:text-2xl md:h-14 rounded-md shadow-md" onclick="pay_now()" value="Pay Now">Buy Now</button> -->
+                            </div>
                         </div>
-                        </div>
-                        <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:font-medium sm:h-12 md:text-2xl md:h-14 rounded-md shadow-md" onclick="pay_now()" value="Pay Now">Buy Now</button>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-xl">
+                    </a>
+                <?php
+                }
+                ?>
+                <!-- <div class="bg-white rounded-lg shadow-xl 2xl:w-[34rem]">
                     <div class="p-4 sm:p-8">
-                        <img src="Logo/5994421.jpg" alt="Os" class="rounded-xl lg:h-[174.21px] xl:h-[280px] w-full">
+                        <img src="Logo/OS.jpg" alt="Os" class="rounded-xl">
                         <div class="flex justify-between">
-                        <h3 class="product_name text-lg pt-1 sm:pt-3 sm:text-2xl font-medium md:text-3xl md:pt-6 md:pb-4 lg:text-xl xl:text-2xl">Learn <br> Operating System </h3>
-                        <h2 class="amount mt-5">₹3999</h2>
+                            <h3 class="product_name text-lg pt-1 sm:pt-3 sm:text-2xl font-medium md:text-3xl md:pt-6 md:pb-4 lg:text-xl xl:text-2xl">Learn <br> Operating System </h3>
+                            <h2 class="amount mt-5">₹3999</h2>
                         </div>
                         <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:h-12 sm:font-medium rounded-md shadow-md md:text-2xl md:h-14">Buy Now</button>
                     </div>
                 </div>
-                <div class="bg-white rounded-lg shadow-xl">
+                <div class="bg-white rounded-lg shadow-xl 2xl:w-[34rem]">
                     <div class="p-4 sm:p-8">
-                        <img src="Logo/1032.jpg" alt="DSA" class="rounded-xl lg:h-[174.21px] xl:h-[280px] w-full">
+                        <img src="Logo/DBMS.jpg" alt="DBMS" class="rounded-xl">
                         <div class="flex justify-between">
-                        <h3 class="product_name text-lg pt-1 sm:text-xl sm:pt-3 font-medium md:text-3xl md:pt-6 md:pb-4 lg:text-xl xl:text-2xl">Learn <br> Database Management System
-                        </h3>
-                        <h2 class="amount mt-5">₹2999</h2>
+                            <h3 class="product_name text-lg pt-1 sm:text-xl sm:pt-3 font-medium md:text-3xl md:pt-6 md:pb-4 lg:text-xl xl:text-2xl">Learn <br> Database Management System
+                            </h3>
+                            <h2 class="amount mt-5">₹2999</h2>
                         </div>
                         <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:h-12 sm:font-medium rounded-md shadow-md md:text-2xl md:h-14">Buy Now</button>
                     </div>
                 </div>
+                <div class="bg-white rounded-lg shadow-xl 2xl:w-[34rem]">
+                    <div class="p-4 sm:p-8">
+                        <img src="Logo/MERN.jpg" alt="Mern" class="rounded-xl">
+                        <div class="flex justify-between">
+                            <h3 class="product_name text-lg pt-1 sm:text-xl sm:pt-3 font-medium md:text-3xl md:pt-6 md:pb-4 lg:text-xl xl:text-2xl">Learn <br> Database Management System
+                            </h3>
+                            <h2 class="amount mt-5">₹2999</h2>
+                        </div>
+                        <button class="bg-[#759DEA] text-center w-full mt-3 h-10 text-lg font-normal sm:text-xl sm:h-12 sm:font-medium rounded-md shadow-md md:text-2xl md:h-14">Buy Now</button>
+                    </div>
+                </div>
+            </div> -->
             </div>
-        </div>
-        
-        <!-- Footer -->
-        <footer class="px-4 divide-y bg-[#759DEA]">
-            <div class="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
-                <div class="lg:w-1/3">
-                    <a rel="" href="#" class="flex justify-center space-x-3 lg:justify-center lg:mt-10">
-                        <!-- <div class="flex items-center justify-center w-12 h-12 rounded-full">
+
+            <!-- Footer -->
+            <footer class="px-4 divide-y bg-[#759DEA]">
+                <div class="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
+                    <div class="lg:w-1/3">
+                        <a rel="" href="#" class="flex justify-center space-x-3 lg:justify-center lg:mt-10">
+                            <!-- <div class="flex items-center justify-center w-12 h-12 rounded-full">
                             <img src="Logo/Circle_1980x1980.png" alt="Devtown">                            
                         </div> -->
-                        <span class="self-center text-[#30559E] text-4xl sm:text-5xl xl:text-7xl font-semibold" style="font-family: 'Lobster', cursive;">DevTown</span>
-                    </a>
-                </div>
-                <div class="grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-2 sm:text-center pl-6">
-                    <div class="space-y-3">
-                        <h3 class="tracking-wide font-semibold text-lg uppercase text-[#30559E] sm:text-2xl xl:text-3xl">Menu
-                        </h3>
-                        <ul class="space-y-1 text-white text-md sm:text-lg sm:space-y-3 xl:text-2xl">
-                            <li>
-                                <a rel="noopener noreferrer" href="#">About Us</a>
-                            </li>
-                            <li>
-                                <a rel="noopener noreferrer" href="#">Contact Us</a>
-                            </li>
-                            <li>
-                                <a rel="noopener noreferrer" href="Course.php">Courses</a>
-                            </li>
-                            <li>
-                                <a rel="noopener noreferrer" href="#">Blog</a>
-                            </li>
-                        </ul>
+                            <span class="self-center text-[#30559E] text-4xl sm:text-5xl xl:text-7xl font-semibold" style="font-family: 'Lobster', cursive;">DevTown</span>
+                        </a>
                     </div>
-                    <div class="space-y-3">
-                        <h3 class="tracking-wide text-[#30559E] font-semibold text-lg uppercase sm:text-2xl xl:text-3xl">
-                            Compilers</h3>
-                        <ul class="space-y-1 text-white text-md sm:space-y-3 sm:text-lg xl:text-2xl">
-                            <li>
-                                <a rel="noopener noreferrer" href="#">Programming</a>
-                            </li>
-                            <li>
-                                <a rel="noopener noreferrer" href="#">Web Design</a>
-                            </li>
-                        </ul>
+                    <div class="grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-2 sm:text-center pl-6">
+                        <div class="space-y-3">
+                            <h3 class="tracking-wide font-semibold text-lg uppercase text-[#30559E] sm:text-2xl xl:text-3xl">Menu
+                            </h3>
+                            <ul class="space-y-1 text-white text-md sm:text-lg sm:space-y-3 xl:text-2xl">
+                                <li>
+                                    <a rel="noopener noreferrer" href="#">About Us</a>
+                                </li>
+                                <li>
+                                    <a rel="noopener noreferrer" href="#">Contact Us</a>
+                                </li>
+                                <li>
+                                    <a rel="noopener noreferrer" href="Course.php">Courses</a>
+                                </li>
+                                <li>
+                                    <a rel="noopener noreferrer" href="#">Blog</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="space-y-3">
+                            <h3 class="tracking-wide text-[#30559E] font-semibold text-lg uppercase sm:text-2xl xl:text-3xl">
+                                Compilers</h3>
+                            <ul class="space-y-1 text-white text-md sm:space-y-3 sm:text-lg xl:text-2xl">
+                                <li>
+                                    <a rel="noopener noreferrer" href="#">Programming</a>
+                                </li>
+                                <li>
+                                    <a rel="noopener noreferrer" href="#">Web Design</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="py-6 text-sm text-center text-white sm:text-lg xl:text-2xl">Copyright © 2023 DevTown. <br> All rights
-                reserved.</div>
-        </footer>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/typed.js@2.0.14/dist/typed.umd.js"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <!-- <script src="dark_light.js"></script> -->
-    <!-- <script src="dark_light.js"></script> -->
-    <script>
-        // Dark - Light Mode
-        // const darkToggle = document.querySelector('.moon');
-        // const lightToggle = document.querySelector('.sun');
-        // darkToggle.addEventListener('click',(event) => {
-        //     event.preventDefault();
-        //     document.documentElement.classList.add('dark');
-        //     darkToggle.classList.add('hidden');
-        //     lightToggle.classList.remove('hidden');
-        // });
-        // lightToggle.addEventListener('click',(event) => {
-        //     event.preventDefault();
-        //     document.documentElement.classList.remove('dark');
-        //     lightToggle.classList.add('hidden');
-        //     darkToggle.classList.remove('hidden');
-        // });
+                <div class="py-6 text-sm text-center text-white sm:text-lg xl:text-2xl">Copyright © 2023 DevTown. <br> All rights
+                    reserved.</div>
+            </footer>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/typed.js@2.0.14/dist/typed.umd.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <!-- <script src="dark_light.js"></script> -->
+        <!-- <script src="dark_light.js"></script> -->
+        <script>
+            // Dark - Light Mode
+            // const darkToggle = document.querySelector('.moon');
+            // const lightToggle = document.querySelector('.sun');
+            // darkToggle.addEventListener('click',(event) => {
+            //     event.preventDefault();
+            //     document.documentElement.classList.add('dark');
+            //     darkToggle.classList.add('hidden');
+            //     lightToggle.classList.remove('hidden');
+            // });
+            // lightToggle.addEventListener('click',(event) => {
+            //     event.preventDefault();
+            //     document.documentElement.classList.remove('dark');
+            //     lightToggle.classList.add('hidden');
+            //     darkToggle.classList.remove('hidden');
+            // });
 
-        // Hamburger Menu Animate
-        $(document).ready(function() {
-            $("#menu").click(function() {
-                var menu_toggle_click = $("#menu_toggle").val();
-                if (menu_toggle_click == 0) {
-                    $("#first").removeClass();
-                    $("#second").removeClass();
-                    $("#third").removeClass();
-                    $("#first").addClass(
-                        "w-10 rounded-md py-[2px] absolute top-1/2 rotate-45 bg-[#011229] transition-all duration-300"
-                    );
-                    $("#second").addClass(
-                        "w-10 absolute top-1/2 py-0 opacity-0 rounded-md bg-[#011229] transition-all duration-300"
-                    );
-                    $("#third").addClass(
-                        "w-10 absolute top-1/2 -rotate-45 bg-[#011229] rounded-md py-[2px] transition-all duration-300"
-                    );
-                    menu_toggle_click = $("#menu_toggle").val("1");
-                    $(".menu").css('display', 'block');
+            // Hamburger Menu Animate
+            $(document).ready(function() {
+                $("#menu").click(function() {
+                    var menu_toggle_click = $("#menu_toggle").val();
+                    if (menu_toggle_click == 0) {
+                        $("#first").removeClass();
+                        $("#second").removeClass();
+                        $("#third").removeClass();
+                        $("#first").addClass(
+                            "w-10 rounded-md py-[2px] absolute top-1/2 rotate-45 bg-[#011229] transition-all duration-300"
+                        );
+                        $("#second").addClass(
+                            "w-10 absolute top-1/2 py-0 opacity-0 rounded-md bg-[#011229] transition-all duration-300"
+                        );
+                        $("#third").addClass(
+                            "w-10 absolute top-1/2 -rotate-45 bg-[#011229] rounded-md py-[2px] transition-all duration-300"
+                        );
+                        menu_toggle_click = $("#menu_toggle").val("1");
+                        $(".menu").css('display', 'block');
+                    } else {
+                        $("#first").removeClass();
+                        $("#second").removeClass();
+                        $("#third").removeClass();
+                        $("#first").addClass(
+                            "w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300"
+                        );
+                        $("#second").addClass(
+                            "w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300"
+                        );
+                        $("#third").addClass(
+                            "w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300"
+                        );
+                        menu_toggle_click = $("#menu_toggle").val("0");
+                        $(".menu").css('display', 'none');
+                    }
+                });
+            });
+
+            // typing effect on text
+            var typed = new Typed(".auto-type", {
+                strings: ["DevTown"],
+                typeSpeed: 150,
+                backSpeed: 150,
+                loop: true
+            })
+            $('.typed-cursor').addClass('text-[#30559E]');
+
+            // counter
+            var selector = document.querySelector(".counter_section");
+            var courses = document.querySelector(".courses");
+            var companies = document.querySelector(".companies");
+            var users = document.querySelector(".users");
+            var watch = document.querySelector(".watch");
+            let CounterObserver = new IntersectionObserver((entries, observer) => {
+                let [entry] = entries;
+                if (!entry.isIntersecting) return;
+
+                let counter_courses = 1;
+                let counter_companies = 1;
+                let counter_users = 1;
+                let counter_watch = 1;
+                setInterval(() => {
+                    if (counter_courses < 500) {
+                        counter_courses++;
+                        courses.innerText = counter_courses;
+                    }
+                    if (counter_companies < 350) {
+                        counter_companies++;
+                        companies.innerText = counter_companies;
+                    }
+                    if (counter_users < 300) {
+                        counter_users++;
+                        users.innerText = counter_users;
+                    }
+                    if (counter_watch < 400) {
+                        counter_watch++;
+                        watch.innerText = counter_watch;
+                    }
+                }, 1);
+            }, {
+                root: null,
+                threshold: 0.4,
+            });
+            CounterObserver.observe(selector);
+        </script>
+
+        <!-- Payment System Code -->
+        <script>
+            function pay_now() {
+                var pro_name = document.getElementById('product_name');
+                var product_name = pro_name.textContent;
+                var user = '<?php echo $_SESSION['User']; ?>';
+                var email = '<?php echo $_SESSION['email']; ?>';
+                var amt = document.getElementById('amount');
+                var amount = amt.textContent;
+                // alert(amount);
+                // alert(product_name);
+                // alert(user);
+                // alert(email);
+                jQuery.ajax({
+                    url: 'payment-proccess.php',
+                    type: 'post',
+                    // dataType: 'json',
+                    data: "&product_name=" + product_name + "&amount=" + amount + "&user=" + user + "&email=" + email,
+                    success: function(msg) {
+                        var options = {
+                            "key": "rzp_test_uZ1lSqeEpMsKxl",
+                            "amount": amount * 100,
+                            "name": "DevTown",
+                            "description": "Payment",
+                            "image": "Logo/Square_1980x1980.png",
+                            "handler": function(response) {
+                                console.log(response);
+                                jQuery.ajax({
+                                    url: 'payment-proccess.php',
+                                    type: 'post',
+                                    // dataType: 'json',
+                                    data: "payment_id=" + response.razorpay_payment_id,
+                                    success: function(msg) {
+                                        window.location.href = 'dashboard/index.php';
+                                    }
+                                });
+                            },
+                            "theme": {
+                                "color": "#528FF0"
+                            }
+                        };
+                        var rzp1 = new Razorpay(options);
+                        rzp1.open();
+                    }
+                });
+
+
+            }
+        </script>
+
+        <!-- AOS animation -->
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script>
+            AOS.init({
+                once: true
+            });
+        </script>
+
+        <!-- card slider -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+        <script>
+            const swiper = new Swiper(".swiper", {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+            const swiper_new = new Swiper(".swiper_new", {
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true,
+                pagination: {
+                    el: ".swiper-pagination_new",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next_new",
+                    prevEl: ".swiper-button-prev_new",
+                },
+            });
+
+            var element = document.getElementById("labs");
+            var compiler = document.getElementById("compiler");
+            element.addEventListener("click", function() {
+                if (compiler.style.display === "block") {
+                            compiler.style.display = "none"; // wait for 3 seconds (3000 milliseconds) before hiding the element
                 } else {
-                    $("#first").removeClass();
-                    $("#second").removeClass();
-                    $("#third").removeClass();
-                    $("#first").addClass(
-                        "w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300"
-                    );
-                    $("#second").addClass(
-                        "w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300"
-                    );
-                    $("#third").addClass(
-                        "w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300"
-                    );
-                    menu_toggle_click = $("#menu_toggle").val("0");
-                    $(".menu").css('display', 'none');
+                    compiler.style.display = "block";
                 }
             });
-        });
 
-        // typing effect on text
-        var typed = new Typed(".auto-type", {
-            strings: ["DevTown"],
-            typeSpeed: 150,
-            backSpeed: 150,
-            loop: true
-        })
-        $('.typed-cursor').addClass('text-[#30559E]');
-
-        // counter
-        var selector = document.querySelector(".counter_section");
-        var courses = document.querySelector(".courses");
-        var companies = document.querySelector(".companies");
-        var users = document.querySelector(".users");
-        var watch = document.querySelector(".watch");
-        let CounterObserver = new IntersectionObserver((entries, observer) => {
-            let [entry] = entries;
-            if (!entry.isIntersecting) return;
-
-            let counter_courses = 1;
-            let counter_companies = 1;
-            let counter_users = 1;
-            let counter_watch = 1;
-            setInterval(() => {
-                if (counter_courses < 500) {
-                    counter_courses++;
-                    courses.innerText = counter_courses;
+            var avatar = document.getElementById("avatar");
+            var avatar_dropdown = document.getElementById("avatar-dropdown");
+            avatar.addEventListener("click", function() {
+                if (avatar_dropdown.style.display === "block") {
+                    avatar_dropdown.style.display = "none"; // wait for 3 seconds (3000 milliseconds) before hiding the element
+                } else {
+                    avatar_dropdown.style.display = "block";
                 }
-                if (counter_companies < 350) {
-                    counter_companies++;
-                    companies.innerText = counter_companies;
-                }
-                if (counter_users < 300) {
-                    counter_users++;
-                    users.innerText = counter_users;
-                }
-                if (counter_watch < 400) {
-                    counter_watch++;
-                    watch.innerText = counter_watch;
-                }
-            }, 1);
-        }, {
-            root: null,
-            threshold: 0.4,
-        });
-        CounterObserver.observe(selector);
-    </script>
-
-    <!-- Payment System Code -->
-    <script>
-        function pay_now(){	
-            var pro_name= document.getElementById('product_name');
-            var product_name=pro_name.textContent;
-            var user= '<?php echo $_SESSION['User']; ?>';
-            var email= '<?php echo $_SESSION['email']; ?>';
-            var amt= document.getElementById('amount');
-            var amount = amt.textContent;
-            // alert(amount);
-            // alert(product_name);
-            // alert(user);
-            // alert(email);
-			jQuery.ajax({
-				url: 'payment-proccess.php',
-				type: 'post',
-				// dataType: 'json',
-				data:"&product_name="+product_name+"&amount="+amount+"&user="+user+"&email="+email,
-				success: function(msg) {
-					var options = {
-						"key": "rzp_test_uZ1lSqeEpMsKxl",
-						"amount": amount * 100,
-						"name": "DevTown",
-						"description": "Payment",
-						"image": "Logo/Square_1980x1980.png",
-						"handler": function(response) {
-							console.log(response);
-							jQuery.ajax({
-								url: 'payment-proccess.php',
-								type: 'post',
-								// dataType: 'json',
-								data:"payment_id="+response.razorpay_payment_id,
-								success: function(msg) {
-									window.location.href = 'success.php';
-								}
-							});
-						},
-						"theme": {
-							"color": "#528FF0"
-						}
-					};
-					var rzp1 = new Razorpay(options);
-					rzp1.open();
-				}
-			});
-
-            
-        }
-    </script>
-
-    <!-- AOS animation -->
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-    <script>
-        AOS.init({
-            once: true
-        });
-    </script>
-
-    <!-- card slider -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script>
-        const swiper = new Swiper(".swiper", {
-            slidesPerView: 1,
-            spaceBetween: 30,
-            loop: true,
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-        });
-        const swiper_new = new Swiper(".swiper_new", {
-            slidesPerView: 3,
-            spaceBetween: 30,
-            loop: true,
-            pagination: {
-                el: ".swiper-pagination_new",
-                clickable: true,
-            },
-            navigation: {
-                nextEl: ".swiper-button-next_new",
-                prevEl: ".swiper-button-prev_new",
-            },
-        });
-    </script>
+            });
+        </script>
 </body>
 
 </html>

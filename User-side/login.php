@@ -59,9 +59,9 @@ if (isset($_POST['btn_login'])) {
       }
       // end here
 
-
+      $_SESSION['redirect'];
       // echo '<script>alert("login successfull")</script>';
-      header('location:index.php');
+      header('location:'.$_SESSION['redirect']);
     } else {
       echo '<script>alert("password incorrect")</script>';
     }

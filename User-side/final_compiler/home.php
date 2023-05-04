@@ -42,9 +42,9 @@
   <div class="w-full bg-gray-900 p-3">
     <nav>
       <ul class="flex items-center">
-        <li><img src="../Logo/Circle_1980x1980.png" alt="" class="w-12"></li>
+        <li><a href="../index.php"><img src="../Logo/Circle_1980x1980.png" alt="" class="w-12"></a></li>
         <li>
-          <h2 class="text-3xl text-white ml-3 font-medium">DevTown IDE</h2>
+          <a href="../index.php"><h2 class="text-3xl text-white ml-3 font-medium">DevTown IDE</h2></a>
         </li>
         <li class="ml-[330px] flex items-center">
           <div class="flex mr-4 items-center">
@@ -61,25 +61,6 @@
         <form action="compile.php" id="form" name="f2" method="POST" class="flex items-center">
           <li class="ml-3">
             <div class="relative flex items-center">
-              <!-- <div class="dropdown_language">
-              <input type="hidden" id="language_input" value="0">
-              <button id="language_display" class="bg-[#232b39] w-36 px-2 py-2 rounded-lg flex text-white items-center text-lg font-medium">
-                <p id="destination-paragraph">
-                  C language</p><img src="../Logo/chevron-down.svg" alt="" class="w-7">
-              </button>
-            </div>
-            <div class="menu_language absolute rounded-lg bg-white" style="display: none;">
-              <button id="clan">
-                <h2 id="C_language" class="hover:bg-gray-200 cursor-pointer bg-white text-lg font-medium px-2 rounded-t-lg flex items-center">C language</h2>
-              </button>
-              <button id="cpp">
-                <h2 id="C++" class="hover:bg-gray-200 cursor-pointer bg-white text-lg font-medium px-2">C++</h2>
-              </button>
-              <br>
-              <button id="pythonbtn">
-                <h2 id="Python" class="hover:bg-gray-200 cursor-pointer bg-white text-lg font-medium px-2 rounded-b-lg">Python</h2>
-              </button>
-            </div> -->
               <select name="language" id="language" class="w-36 py-2 px-2 rounded-lg bg-[#232b39] text-white text-lg outline-none appearance-none font-medium">
                 <option value="c" class="bg-white text-gray-900 font-medium" selected>C Language</option>
                 <option value="cpp" class="bg-white text-gray-900 font-medium">C++</option>
@@ -88,25 +69,10 @@
               <img src="../Logo/chevron-down.svg" alt="" class="w-8 h-8 absolute left-28">
             </div>
           </li>
-          <li><abbr title="Press F2"><button type="submit" id="st" class="ml-3 text-white bg-green-500 px-3 py-2 text-[18px] font-medium rounded-lg flex items-center"><img src="../Logo/play-button.svg" alt="" class="w-6 mr-1">RUN</button></abbr></li>
+          <li><abbr title="Press F2"><button type="submit" id="st" class="ml-3 text-white bg-[#759DEA] px-3 py-2 text-[18px] font-medium rounded-lg flex items-center"><img src="../Logo/play-button.svg" alt="" class="w-6 mr-1">RUN</button></abbr></li>
       </ul>
-      <!-- </form> -->
     </nav>
   </div>
-  <!-- <form action="compile.php" id="form" name="f2" method="POST"> -->
-  <!-- <label for="lang">Choose Language</label> -->
-  <!-- <select class="form-control" name="language">
-            <option value="c">C</option>
-            <option value="cpp">C++</option>
-            <option value="cpp11">C++11</option> -->
-  <!-- <option value="java">Java</option>
-            <option value="python2.7">python</option>
-
-
-
-          </select><br><br> -->
-
-  <!-- <label for="ta" class="text-gray-100">Write Your Code</label> -->
   <div class="flex">
     <div class="m-4"><textarea class="bg-zinc-900 border-2 border-white h-[86vh] w-[975px] text-gray-100 text-xl p-4 placeholder:text-[#759DEA] rounded-lg" name="code" id="code" placeholder="// Write Your Code"></textarea></div>
     <div class="flex flex-col my-4">
@@ -116,12 +82,7 @@
       <textarea id='div' class="bg-zinc-900 border-2 border-white h-[58vh] w-[500px] text-gray-100 text-xl p-4 placeholder:text-[#759DEA] rounded-lg" name="output" placeholder="// Your Output"></textarea>
     </div>
   </div>
-
-  <!-- <input type="submit" id="st" class="btn btn-success" value="Run Code"><br><br><br> -->
-
-
   </form>
-
   <script type="text/javascript">
     $(document).ready(function() {
       $("#st").click(function() {
@@ -236,73 +197,6 @@
     });
   </script>
 
-  <!--<script>
-"use strict";
-function submitForm(oFormElement)
-{
-  var xhr = new XMLHttpRequest();
-  var display=document.getElementById('div');
-  xhr.onload = function(){ display.innerHTML=xhr.responseText; }
-  xhr.open (oFormElement.method, oFormElement.action, true);
-  xhr.send (new FormData (oFormElement));
-  return false;
-}
-</script>-->
-  <!--<label for="out">Output</label>
-<textarea id='div' class="form-control" name="output" rows="10" cols="50"></textarea><br><br>-->
-  <!-- </div>
-    </div>
-    <div class="col-sm-4">
-    </div>
-  </div>
-  </div> -->
-  <br><br><br>
-  <script>
-    // JavaScript code to toggle the dropdown menu
-    function toggleDropdown() {
-      const dropdown = document.querySelector('.dropdown');
-      dropdown.classList.toggle('show');
-    }
-
-    $('.dropdown_language').click(function() {
-      var language_flag = $('#language_input').val();
-      if (language_flag == 0) {
-        $('.menu_language').slideDown().css("display", "block");
-        language_flag = $('#language_input').val("1");
-      } else {
-        $('.menu_language').slideUp().css("display", "none");
-        language_flag = $('#language_input').val("0");
-      }
-    });
-
-    // var cpp = document.getElementById("c++");
-    // var c = document.getElementById("C_language");
-    // var python = document.getElementById("Python");
-    // var cbtn = document.getElementById("clan");
-    // var cpp = document.getElementById("cpp");
-    // var pythonbtn = document.getElementById("pythonbtn");
-
-    // // destination para variabel 
-    // var destinationParagraph = document.getElementById('destination-paragraph');
-
-    // // c language
-    // cbtn.addEventListener('click', function() {
-    //   destinationParagraph.textContent = c.textContent;
-    //   $('.menu_language').slideUp().css("display", "none");
-    // });
-
-    // // cpp 
-    // cpp.addEventListener('click', function() {
-    //   destinationParagraph.textContent = cpp.textContent;
-    //   $('.menu_language').slideUp().css("display", "none");
-    // });
-
-    // // python
-    // pythonbtn.addEventListener('click', function() {
-    //   destinationParagraph.textContent = python.textContent;
-    //   $('.menu_language').slideUp().css("display", "none");
-    // });
-  </script>
 </body>
 
 </html>
