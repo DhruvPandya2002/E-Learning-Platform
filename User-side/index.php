@@ -296,7 +296,7 @@ if (isset($_POST['logout'])) {
                             DevTown
                         </p>
                     </li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl">About us</li>
+                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about/about.php">About us</a></li>
                     <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Course.php">Courses</a></li>
                     <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
                         <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
@@ -316,13 +316,13 @@ if (isset($_POST['logout'])) {
                         </div>
                     </li>
                     <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl">Contact</li>
+                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="contact.php">Contact</a></li>
                     <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
                     <?php
                     if (!$_SESSION['User']) {
                         echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
                     } else {
-                        echo '<li>
+                        echo '<li class="flex hidden md:block justify-center items-center">
                         <div class="avatar cursor-pointer flex items-center text-xl gap-3 capitalize bg-[#759DEa] py-2 px-3 font-medium rounded-full" id="avatar">';
                             echo letters_images();
                             echo $_SESSION['User'];
@@ -412,12 +412,12 @@ if (isset($_POST['logout'])) {
             </nav>
             <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
                 <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">About Us</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="about/about.php">About Us</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="#">Blogs</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="final_compiler/home.php">Programming Compiler</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Web Design Compiler</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Contact</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="codeeditor/index.php">Web Design Compiler</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="contact/contact.php">Contact</a></li>
                     <?php
                     if (!$_SESSION['User']) {
                         echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
@@ -457,10 +457,10 @@ if (isset($_POST['logout'])) {
                     </h3>
                 </div>
                 <div class="button_div flex items-center justify-start sm:justify-center md:justify-center lg:justify-start  gap-x-6" data-aos="fade-right" data-aos-delay="100">
-                    <a href="">
+                    <a href="Course.php">
                         <button class="active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2 cursor-pointer rounded-md bg-[#30559E] text-[#fff] sm:text-lg border-[#30559E] xl:text-xl text-sm border lg:text-md xl:px-9 px-5 xl:py-4 py-2" style="font-family: 'Rubik', sans-serif;">View Courses</button>
                     </a>
-                    <a href="">
+                    <a href="final_compiler/home.php">
                         <button class="active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2 cursor-pointer place-items-center rounded-md border sm:text-lg sm:w-40 xl:text-xl text-sm text-[#011229] font-rubik border-[#30559E] xl:px-9 px-5 xl:py-4 py-2 w-28">Practice</button>
                     </a>
                 </div>
@@ -949,7 +949,7 @@ if (isset($_POST['logout'])) {
                 $result = mysqli_query($con, $sql);
                 while ($record_data = mysqli_fetch_assoc($result)) {
                 ?>
-                    <a href="purchase_card/<?php echo $record_data['course_name']; ?>.php?premium_course_id=<?php echo $record_data['id']; ?>">
+                    <a href="<?php echo $record_data['course_name']; ?>.php?premium_course_id=<?php echo $record_data['id']; ?>">
                         <div class="bg-white rounded-lg shadow-xl 2xl:w-[34rem] flex flex-col justify-center items-center">
                             <div class="p-4 sm:p-8">
                                 <img src="Logo/<?php echo $record_data['image']; ?>" alt="<?php echo $record_data['image']; ?>" class="rounded-xl">
@@ -1023,10 +1023,10 @@ if (isset($_POST['logout'])) {
                             </h3>
                             <ul class="space-y-1 text-white text-md sm:text-lg sm:space-y-3 xl:text-2xl">
                                 <li>
-                                    <a rel="noopener noreferrer" href="#">About Us</a>
+                                    <a rel="noopener noreferrer" href="about/about.php">About Us</a>
                                 </li>
                                 <li>
-                                    <a rel="noopener noreferrer" href="#">Contact Us</a>
+                                    <a rel="noopener noreferrer" href="contact/contact.php">Contact Us</a>
                                 </li>
                                 <li>
                                     <a rel="noopener noreferrer" href="Course.php">Courses</a>
@@ -1041,10 +1041,10 @@ if (isset($_POST['logout'])) {
                                 Compilers</h3>
                             <ul class="space-y-1 text-white text-md sm:space-y-3 sm:text-lg xl:text-2xl">
                                 <li>
-                                    <a rel="noopener noreferrer" href="#">Programming</a>
+                                    <a rel="noopener noreferrer" href="final_compiler/home.php">Programming</a>
                                 </li>
                                 <li>
-                                    <a rel="noopener noreferrer" href="#">Web Design</a>
+                                    <a rel="noopener noreferrer" href="codeeditor/index.php">Web Design</a>
                                 </li>
                             </ul>
                         </div>
@@ -1269,6 +1269,44 @@ if (isset($_POST['logout'])) {
                     avatar_dropdown.style.display = "block";
                 }
             });
+
+            // // Hamburger Menu Animate
+            // $(document).ready(function() {
+            //     $("#menu").click(function() {
+            //         var menu_toggle_click = $("#menu_toggle").val();
+            //         if (menu_toggle_click == 0) {
+            //             $("#first").removeClass();
+            //             $("#second").removeClass();
+            //             $("#third").removeClass();
+            //             $("#first").addClass(
+            //                 "w-10 rounded-md py-[2px] absolute top-1/2 rotate-45 bg-[#011229] transition-all duration-300"
+            //             );
+            //             $("#second").addClass(
+            //                 "w-10 absolute top-1/2 py-0 opacity-0 rounded-md bg-[#011229] transition-all duration-300"
+            //             );
+            //             $("#third").addClass(
+            //                 "w-10 absolute top-1/2 -rotate-45 bg-[#011229] rounded-md py-[2px] transition-all duration-300"
+            //             );
+            //             menu_toggle_click = $("#menu_toggle").val("1");
+            //             $(".menu").css('display', 'block');
+            //         } else {
+            //             $("#first").removeClass();
+            //             $("#second").removeClass();
+            //             $("#third").removeClass();
+            //             $("#first").addClass(
+            //                 "w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300"
+            //             );
+            //             $("#second").addClass(
+            //                 "w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300"
+            //             );
+            //             $("#third").addClass(
+            //                 "w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300"
+            //             );
+            //             menu_toggle_click = $("#menu_toggle").val("0");
+            //             $(".menu").css('display', 'none');
+            //         }
+            //     });
+            // });
         </script>
 </body>
 

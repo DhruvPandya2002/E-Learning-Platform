@@ -12,6 +12,19 @@ if(!isset($_SESSION['User'])){
 $email = $_SESSION['email'];
 $_SESSION['premium_id'] = '';
 $premium_course_id = $_GET['premium_course_id'];
+$premium_course_name = $_GET['premium_course_name'];
+$_SESSION['premium_course_name'] = $premium_course_name;
+$_SESSION['premium_course_id']=$premium_course_id;
+
+// fetch total_videos and watched_videos
+// $final_sql = "SELECT * FROM `user_watched` WHERE `user_name`='$_SESSION[User]', `course_name`='$premium_course_name'";
+// $final_result = mysqli_query($conn, $final_sql);
+// $row = mysqli_fetch_array($final_result);
+// $total_video = $row['total_videos'];
+// $watched_video = $row['watched_videos'];
+// echo $total_video;
+// echo $watched_video;
+// while ($row = mysqli_fetch_assoc($result)) {
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +41,7 @@ $premium_course_id = $_GET['premium_course_id'];
 
   <meta name="description" content="" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="../Logo/Circle_1980x1980.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -295,8 +309,22 @@ $premium_course_id = $_GET['premium_course_id'];
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
                       $_SESSION['premium_id'] = $row['premium_id'];
+                      $iframe_html = $row['content'];
+
+
+                        $dom = new DOMDocument();
+                        $dom->loadHTML($iframe_html);
+
+
+                        $xpath = new DOMXPath($dom);
+                        $src = $xpath->query("//iframe/@src")->item(0)->nodeValue;
+
+                        preg_match('/\/embed\/(.+)/', $src, $matches);
+                        $video_id = $matches[1];
                 ?>
-                        <div class="h-[35vh] w-[380px] sm:my-5 sm:mx-2 sm:w-[620px] md:w-[460vh] md:h-[40vh] lg:w-[110vh] lg:h-[60vh] lg:my-3 lg:mx-2 xl:h-[60vh] xl:w-[110vh] xl:my-0 xl:mx-0 2xl:w-[130vh] 2xl:h-[70vh] shadow-lg"><?php echo $row['content']; ?></div>
+                        <div class="h-[35vh] w-[380px] sm:my-5 sm:mx-2 sm:w-[620px] md:w-[460vh] md:h-[40vh] lg:w-[110vh] lg:h-[60vh] lg:my-3 lg:mx-2 xl:h-[60vh] xl:w-[110vh] xl:my-0 xl:mx-0 2xl:w-[130vh] 2xl:h-[70vh] shadow-lg" id="player">
+                          <?php echo $row['content']; ?>
+                        </div>
                     <?php
                     }
                 } else {
@@ -306,8 +334,23 @@ $premium_course_id = $_GET['premium_course_id'];
                     $query = "SELECT * FROM `premium_course` WHERE `premium_id` = '$premium_id' and `premium_course_id` = '$premium_course_id' and `flag` = 0";
                     $result = mysqli_query($con, $query);
                     while ($row = mysqli_fetch_assoc($result)) {
+                      $iframe_html = $row['content'];
+
+
+                        $dom = new DOMDocument();
+                        $dom->loadHTML($iframe_html);
+
+
+                        $xpath = new DOMXPath($dom);
+                        $src = $xpath->query("//iframe/@src")->item(0)->nodeValue;
+
+
+                        preg_match('/\/embed\/(.+)/', $src, $matches);
+                        $video_id = $matches[1];
                     ?>
-                        <div class="h-[35vh] w-[380px] sm:my-5 sm:mx-2 sm:w-[620px] md:w-[460vh] md:h-[40vh] lg:w-[110vh] lg:h-[60vh] lg:my-3 lg:mx-2 xl:h-[60vh] xl:w-[110vh] xl:my-0 xl:mx-0 2xl:w-[130vh] 2xl:h-[70vh] shadow-lg"><?php echo $row['content']; ?></div>
+                        <div class="h-[35vh] w-[380px] sm:my-5 sm:mx-2 sm:w-[620px] md:w-[460vh] md:h-[40vh] lg:w-[110vh] lg:h-[60vh] lg:my-3 lg:mx-2 xl:h-[60vh] xl:w-[110vh] xl:my-0 xl:mx-0 2xl:w-[130vh] 2xl:h-[70vh] shadow-lg" id="player">
+                          <?php echo $row['content']; ?>
+                        </div>
                 <?php
                     }
                 }
@@ -347,10 +390,60 @@ $premium_course_id = $_GET['premium_course_id'];
                     <label for="input" class="text-xl sm:text-2xl label absolute top-3 left-2 text-gray-400 transition-all duration-300 pointer-events-none">Add a Comment...</label>
                     <div class="underline"></div>
                     <input type="hidden" id="commentId" value="0" name="parent_id">
-                    <button class="comment_send" type="submit" id="send" onclick="send_data()"><img src="../Logo/send.svg" alt="" class="w-10 ml-1"></button>
+                    <button class="comment_send" type="submit" id="send"><img src="../Logo/send.svg" alt="" class="w-10 ml-1"></button>
                 </form>
             </div>
         <div id="comments"></div>
+        <script>
+    //session variables
+    var premium_id = '<?php echo $_SESSION['premium_id']; ?>';
+    var premium_course_id = '<?php echo $_GET['premium_course_id']; ?>';
+    var sender = '<?php echo $_SESSION['User']; ?>';
+    // alert(premium_id);
+    // alert(premium_course_id);
+    // alert(sender);
+    
+  $(function() {
+  $('#comment-form').submit(function(event) {
+    // Prevent the default form submission behavior
+    event.preventDefault();
+    
+    // Get the form data
+    var formData = $(this).serialize();
+    formData += '&premium_id=' + premium_id;
+    formData += '&premium_course_id=' + premium_course_id;
+    formData += '&sender=' + sender;
+    formData += '&comment=' + $('#input_comment').val();
+    formData += '&parent_id' + $('#commentId').val();
+
+    // Send an AJAX request to store the comment in the database
+    $.ajax({
+      url: 'store_comment_p.php',
+      type: 'POST',
+      data: formData,
+      success: function(data) {
+        // If the comment was stored successfully, update the comments section on the page
+        // $('input[name=enter_comment]').val('');
+        $('#comment-form')[0].reset();
+        getComments();
+      }
+    });
+  });
+
+  
+  function getComments() {
+    // Send an AJAX request to retrieve the list of comments from the server
+    $.get('get_comments.php', function(data) {
+      // Update the comments section on the page with the new comment
+      $('#comments').html(data);
+    });
+  }
+  
+  // Call the getComments function when the page is loaded
+  getComments();
+});
+
+</script>
 
         <!-- getting comments using ajax Hemant -->
           <!-- <div class="container-xxl flex-grow-1 container-p-y">
@@ -860,6 +953,7 @@ $premium_course_id = $_GET['premium_course_id'];
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
+
   <!-- / Layout wrapper -->
 
   <!-- <div class="buy-now">
@@ -953,53 +1047,56 @@ $premium_course_id = $_GET['premium_course_id'];
     //         }
     //     });
   </script>
-  <script>
-    //session variables
-    var premium_id = '<?php echo $_SESSION['premium_id']; ?>';
-    var premium_course_id = '<?php echo $_GET['premium_course_id']; ?>';
-    var sender = '<?php echo $_SESSION['User']; ?>';
-    
-  $(function() {
-  $('#comment-form').submit(function(event) {
-    // Prevent the default form submission behavior
-    event.preventDefault();
-    
-    // Get the form data
-    var formData = $(this).serialize();
-    formData += '&premium_id=' + premium_id;
-    formData += '&premium_course_id=' + premium_course_id;
-    formData += '&sender=' + sender;
-    formData += '&comment=' + $('#input_comment').val();
-    formData += '&parent_id' + $('#commentId').val();
+  <!-- video monitoring system -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        var id = "<?php echo $video_id; ?>";
+        var video = {
+            id: id,
+            iframeId: "player",
+            watched: false,
+            player: null,
+        };
 
-    // Send an AJAX request to store the comment in the database
-    $.ajax({
-      url: 'store_comment.php',
-      type: 'POST',
-      data: formData,
-      success: function(data) {
-        // If the comment was stored successfully, update the comments section on the page
-        // $('input[name=enter_comment]').val('');
-        $('#comment-form')[0].reset();
-        getComments();
-      }
-    });
-  });
+        function onYouTubeIframeAPIReady() {
+            video.player = new YT.Player(video.iframeId, {
+                videoId: video.id,
+                events: {
+                    onStateChange: onPlayerStateChange,
+                },
+            });
+        }
 
-  
-  function getComments() {
-    // Send an AJAX request to retrieve the list of comments from the server
-    $.get('get_comments.php', function(data) {
-      // Update the comments section on the page with the new comment
-      $('#comments').html(data);
-    });
-  }
-  
-  // Call the getComments function when the page is loaded
-  getComments();
-});
+        function onPlayerStateChange(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                video.watched = false;
+            }
+            if (event.data == YT.PlayerState.ENDED) {
+                video.watched = true;
+                saveWatchedState();
+            }
+        }
 
-</script>
+        function saveWatchedState() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "save_watched_state.php");
+            xhr.setRequestHeader(
+                "Content-Type",
+                "application/x-www-form-urlencoded"
+            );
+            xhr.onload = function() {
+                if (xhr.status === 200 && xhr.responseText !== "OK") {
+                    alert("Error saving watched state: " + xhr.responseText);
+                }
+            };
+            xhr.send(
+                "video_id=" +
+                encodeURIComponent(video.id) +
+                "&watched=" +
+                encodeURIComponent(video.watched)
+            );
+        }
+    </script>
 </body>
 
 </html>

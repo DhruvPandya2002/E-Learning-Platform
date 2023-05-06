@@ -69,7 +69,7 @@
               <img src="../Logo/chevron-down.svg" alt="" class="w-8 h-8 absolute left-28">
             </div>
           </li>
-          <li><abbr title="Press F2"><button type="submit" id="st" class="ml-3 text-white bg-[#759DEA] px-3 py-2 text-[18px] font-medium rounded-lg flex items-center"><img src="../Logo/play-button.svg" alt="" class="w-6 mr-1">RUN</button></abbr></li>
+          <li><abbr title="Press F2"><button type="submit" id="st" class="ml-3 text-white bg-green-500 px-3 py-2 text-[18px] font-medium rounded-lg flex items-center"><img src="../Logo/play-button.svg" alt="" class="w-6 mr-1">RUN</button></abbr></li>
       </ul>
     </nav>
   </div>

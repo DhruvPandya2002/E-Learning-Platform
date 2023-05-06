@@ -1,11 +1,13 @@
-<?php 
+<?php
+include('../dashboard/letter_image.php');
+include('../dashboard/comment_server.php');
 error_reporting(0);
-session_start();
 $con = new mysqli('localhost', 'root', '', 'devtown');
 if (!$con)
     die(mysqli_error($con));
 ?>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>DevTown About Us</title>
@@ -40,6 +42,7 @@ if (!$con)
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <!-- <script type="text/javascript" async=""
         src="https://www.gstatic.com/recaptcha/releases/1h-hbVSJRMOQsmO_2qL9cO0z/recaptcha__en.js"
         crossorigin="anonymous"
@@ -59,433 +62,6 @@ if (!$con)
             src: url("data:application/font-woff;charset=utf-8;base64, d09GRgABAAAAAAZgABAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAGRAAAABoAAAAci6qHkUdERUYAAAWgAAAAIwAAACQAYABXR1BPUwAABhQAAAAuAAAANuAY7+xHU1VCAAAFxAAAAFAAAABm2fPczU9TLzIAAAHcAAAASgAAAGBP9V5RY21hcAAAAkQAAACIAAABYt6F0cBjdnQgAAACzAAAAAQAAAAEABEBRGdhc3AAAAWYAAAACAAAAAj//wADZ2x5ZgAAAywAAADMAAAD2MHtryVoZWFkAAABbAAAADAAAAA2E2+eoWhoZWEAAAGcAAAAHwAAACQC9gDzaG10eAAAAigAAAAZAAAArgJkABFsb2NhAAAC0AAAAFoAAABaFQAUGG1heHAAAAG8AAAAHwAAACAAcABAbmFtZQAAA/gAAAE5AAACXvFdBwlwb3N0AAAFNAAAAGIAAACE5s74hXjaY2BkYGAAYpf5Hu/j+W2+MnAzMYDAzaX6QjD6/4//Bxj5GA8AuRwMYGkAPywL13jaY2BkYGA88P8Agx4j+/8fQDYfA1AEBWgDAIB2BOoAeNpjYGRgYNBh4GdgYgABEMnIABJzYNADCQAACWgAsQB42mNgYfzCOIGBlYGB0YcxjYGBwR1Kf2WQZGhhYGBiYGVmgAFGBiQQkOaawtDAoMBQxXjg/wEGPcYDDA4wNUA2CCgwsAAAO4EL6gAAeNpj2M0gyAACqxgGNWBkZ2D4/wMA+xkDdgAAAHjaY2BgYGaAYBkGRgYQiAHyGMF8FgYHIM3DwMHABGQrMOgyWDLEM1T9/w8UBfEMgLzE////P/5//f/V/xv+r4eaAAeMbAxwIUYmIMHEgKYAYjUcsDAwsLKxc3BycfPw8jEQA/gZBASFhEVExcQlJKWkZWTl5BUUlZRVVNXUNTQZBgMAAMR+E+gAEQFEAAAAKgAqACoANAA+AEgAUgBcAGYAcAB6AIQAjgCYAKIArAC2AMAAygDUAN4A6ADyAPwBBgEQARoBJAEuATgBQgFMAVYBYAFqAXQBfgGIAZIBnAGmAbIBzgHsAAB42u2NMQ6CUAyGW568x9AneYYgm4MJbhKFaExIOAVX8ApewSt4Bic4AfeAid3VOBixDxfPYEza5O+Xfi04YADggiUIULCuEJK8VhO4bSvpdnktHI5QCYtdi2sl8ZnXaHlqUrNKzdKcT8cjlq+rwZSvIVczNiezsfnP/uznmfPFBNODM2K7MTQ45YEAZqGP81AmGGcF3iPqOop0r1SPTaTbVkfUe4HXj97wYE+yNwWYxwWu4v1ugWHgo3S1XdZEVqWM7ET0cfnLGxWfkgR42o2PvWrDMBSFj/IHLaF0zKjRgdiVMwScNRAoWUoH78Y2icB/yIY09An6AH2Bdu/UB+yxopYshQiEvnvu0dURgDt8QeC8PDw7Fpji3fEA4z/PEJ6YOB5hKh4dj3EvXhxPqH/SKUY3rJ7srZ4FZnh1PMAtPhwP6fl2PMJMPDgeQ4rY8YT6Gzao0eAEA409DuggmTnFnOcSCiEiLMgxCiTI6Cq5DZUd3Qmp10vO0LaLTd2cjN4fOumlc7lUYbSQcZFkutRG7g6JKZKy0RmdLY680CDnEJ+UMkpFFe1RN7nxdVpXrC4aTtnaurOnYercZg2YVmLN/d/gczfEimrE/fs/bOuq29Zmn8tloORaXgZgGa78yO9/cnXm2BpaGvq25Dv9S4E9+5SIc9PqupJKhYFSSl47+Qcr1mYNAAAAeNptw0cKwkAAAMDZJA8Q7OUJvkLsPfZ6zFVERPy8qHh2YER+3i/BP83vIBLLySsoKimrqKqpa2hp6+jq6RsYGhmbmJqZSy0sraxtbO3sHRydnEMU4uR6yx7JJXveP7WrDycAAAAAAAH//wACeNpjYGRgYOABYhkgZgJCZgZNBkYGLQZtIJsFLMYAAAw3ALgAeNolizEKgDAQBCchRbC2sFER0YD6qVQiBCv/H9ezGI6Z5XBAw8CBK/m5iQQVauVbXLnOrMZv2oLdKFa8Pjuru2hJzGabmOSLzNMzvutpB3N42mNgZGBg4GKQYzBhYMxJLMlj4GBgAYow/P/PAJJhLM6sSoWKfWCAAwDAjgbRAAB42mNgYGBkAIIbCZo5IPrmUn0hGA0AO8EFTQAA");
             font-weight: 400;
             font-style: normal
-        }
-
-        :root {
-            --swiper-theme-color: #007aff
-        }
-
-        .swiper {
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-            overflow: hidden;
-            list-style: none;
-            padding: 0;
-            z-index: 1
-        }
-
-        .swiper-vertical>.swiper-wrapper {
-            flex-direction: column
-        }
-
-        .swiper-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            display: flex;
-            transition-property: transform;
-            box-sizing: content-box
-        }
-
-        .swiper-android .swiper-slide,
-        .swiper-wrapper {
-            transform: translateZ(0)
-        }
-
-        .swiper-pointer-events {
-            touch-action: pan-y
-        }
-
-        .swiper-pointer-events.swiper-vertical {
-            touch-action: pan-x
-        }
-
-        .swiper-slide {
-            flex-shrink: 0;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            transition-property: transform
-        }
-
-        .swiper-slide-invisible-blank {
-            visibility: hidden
-        }
-
-        .swiper-autoheight,
-        .swiper-autoheight .swiper-slide {
-            height: auto
-        }
-
-        .swiper-autoheight .swiper-wrapper {
-            align-items: flex-start;
-            transition-property: transform, height
-        }
-
-        .swiper-backface-hidden .swiper-slide {
-            transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden
-        }
-
-        .swiper-3d,
-        .swiper-3d.swiper-css-mode .swiper-wrapper {
-            perspective: 1200px
-        }
-
-        .swiper-3d .swiper-cube-shadow,
-        .swiper-3d .swiper-slide,
-        .swiper-3d .swiper-slide-shadow,
-        .swiper-3d .swiper-slide-shadow-bottom,
-        .swiper-3d .swiper-slide-shadow-left,
-        .swiper-3d .swiper-slide-shadow-right,
-        .swiper-3d .swiper-slide-shadow-top,
-        .swiper-3d .swiper-wrapper {
-            transform-style: preserve-3d
-        }
-
-        .swiper-3d .swiper-slide-shadow,
-        .swiper-3d .swiper-slide-shadow-bottom,
-        .swiper-3d .swiper-slide-shadow-left,
-        .swiper-3d .swiper-slide-shadow-right,
-        .swiper-3d .swiper-slide-shadow-top {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10
-        }
-
-        .swiper-3d .swiper-slide-shadow {
-            background: rgba(0, 0, 0, .15)
-        }
-
-        .swiper-3d .swiper-slide-shadow-left {
-            background-image: linear-gradient(270deg, rgba(0, 0, 0, .5), transparent)
-        }
-
-        .swiper-3d .swiper-slide-shadow-right {
-            background-image: linear-gradient(90deg, rgba(0, 0, 0, .5), transparent)
-        }
-
-        .swiper-3d .swiper-slide-shadow-top {
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, .5), transparent)
-        }
-
-        .swiper-3d .swiper-slide-shadow-bottom {
-            background-image: linear-gradient(180deg, rgba(0, 0, 0, .5), transparent)
-        }
-
-        .swiper-css-mode>.swiper-wrapper {
-            overflow: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none
-        }
-
-        .swiper-css-mode>.swiper-wrapper::-webkit-scrollbar {
-            display: none
-        }
-
-        .swiper-css-mode>.swiper-wrapper>.swiper-slide {
-            scroll-snap-align: start start
-        }
-
-        .swiper-horizontal.swiper-css-mode>.swiper-wrapper {
-            scroll-snap-type: x mandatory
-        }
-
-        .swiper-vertical.swiper-css-mode>.swiper-wrapper {
-            scroll-snap-type: y mandatory
-        }
-
-        .swiper-centered>.swiper-wrapper:before {
-            content: "";
-            flex-shrink: 0;
-            order: 9999
-        }
-
-        .swiper-centered.swiper-horizontal>.swiper-wrapper>.swiper-slide:first-child {
-            -webkit-margin-start: var(--swiper-centered-offset-before);
-            margin-inline-start: var(--swiper-centered-offset-before)
-        }
-
-        .swiper-centered.swiper-horizontal>.swiper-wrapper:before {
-            height: 100%;
-            min-height: 1px;
-            width: var(--swiper-centered-offset-after)
-        }
-
-        .swiper-centered.swiper-vertical>.swiper-wrapper>.swiper-slide:first-child {
-            -webkit-margin-before: var(--swiper-centered-offset-before);
-            margin-block-start: var(--swiper-centered-offset-before)
-        }
-
-        .swiper-centered.swiper-vertical>.swiper-wrapper:before {
-            width: 100%;
-            min-width: 1px;
-            height: var(--swiper-centered-offset-after)
-        }
-
-        .swiper-centered>.swiper-wrapper>.swiper-slide {
-            scroll-snap-align: center center
-        }
-
-        .swiper-pagination {
-            position: absolute;
-            text-align: center;
-            transition: opacity .3s;
-            transform: translateZ(0);
-            z-index: 10
-        }
-
-        .swiper-pagination.swiper-pagination-hidden {
-            opacity: 0
-        }
-
-        .swiper-pagination-disabled>.swiper-pagination,
-        .swiper-pagination.swiper-pagination-disabled {
-            display: none !important
-        }
-
-        .swiper-horizontal>.swiper-pagination-bullets,
-        .swiper-pagination-bullets.swiper-pagination-horizontal,
-        .swiper-pagination-custom,
-        .swiper-pagination-fraction {
-            bottom: 10px;
-            left: 0;
-            width: 100%
-        }
-
-        .swiper-pagination-bullets-dynamic {
-            overflow: hidden;
-            font-size: 0
-        }
-
-        .swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
-            transform: scale(.33);
-            position: relative
-        }
-
-        .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active,
-        .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-main {
-            transform: scale(1)
-        }
-
-        .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev {
-            transform: scale(.66)
-        }
-
-        .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-prev-prev {
-            transform: scale(.33)
-        }
-
-        .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next {
-            transform: scale(.66)
-        }
-
-        .swiper-pagination-bullets-dynamic .swiper-pagination-bullet-active-next-next {
-            transform: scale(.33)
-        }
-
-        .swiper-pagination-bullet {
-            width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 8px));
-            height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 8px));
-            display: inline-block;
-            border-radius: 50%;
-            background: var(--swiper-pagination-bullet-inactive-color, #000);
-            opacity: var(--swiper-pagination-bullet-inactive-opacity, .2)
-        }
-
-        button.swiper-pagination-bullet {
-            border: none;
-            margin: 0;
-            padding: 0;
-            box-shadow: none;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none
-        }
-
-        .swiper-pagination-clickable .swiper-pagination-bullet {
-            cursor: pointer
-        }
-
-        .swiper-pagination-bullet:only-child {
-            display: none !important
-        }
-
-        .swiper-pagination-bullet-active {
-            opacity: var(--swiper-pagination-bullet-opacity, 1);
-            background: var(--swiper-pagination-color, var(--swiper-theme-color))
-        }
-
-        .swiper-pagination-vertical.swiper-pagination-bullets,
-        .swiper-vertical>.swiper-pagination-bullets {
-            right: 10px;
-            top: 50%;
-            transform: translate3d(0, -50%, 0)
-        }
-
-        .swiper-pagination-vertical.swiper-pagination-bullets .swiper-pagination-bullet,
-        .swiper-vertical>.swiper-pagination-bullets .swiper-pagination-bullet {
-            margin: var(--swiper-pagination-bullet-vertical-gap, 6px) 0;
-            display: block
-        }
-
-        .swiper-pagination-vertical.swiper-pagination-bullets.swiper-pagination-bullets-dynamic,
-        .swiper-vertical>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px
-        }
-
-        .swiper-pagination-vertical.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet,
-        .swiper-vertical>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
-            display: inline-block;
-            transition: transform .2s, top .2s
-        }
-
-        .swiper-horizontal>.swiper-pagination-bullets .swiper-pagination-bullet,
-        .swiper-pagination-horizontal.swiper-pagination-bullets .swiper-pagination-bullet {
-            margin: 0 var(--swiper-pagination-bullet-horizontal-gap, 4px)
-        }
-
-        .swiper-horizontal>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic,
-        .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap
-        }
-
-        .swiper-horizontal>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet,
-        .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
-            transition: transform .2s, left .2s
-        }
-
-        .swiper-horizontal.swiper-rtl>.swiper-pagination-bullets-dynamic .swiper-pagination-bullet {
-            transition: transform .2s, right .2s
-        }
-
-        .swiper-pagination-progressbar {
-            background: rgba(0, 0, 0, .25);
-            position: absolute
-        }
-
-        .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
-            background: var(--swiper-pagination-color, var(--swiper-theme-color));
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            transform: scale(0);
-            transform-origin: left top
-        }
-
-        .swiper-rtl .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
-            transform-origin: right top
-        }
-
-        .swiper-horizontal>.swiper-pagination-progressbar,
-        .swiper-pagination-progressbar.swiper-pagination-horizontal,
-        .swiper-pagination-progressbar.swiper-pagination-vertical.swiper-pagination-progressbar-opposite,
-        .swiper-vertical>.swiper-pagination-progressbar.swiper-pagination-progressbar-opposite {
-            width: 100%;
-            height: 4px;
-            left: 0;
-            top: 0
-        }
-
-        .swiper-horizontal>.swiper-pagination-progressbar.swiper-pagination-progressbar-opposite,
-        .swiper-pagination-progressbar.swiper-pagination-horizontal.swiper-pagination-progressbar-opposite,
-        .swiper-pagination-progressbar.swiper-pagination-vertical,
-        .swiper-vertical>.swiper-pagination-progressbar {
-            width: 4px;
-            height: 100%;
-            left: 0;
-            top: 0
-        }
-
-        .swiper-pagination-lock {
-            display: none
-        }
-
-        :root {
-            --swiper-navigation-size: 44px
-        }
-
-        .swiper-button-next,
-        .swiper-button-prev {
-            position: absolute;
-            top: 50%;
-            width: calc(var(--swiper-navigation-size)/ 44 * 27);
-            height: var(--swiper-navigation-size);
-            margin-top: calc(0px - (var(--swiper-navigation-size)/ 2));
-            z-index: 10;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--swiper-navigation-color, var(--swiper-theme-color))
-        }
-
-        .swiper-button-next.swiper-button-disabled,
-        .swiper-button-prev.swiper-button-disabled {
-            opacity: .35;
-            cursor: auto;
-            pointer-events: none
-        }
-
-        .swiper-button-next.swiper-button-hidden,
-        .swiper-button-prev.swiper-button-hidden {
-            opacity: 0;
-            cursor: auto;
-            pointer-events: none
-        }
-
-        .swiper-navigation-disabled .swiper-button-next,
-        .swiper-navigation-disabled .swiper-button-prev {
-            display: none !important
-        }
-
-        .swiper-button-next:after,
-        .swiper-button-prev:after {
-            font-family: swiper-icons;
-            font-size: var(--swiper-navigation-size);
-            text-transform: none !important;
-            letter-spacing: 0;
-            font-variant: normal;
-            line-height: 1
-        }
-
-        .swiper-button-prev,
-        .swiper-rtl .swiper-button-next {
-            left: 10px;
-            right: auto
-        }
-
-        .swiper-button-prev:after,
-        .swiper-rtl .swiper-button-next:after {
-            content: "prev"
-        }
-
-        .swiper-button-next,
-        .swiper-rtl .swiper-button-prev {
-            right: 10px;
-            left: auto
-        }
-
-        .swiper-button-next:after,
-        .swiper-rtl .swiper-button-prev:after {
-            content: "next"
-        }
-
-        .swiper-button-lock {
-            display: none
         }
     </style>
     <script defer="" nomodule="" src="_next/static/chunks/polyfills-0d1b80a048d4787e.js"></script>
@@ -709,81 +285,113 @@ if (!$con)
     <style data-emotion="css" data-s=""></style>
 </head>
 
-<body style="overflow: unset;">
+<body style="overflow: unset; -webkit-tap-highlight-color: transparent;">
     <!-- data-aos-easing="ease" data-aos-duration="1200" data-aos-delay="0"  -->
     <div id="__next">
         <div class="overflow-hidden animate-opacityanim bg-[#fff]">
-            <div class="fixed z-[9999] w-full transition-all duration-300">
-                <!-- <div class="left-0 right-0 top-0 z-[9999] w-full h-[120px] lg:h-[70px] flex justify-center items-center bg-gradient-to-b from-brand to-purple500 hidden"
-                    style="box-shadow: rgba(0, 0, 0, 0.49) 2px -26px 49px -21px;">
-                    <div class="w-11/12 max-w-[1200px] mx-auto flex justify-between items-center">
-                        <div class="xl:flex xl:flex-row xl:items-center py-2 xl:space-x-2 mx-auto text-center">
-                            <div class="leading-6 lg:text-lg text-[#fff] font-rubik">
-                                <p>Join the Future of Online Compiling with <strong>Quick Compiler</strong> - Now in
-                                    <strong>Beta</strong>!"</p>
-                            </div>
-                            <div class="flex items-center space-x-2 justify-center"><a
-                                    class="p-1 px-2 bg-[#fff] text-brand lg:text-l font-rubik font-semibold rounded-md"
-                                    target="_blank" rel="noopener noreferrer" href="http://labs.thecodehelp.in/">TRY
-                                    NOW</a></div>
-                        </div><button aria-label="close" class="rotate-45 text-4xl text-[#fff]"><svg
-                                stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24"
-                                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19 11h-6V5h-2v6H5v2h6v6h2v-6h6z"></path>
-                            </svg></button>
-                    </div>
-                </div> -->
-                <div class="fixed z-[9999] w-full">
-            <!-- Navbar -->
-            <nav class="navbar h-16 sm:h-20 backdrop-blur-sm" style="box-shadow: rgba(157, 157, 157, 0.3) 0 4px 10px">
-                <ul class="flex justify-between items-center">
-                    <li class="flex justify-center items-center">
-                        <a href="index.php"><img src="../Logo/Circle_1980x1980.png" alt="DevTown" class="w-14 m-1 p-1 sm:w-[74px]" /></a>
-                        <p class="text-3xl sm:text-[40px] text-[#30559E]" style="font-family: 'Lobster', cursive;">
-                            DevTown
-                        </p>
-                    </li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about.php">About us</a></li>
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="../Course.php">Courses</a></li>
-                    <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
-                        <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
+            <div class="fixed z-[9999] w-full">
+                <!-- Navbar -->
+                <nav class="navbar h-16 sm:h-20 backdrop-blur-sm" style="box-shadow: rgba(157, 157, 157, 0.3) 0 4px 10px">
+                    <ul class="flex justify-between items-center">
+                        <li class="flex justify-center items-center">
+                            <a href="../index.php"><img src="../Logo/Circle_1980x1980.png" alt="DevTown" class="w-14 m-1 p-1 sm:w-[74px]" /></a>
+                            <p class="text-3xl sm:text-[40px] text-[#30559E]" style="font-family: 'Lobster', cursive;">
+                                DevTown
+                            </p>
+                        </li>
+                        <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about.php">About us</a></li>
+                        <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="../Course.php">Courses</a></li>
+                        <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
+                            <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
                             <ul class="flex flex-col justify-start">
                                 <li class="text-sm px-5 pt-5 text-gray-600"><a href="final_compiler/home.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Programming Compiler</span><br><span>Write and run code in multiple <br>programming language from anywhere.</span></a></li>
                                 <li class="text-sm p-5 text-gray-600"><a href="codeeditor/index.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Web Designing</span><br><span>Write and run code for Web <br>Designing from anywhere.</span></a></li>
                             </ul>
                         </div> -->
-                        <div class="hover-container">
-                            <h1 id="labs" class="cursor-pointer">Labs</h1>
-                            <div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler" style="display: none;">
-                                <ul class="flex flex-col justify-start">
-                                    <li class="text-sm px-5 pt-5 text-gray-600"><a href="final_compiler/home.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Programming Compiler</span><br><span>Write and run code in multiple <br>programming language from anywhere.</span></a></li>
-                                    <li class="text-sm p-5 text-gray-600"><a href="codeeditor/index.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Web Designing</span><br><span>Write and run code for Web <br>Designing from anywhere.</span></a></li>
-                                </ul>
+                            <div class="hover-container">
+                                <h1 id="labs" class="cursor-pointer">Labs</h1>
+                                <div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler" style="display: none;">
+                                    <ul class="flex flex-col justify-start">
+                                        <li class="text-sm px-5 pt-5 text-gray-600"><a href="../final_compiler/home.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Programming Compiler</span><br><span>Write and run code in multiple <br>programming language from anywhere.</span></a></li>
+                                        <li class="text-sm p-5 text-gray-600"><a href="../codeeditor/index.php"><span class="text-xl font-medium text-gray-700 hover:text-black">Web Designing</span><br><span>Write and run code for Web <br>Designing from anywhere.</span></a></li>
+                                    </ul>
+                                </div>
                             </div>
+                        </li>
+                        <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
+                        <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="../contact/contact.php">Contact</a></li>
+                        <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
+                        <?php
+                        if (!$_SESSION['User']) {
+                            echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="../login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="../Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
+                        } else {
+                            echo '<li class="flex hidden md:block justify-center items-center">
+                        <div class="avatar cursor-pointer flex items-center text-xl gap-3 capitalize bg-[#759DEa] py-2 px-3 font-medium rounded-full" id="avatar">';
+                            echo letters_images();
+                            echo $_SESSION['User'];
+                            echo '</div>
+                        <div class="avatar-dropdown bg-[#e0f1ff] shadow-lg rounded-2xl w-60 -ml-2 mt-5 absolute animate__animated" id="avatar-dropdown" style="display: none;">
+                            <ul class="flex flex-col justify-start">
+                                <li class="px-5 pt-3 flex justify-start items-center">
+                                    <div>';
+                            echo letters_images();
+                            echo '</div>
+                                    <div class="ml-2 flex flex-col items-start">
+                                        <h1 class="capitalize text-lg text-gray-900">';
+                            echo $_SESSION['User'];
+                            echo '</h1>
+                                        <small class="text-gray-700">';
+                            echo $_SESSION['email'];
+                            echo '</small>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="border-b-2 border-gray-400 mx-3 mt-2 h-1"></div>
+                                </li>
+                                <li>
+                                    <a href="dashboard/index.php" class="hover:bg-gray-500">
+                                    <div class="flex justify-center items-center gap-3 py-3">
+                                        <img src="../Logo/dashboard.svg" alt="" class="w-7">
+                                        <h1 class="text-lg font-medium text-gray-700 hover:text-gray-950">Dashboard</h1>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="dashboard/my_courses.php" class="hover:bg-gray-500">
+                                    <div class="flex justify-center items-center gap-3 pb-3">
+                                        <img src="../Logo/profile.svg" alt="" class="w-8">
+                                        <h1 class="text-lg font-medium text-gray-700 hover:text-gray-950">My Profile</h1>
+                                    </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="border-b-2 border-gray-400 mx-3 h-1"></div>
+                                </li>
+                                <li>
+                                <a href="logout.php" class="hover:bg-gray-500">
+                                    <div class="flex justify-center items-center gap-3 py-3">
+                                        <img src="../Logo/power.svg" alt="" class="w-7">
+                                        <h1 class="text-lg font-medium text-gray-700 hover:text-gray-950">Logout</h1>
+                                    </div>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-                    </li>
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl">Contact</li>
-                    <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
-                    <?php
-                    if (!$_SESSION['User']) {
-                        echo '<li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="../Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li>';
-                    } else {
-                        echo '<li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
-                    }
+                    </li>';
+                        }
 
-                    ?>
-                    <!-- <li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><a href="login.php"><button type="submit" class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Logout<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></form></li> -->
-                    <li class="flex justify-center items-center">
-                        <input type="hidden" value="0" id="menu_toggle" />
-                        <div class="relative flex h-[40px] w-[40px] cursor-pointer flex-col items-end justify-between p-[0.4rem] md:hidden" style="-webkit-tap-highlight-color: transparent" id="menu">
-                            <span class="w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300" id="first"></span>
-                            <span class="w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300" id="second"></span>
-                            <span class="w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300" id="third"></span>
-                        </div>
-                        <div class="mx-2 cursor-pointer" style="-webkit-tap-highlight-color: transparent">
-                            <div class="moon" id="theme-toggle">
-                                <!-- <svg width="40px" height="40px" viewBox="0 0 24.00 24.00" fill="none"
+                        ?>
+                        <!-- <li class="flex hidden md:block justify-center items-center mr-3"><form method="post"><a href="login.php"><button type="submit" class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Logout<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></form></li> -->
+                        <li class="flex justify-center items-center">
+                            <input type="hidden" value="0" id="menu_toggle" />
+                            <div class="relative flex h-[40px] w-[40px] cursor-pointer flex-col items-end justify-between p-[0.4rem] md:hidden" style="-webkit-tap-highlight-color: transparent" id="menu">
+                                <span class="w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300" id="first"></span>
+                                <span class="w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300" id="second"></span>
+                                <span class="w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300" id="third"></span>
+                            </div>
+                            <div class="mx-2 cursor-pointer" style="-webkit-tap-highlight-color: transparent">
+                                <div class="moon" id="theme-toggle">
+                                    <!-- <svg width="40px" height="40px" viewBox="0 0 24.00 24.00" fill="none"
                                     xmlns="http://www.w3.org/2000/svg" stroke="#30559E">
                                     <g id="SVGRepo_bgCarrier" stroke-width="0" />
                                     <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
@@ -797,177 +405,120 @@ if (!$con)
                                         </g>
                                     </g>
                                 </svg> -->
-                            </div>
-                            <!-- <div class="sun hidden">
+                                </div>
+                                <!-- <div class="sun hidden">
                                 <img src="Logo/sun.svg" alt="Sun" width="40px" height="40px">
                             </div> -->
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-            <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
-                <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">About Us</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Blogs</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="final_compiler/home.php">Programming Compiler</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Web Design Compiler</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Contact</a></li>
-                    <?php
-                    if (!$_SESSION['User']) {
-                        echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
+                    <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
+                        <li class="text-center text-xl sm:text-2xl"><a href="about.php">About Us</a></li>
+                        <li class="text-center text-xl sm:text-2xl"><a href="../Course.php">Courses</a></li>
+                        <li class="text-center text-xl sm:text-2xl"><a href="">Blogs</a></li>
+                        <li class="text-center text-xl sm:text-2xl"><a href="../final_compiler/home.php">Programming Compiler</a></li>
+                        <li class="text-center text-xl sm:text-2xl"><a href="../codeeditor/index.php">Web Design Compiler</a></li>
+                        <li class="text-center text-xl sm:text-2xl"><a href="../contact/contact.php">Contact</a></li>
+                        <?php
+                        if (!$_SESSION['User']) {
+                            echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
                             </li>';
-                    } else {
-                        echo '<li class="flex md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
-                    }
-                    ?>
-                </ul>
-                <div class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden">
+                        } else {
+                            echo '<li class="flex md:block justify-center items-center mr-3"><form method="post"><input type="submit" value="Logout" name="logout" class="bg-[#30559E] cursor-pointer text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl" /></form></li>';
+                        }
+                        ?>
+                    </ul>
+                    <div class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden">
 
+                    </div>
                 </div>
             </div>
         </div>
-                <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[10vh] pb-[8vh] font-rubik md:hidden  pointer-events-none hidden opacity-0 transition-all duration-300"
-                    style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px;">
-                    <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
-                        <li class="text-center"><a class="font-rubik false text-xl leading-5" href="/about">About Us</a>
-                        </li>
-                        <li class="text-center"><a class="font-rubik false text-xl leading-5"
-                                href="/#courses">Courses</a></li>
-                        <li class="text-center"><a class="font-rubik false text-xl leading-5"
-                                href="https://labs.thecodehelp.in">Labs</a></li>
-                        <li class="text-center"><a class="font-rubik false text-xl leading-5"
-                                href="/contact">Contact</a></li>
-                    </ul>
-                    <div class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden"><a
-                            target="_blank"
-                            class="cursor-pointer py-2 px-9 place-items-center rounded-md xl:text-lg bg-[#fff] text-lg"
-                            href="https://learn.thecodehelp.in/s/dashboard">Dashboard</a><a target="_blank"
-                            href="https://learn.thecodehelp.in/s/dashboard"><button
-                                class="focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 
+        <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[10vh] pb-[8vh] font-rubik md:hidden  pointer-events-none hidden opacity-0 transition-all duration-300" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px;">
+            <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
+                <li class="text-center"><a class="font-rubik false text-xl leading-5" href="about.php">About Us</a>
+                </li>
+                <li class="text-center"><a class="font-rubik false text-xl leading-5" href="../Course.php">Courses</a></li>
+                <li class="text-center"><a class="font-rubik false text-xl leading-5" href="../final_compiler/home.php">Programming Compiler</a></li>
+                <li class="text-center"><a class="font-rubik false text-xl leading-5" href="../codeeditor/index.php">Web Design Compiler</a></li>
+                <li class="text-center"><a class="font-rubik false text-xl leading-5" href="../contact/contact.php">Contact</a></li>
+            </ul>
+            <div class="mt-6 flex w-full flex-col items-center justify-center gap-x-2 md:hidden"><a target="_blank" class="cursor-pointer py-2 px-9 place-items-center rounded-md xl:text-lg bg-[#fff] text-lg" href="https://learn.thecodehelp.in/s/dashboard">Dashboard</a><a target="_blank" href="https://learn.thecodehelp.in/s/dashboard"><button class="focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 
       cursor-pointer
-      rounded-md bg-brand text-[#fff] border-brand font-rubik xl:text-lg text-sm border mt-6 py-2 px-11 text-lg flex items-center">Login <svg stroke="currentColor"
-                                    fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
-                                    stroke-linejoin="round" class="ml-2 text-xl" height="1em" width="1em"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-                                    <polyline points="10 17 15 12 10 7"></polyline>
-                                    <line x1="15" y1="12" x2="3" y2="12"></line>
-                                </svg></button></a></div>
+      rounded-md bg-brand text-[#fff] border-brand font-rubik xl:text-lg text-sm border mt-6 py-2 px-11 text-lg flex items-center">Login <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="ml-2 text-xl" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+                            <polyline points="10 17 15 12 10 7"></polyline>
+                            <line x1="15" y1="12" x2="3" y2="12"></line>
+                        </svg></button></a></div>
+        </div>
+    </div>
+    <div class="mt-[85px]">
+        <div class="animate__animated animate__fadeIn animate__fast font-rubik ">
+            <div class="w-full bg-[#30559E]  relative -mt-5 sm:-mt-0">
+                <div class="absolute bottom-0 right-0">
+                    <!--    <img
+                                src="../Logo/dot.svg" alt="dotted_illus"> -->
+                </div><img src="../Logo/purchase_course_bg.svg" alt="bg-illus" class="hidden md:block absolute top-0 left-0 h-[850px] w-[100vw] object-cover md:-translate-y-72 -translate-y-52">
+                <div class="2xl:relative mx-auto grid min-h-[590px] max-w-maxScreen md:grid-cols-2 grid-cols-1">
+                    <div class="hidden md:block absolute top-0 right-0 z-30 w-full h-full overflow-hidden">
+                        <div class="absolute bottom-0 right-0 xl:w-[600px] w-[500px] xl:h-[600px] h-[500px] overflow-hidden">
+                            <span style="box-sizing: border-box; display: block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;"><img alt="hero_img" src="../Logo/12063795_4884785.jpg" decoding="async" data-nimg="fill" style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%; object-fit: contain;" sizes="100vw"><noscript></noscript></span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-4 place-self-center md:p-5 px-paddingXforMob text-[#fff] z-30">
+                        <p class="text-[42px] font-bold">A platform for the next generation of learners!</p>
+                        <p class="text-[20px] text-HeroSubText">Place for imparting education to next-generation
+                            students.</p>
+                        <div class="flex gap-2 items-center"><span>4.7</span><span class="flex gap-1"><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="text-yellow500 text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
+                                    </path>
+                                </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="text-yellow500 text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
+                                    </path>
+                                </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="text-yellow500 text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
+                                    </path>
+                                </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="text-yellow500 text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
+                                    </path>
+                                </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2" baseProfile="tiny" viewBox="0 0 24 24" class="text-yellow500 text-lg" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
+                                    </path>
+                                </svg></span></div>
+                        <div class="flex gap-5 text-lg">
+                            <p class="flex gap-2 items-center"> <svg stroke="currentColor" fill="none" stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                                    </path>
+                                </svg> Engilsh / Hindi</p>
+                            <p class="flex gap-1 items-center"> <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                    <desc></desc>
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z">
+                                    </path>
+                                    <rect x="3" y="6" width="12" height="12" rx="2"></rect>
+                                </svg> 10+ courses</p>
+                        </div>
+                        <div><button class="focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 
+      cursor-pointer
+      place-items-center rounded-md border xl:text-lg text-sm border-brand bg-white100 text-brand100 px-6 py-[0.5rem] text-[#000]"><a href="../Course.php">Start Learning</a></button></div>
+                    </div>
                 </div>
             </div>
-            <div class="mt-[85px]">
-                <div class="animate__animated animate__fadeIn animate__fast font-rubik ">
-                    <div class="w-full bg-brand  relative">
-                        <div class="absolute bottom-0 right-0"><img
-                                src="https://cdn.thecodehelp.in/qtnhsmdcpwvlrupvepau_08e9d4ae9d.svg" alt="dotted_illus">
-                        </div><img src="https://cdn.thecodehelp.in/njg1phfdmf2zh4qlzakg_cd084b6414.svg" alt="bg-illus"
-                            class="hidden md:block absolute top-0 left-0 h-[850px] w-[100vw] object-cover md:-translate-y-72 -translate-y-52">
-                        <div class="2xl:relative mx-auto grid min-h-[590px] max-w-maxScreen md:grid-cols-2 grid-cols-1">
-                            <div class="hidden md:block absolute top-0 right-0 z-30 w-full h-full overflow-hidden">
-                                <div
-                                    class="absolute bottom-0 right-0 xl:w-[600px] w-[500px] xl:h-[600px] h-[500px] overflow-hidden">
-                                    <span
-                                        style="box-sizing: border-box; display: block; overflow: hidden; width: initial; height: initial; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: absolute; inset: 0px;"><img
-                                            alt="hero_img"
-                                            src="/_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=3840&amp;q=75"
-                                            decoding="async" data-nimg="fill"
-                                            style="position: absolute; inset: 0px; box-sizing: border-box; padding: 0px; border: none; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%; object-fit: contain;"
-                                            sizes="100vw"
-                                            srcset="/_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=640&amp;q=75 640w, /_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=750&amp;q=75 750w, /_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=828&amp;q=75 828w, /_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=1080&amp;q=75 1080w, /_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=1200&amp;q=75 1200w, /_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=1920&amp;q=75 1920w, /_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=2048&amp;q=75 2048w, /_next/image?url=https%3A%2F%2Fcdn.thecodehelp.in%2Fdqtrj3yxqgj0jig4shvd_e044fb6f00.png&amp;w=3840&amp;q=75 3840w"><noscript></noscript></span>
-                                </div>
-                            </div>
-                            <div
-                                class="flex flex-col gap-4 place-self-center md:p-5 px-paddingXforMob text-[#fff] z-30">
-                                <p class="text-[42px] font-bold">A platform for the next generation of learners!</p>
-                                <p class="text-[20px] text-HeroSubText">Place for imparting education to next-generation
-                                    students.</p>
-                                <div class="flex gap-2 items-center"><span>4.7</span><span class="flex gap-1"><svg
-                                            stroke="currentColor" fill="currentColor" stroke-width="0" version="1.2"
-                                            baseProfile="tiny" viewBox="0 0 24 24" class="text-yellow500 text-lg"
-                                            height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
-                                            </path>
-                                        </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                                            version="1.2" baseProfile="tiny" viewBox="0 0 24 24"
-                                            class="text-yellow500 text-lg" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
-                                            </path>
-                                        </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                                            version="1.2" baseProfile="tiny" viewBox="0 0 24 24"
-                                            class="text-yellow500 text-lg" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
-                                            </path>
-                                        </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                                            version="1.2" baseProfile="tiny" viewBox="0 0 24 24"
-                                            class="text-yellow500 text-lg" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
-                                            </path>
-                                        </svg><svg stroke="currentColor" fill="currentColor" stroke-width="0"
-                                            version="1.2" baseProfile="tiny" viewBox="0 0 24 24"
-                                            class="text-yellow500 text-lg" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M3.1 11.3l3.6 3.3-1 4.6c-.1.6.1 1.2.6 1.5.2.2.5.3.8.3.2 0 .4 0 .6-.1 0 0 .1 0 .1-.1l4.1-2.3 4.1 2.3s.1 0 .1.1c.5.2 1.1.2 1.5-.1.5-.3.7-.9.6-1.5l-1-4.6c.4-.3 1-.9 1.6-1.5l1.9-1.7.1-.1c.4-.4.5-1 .3-1.5s-.6-.9-1.2-1h-.1l-4.7-.5-1.9-4.3s0-.1-.1-.1c-.1-.7-.6-1-1.1-1-.5 0-1 .3-1.3.8 0 0 0 .1-.1.1l-1.9 4.3-4.7.5h-.1c-.5.1-1 .5-1.2 1-.1.6 0 1.2.4 1.6z">
-                                            </path>
-                                        </svg></span></div>
-                                <div class="flex gap-5 text-lg">
-                                    <p class="flex gap-2 items-center"> <svg stroke="currentColor" fill="none"
-                                            stroke-width="0" viewBox="0 0 24 24" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
-                                            </path>
-                                        </svg> Engilsh / Hindi</p>
-                                    <p class="flex gap-1 items-center"> <svg stroke="currentColor" fill="none"
-                                            stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
-                                            stroke-linejoin="round" height="1em" width="1em"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <desc></desc>
-                                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                                            <path
-                                                d="M15 10l4.553 -2.276a1 1 0 0 1 1.447 .894v6.764a1 1 0 0 1 -1.447 .894l-4.553 -2.276v-4z">
-                                            </path>
-                                            <rect x="3" y="6" width="12" height="12" rx="2"></rect>
-                                        </svg> 10+ courses</p>
-                                </div>
-                                <div><button
-                                        class="focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 
-      cursor-pointer
-      place-items-center rounded-md border xl:text-lg text-sm border-brand bg-white100 text-brand100 px-6 py-[0.5rem] text-[#000]"><a
-                                            href="/#courses">Start Learning</a></button></div>
-                            </div>
-                        </div>
+            <div class="relative">
+                <div class="mx-auto my-10 grid min-h-[564px] max-w-maxScreen px-paddingXforMob md:grid-cols-2 md:px-4">
+                    <img src="../Logo/Square_1980x1980.png" alt="img" class="-pt-1 mx-auto h-[80vw] w-[80vw] place-self-center rounded-3xl object-cover object-top sm:h-[475px] sm:w-[80%] sm:rounded-3xl md:w-[600px] md:h-[400px] lg:h-[540px] xl:h-[600px]">
+                    <div class="flex flex-col items-center justify-center gap-4 px-4 py-10 md:items-start md:px-12 lg:px-20">
+                        <p class="section_heading text-headText">About us</p>
+                        <p class="section_subheading text-center md:text-start text-subText ">Hello! Welcome to
+                            <span class="font-medium">DevTown</span>, an e-learning platform dedicated to providing computer science students with top-quality, accessible education.
+                        </p>
+                        <p class="content_text text-justify md:text-start text-grey100">At DevTown, we understand the unique needs and challenges faced by computer science students. That's why we offer a wide range of courses across various computer science disciplines, including programming, web development, Datastructures & Algorithms, Operating Systems, and more. Our courses are designed and taught by experienced instructors who bring real-world expertise to the classroom.</p>
                     </div>
-                    <div class="relative">
-                        <div
-                            class="mx-auto my-10 grid min-h-[564px] max-w-maxScreen px-paddingXforMob md:grid-cols-2 md:px-4">
-                            <img src="https://cdn.thecodehelp.in/zbsjwp6ddviegs1oyrku_8019379984.jpg" alt="img"
-                                class="-pt-1 mx-auto h-[80vw] w-[80vw] place-self-center rounded-full object-cover object-top sm:h-[500px] sm:w-full sm:rounded-3xl md:w-[660px] lg:h-[564px]">
-                            <div
-                                class="flex flex-col items-center justify-center gap-4 px-4 py-10 md:items-start md:px-12 lg:px-20">
-                                <p class="section_heading text-headText">About us</p>
-                                <p class="section_subheading text-center md:text-start text-subText ">Hello! Welcome to
-                                    <span class="font-medium">Code Help</span>! Really happy to see you here.
-                                </p>
-                                <p class="content_text text-justify md:text-start text-grey100">Thinking of taking a
-                                    step towards a mentorship programme? It definitely seems a bit daunting at first. It
-                                    is never easy to ask for someone's counsel or guidance be it for studies or just in
-                                    general. So, at <span class="font-medium">CodeHelp</span> we are here to provide all
-                                    the necessary counsel you might need for <span class="font-medium">placement
-                                        preparations, interview experiences, programming</span>, et cetera! For any
-                                    additional questions, feel free to email us at lovebabbar@codehelp.in</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="relative">
+                </div>
+            </div>
+            <!-- <div class="relative">
                         <div class="mx-auto my-10 grid h-fit max-w-maxScreen px-paddingXforMob md:grid-cols-2"><img
                                 src="https://cdn.thecodehelp.in/w7yldvvwkigvu8tbhtua_a8be125c66.webp" alt="img"
                                 class="mx-auto block h-[80vw] w-[80vw] rounded-full object-cover sm:h-[500px] sm:w-full sm:rounded-3xl md:hidden">
@@ -991,7 +542,7 @@ if (!$con)
                                 class="hidden md:block mx-auto h-[80vw] w-[80vw] place-self-center rounded-full object-cover object-top sm:h-[500px] sm:w-full sm:rounded-3xl md:w-[660px] lg:h-[564px]">
                         </div>
                     </div> -->
-                    <div class="relative mx-auto max-w-maxScreen ">
+            <!-- <div class="relative mx-auto max-w-maxScreen ">
                         <div
                             class="absolute -top-20 -left-20 -z-40 h-[490px] w-[490px] rounded-full bg-brand100/10 blur-[100px]">
                         </div>
@@ -1177,8 +728,8 @@ if (!$con)
                                     aria-label="Go to slide 2"></span>
                             </div><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
                         </div>
-                    </div>
-                    <!-- <div class="relative mx-auto max-w-maxScreen ">
+                    </div> -->
+            <!-- <div class="relative mx-auto max-w-maxScreen ">
                         <div
                             class="absolute -top-20 -left-20 -z-40 h-[490px] w-[490px] rounded-full bg-brand100/10 blur-[100px]">
                         </div>
@@ -1732,7 +1283,7 @@ if (!$con)
                             </div><span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span>
                         </div>
                     </div> -->
-                    <!-- <div class="bg-section_bg">
+            <!-- <div class="bg-section_bg">
                         <div class="mx-auto max-w-maxScreen px-paddingXforMob py-16">
                             <div class="pb-16 text-center">
                                 <p class="section_heading text-headText">Get in Touch</p>
@@ -1849,9 +1400,9 @@ if (!$con)
                             </div>
                         </div>
                     </div> -->
-                </div>
-            </div>
-            <!-- <footer class="relative min-h-[280px] w-full overflow-hidden bg-brand text-[#fff] py-8 px-8 font-rubik"><img
+        </div>
+    </div>
+    <!-- <footer class="relative min-h-[280px] w-full overflow-hidden bg-brand text-[#fff] py-8 px-8 font-rubik"><img
                     src="https://cdn.thecodehelp.in/ggcp5ffn7v6vdnrrd53d_e563995c50.svg" alt="bg-illus"
                     class="absolute top-0 left-0 z-[-1] h-[15vh] w-[100vw] object-cover"><img
                     src="https://cdn.thecodehelp.in/llyckc8wjy60b9bg3i8h_5f5a528b6d.svg" alt="dotted_illus"
@@ -1892,7 +1443,53 @@ if (!$con)
                         Rights Reserved.</div>
                 </div>
             </footer> -->
+    <footer class="px-4 divide-y bg-[#759DEA]">
+        <div class="container flex flex-col justify-between py-10 mx-auto space-y-8 lg:flex-row lg:space-y-0">
+            <div class="lg:w-1/3">
+                <a rel="" href="../index.php" class="flex justify-center space-x-3 lg:justify-center lg:mt-10">
+                    <!-- <div class="flex items-center justify-center w-12 h-12 rounded-full">
+                            <img src="Logo/Circle_1980x1980.png" alt="Devtown">                            
+                        </div> -->
+                    <span class="self-center text-[#30559E] text-4xl sm:text-5xl xl:text-7xl font-semibold" style="font-family: 'Lobster', cursive;">DevTown</span>
+                </a>
+            </div>
+            <div class="grid grid-cols-2 text-sm gap-x-3 gap-y-8 lg:w-2/3 sm:grid-cols-2 sm:text-center pl-6">
+                <div class="space-y-3">
+                    <h3 class="tracking-wide font-semibold text-lg uppercase text-[#30559E] sm:text-2xl xl:text-3xl">Menu
+                    </h3>
+                    <ul class="space-y-1 text-white text-md sm:text-lg sm:space-y-3 xl:text-2xl">
+                        <li>
+                            <a rel="noopener noreferrer" href="about/about.php">About Us</a>
+                        </li>
+                        <li>
+                            <a rel="noopener noreferrer" href="../contact.php">Contact Us</a>
+                        </li>
+                        <li>
+                            <a rel="noopener noreferrer" href="../Course.php">Courses</a>
+                        </li>
+                        <li>
+                            <a rel="noopener noreferrer" href="#">Blog</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="space-y-3">
+                    <h3 class="tracking-wide text-[#30559E] font-semibold text-lg uppercase sm:text-2xl xl:text-3xl">
+                        Compilers</h3>
+                    <ul class="space-y-1 text-white text-md sm:space-y-3 sm:text-lg xl:text-2xl">
+                        <li>
+                            <a rel="noopener noreferrer" href="../final_compiler/home.php">Programming</a>
+                        </li>
+                        <li>
+                            <a rel="noopener noreferrer" href="../codeeditor/index.php">Web Design</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+        <div class="py-6 text-sm text-center text-white sm:text-lg xl:text-2xl">Copyright © 2023 DevTown. <br> All rights
+            reserved.</div>
+    </footer>
+    </div>
     </div>
     <!-- <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5NHFSJ5" height="0" width="0"
             style="display:none;visibility:hidden"></iframe></noscript>
@@ -1910,7 +1507,46 @@ if (!$con)
     <script src="_next/static/chunks/6728d85a-74b84972e9ad79d2.js"></script>
     <script src="_next/static/chunks/1bfc9850-9aca59ce1657dc9a.js"></script>
     <script src="_next/static/chunks/pages/contact-ce568ec61b04ff81.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadcallback&amp;render=explicit" async=""></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script>
+        // Hamburger Menu Animate
+        $(document).ready(function() {
+            $("#menu").click(function() {
+                var menu_toggle_click = $("#menu_toggle").val();
+                if (menu_toggle_click == 0) {
+                    $("#first").removeClass();
+                    $("#second").removeClass();
+                    $("#third").removeClass();
+                    $("#first").addClass(
+                        "w-10 rounded-md py-[2px] absolute top-1/2 rotate-45 bg-[#011229] transition-all duration-300"
+                    );
+                    $("#second").addClass(
+                        "w-10 absolute top-1/2 py-0 opacity-0 rounded-md bg-[#011229] transition-all duration-300"
+                    );
+                    $("#third").addClass(
+                        "w-10 absolute top-1/2 -rotate-45 bg-[#011229] rounded-md py-[2px] transition-all duration-300"
+                    );
+                    menu_toggle_click = $("#menu_toggle").val("1");
+                    $(".menu").css('display', 'block');
+                } else {
+                    $("#first").removeClass();
+                    $("#second").removeClass();
+                    $("#third").removeClass();
+                    $("#first").addClass(
+                        "w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300"
+                    );
+                    $("#second").addClass(
+                        "w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300"
+                    );
+                    $("#third").addClass(
+                        "w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300"
+                    );
+                    menu_toggle_click = $("#menu_toggle").val("0");
+                    $(".menu").css('display', 'none');
+                }
+            });
+        });
+    </script>
     <!-- <div
         style="background-color: rgb(255, 255, 255); border: 1px solid rgb(204, 204, 204); box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 3px; position: absolute; transition: visibility 0s linear 0.3s, opacity 0.3s linear 0s; opacity: 0; visibility: hidden; z-index: 2000000000; left: 0px; top: -10000px;">
         <div
@@ -1930,14 +1566,36 @@ if (!$con)
     </div> -->
     <!-- AOS animation -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-        <script>
-            AOS.init({
-                once: true
-            });
-        </script>
+    <script>
+        AOS.init({
+            once: true
+        });
+    </script>
 
-        <!-- card slider -->
-        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <!-- card slider -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        var element = document.getElementById("labs");
+        var compiler = document.getElementById("compiler");
+        element.addEventListener("click", function() {
+            if (compiler.style.display === "block") {
+                compiler.style.display = "none"; // wait for 3 seconds (3000 milliseconds) before hiding the element
+            } else {
+                compiler.style.display = "block";
+            }
+        });
+
+        var avatar = document.getElementById("avatar");
+        var avatar_dropdown = document.getElementById("avatar-dropdown");
+        avatar.addEventListener("click", function() {
+            if (avatar_dropdown.style.display === "block") {
+                avatar_dropdown.style.display = "none"; // wait for 3 seconds (3000 milliseconds) before hiding the element
+            } else {
+                avatar_dropdown.style.display = "block";
+            }
+        });
+
+    </script>
 </body>
 
 </html>
