@@ -42,7 +42,7 @@ $row = mysqli_fetch_assoc($result);
                                 DevTown
                             </p>
                         </li>
-                        <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="../about/about.php">About us</a></li>
+                        <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about.php">About us</a></li>
                         <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Course.php">Courses</a></li>
                         <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
                             <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
@@ -61,7 +61,7 @@ $row = mysqli_fetch_assoc($result);
                                 </div>
                             </div>
                         </li>
-                        <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
+                        <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Blog.php">Blog</a></li>
                         <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="contact.php">Contact</a></li>
                         <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
                         <?php
@@ -158,9 +158,9 @@ $row = mysqli_fetch_assoc($result);
                 </nav>
                 <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
                     <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
-                        <li class="text-center text-xl sm:text-2xl"><a href="../about/about.php">About Us</a></li>
+                        <li class="text-center text-xl sm:text-2xl"><a href="about.php">About Us</a></li>
                         <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
-                        <li class="text-center text-xl sm:text-2xl"><a href="">Blogs</a></li>
+                        <li class="text-center text-xl sm:text-2xl"><a href="Blog.php">Blogs</a></li>
                         <li class="text-center text-xl sm:text-2xl"><a href="final_compiler/home.php">Programming Compiler</a></li>
                         <li class="text-center text-xl sm:text-2xl"><a href="codeeditor/index.php">Web Design Compiler</a></li>
                         <li class="text-center text-xl sm:text-2xl"><a href="contact.php">Contact</a></li>

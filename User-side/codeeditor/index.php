@@ -7,11 +7,22 @@
     <link rel="icon" type="png" href="../Logo/Circle_1980x1980.png" />
     <title>DevTown Web IDE</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-builds@1.18.0/css/ace.min.css">
     <script src="https://kit.fontawesome.com/eca7b36c3d.js" crossorigin="anonymous"></script>
 
 </head>
 <body>
+<div class="w-full bg-gray-900 p-3">
+    <nav>
+      <ul class="flex items-center">
+        <li><a href="../index.php"><img src="../Logo/Circle_1980x1980.png" alt="" class="w-12"></a></li>
+        <li>
+          <a href="../index.php"><h2 class="text-3xl text-white ml-3 font-medium">DevTown IDE</h2></a>
+        </li>
+      </ul> 
+    </nav>
+  </div>
     <div class="container">
         <div class="left">
             <label><i class="fa-brands fa-html5"></i> HTML</label>

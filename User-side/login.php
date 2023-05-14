@@ -27,6 +27,7 @@ if (isset($_POST['btn_login'])) {
     $uid = $email_pass['user_id'];
     $status = 1;
     $_SESSION['UID'] = $email_pass['user_id'];
+    $_SESSION['email'] = $email_pass['email'];
 
     if ($db_pass === $password && $flag == '0') {
 
@@ -108,21 +109,12 @@ if (isset($_POST['btn_login'])) {
             <span class="absolute text-md mx-2 pl-1 pr-1 top-2 bg-white peer-focus:text-[#30559E] text-gray-500 sm:text-3xl sm:-top-0 lg:text-2xl
               lg:top-1 xl:text-2xl xl:top-1 2xl:text-xl">Password</span>
           </div>
-          <a href="#" class="flex justify-center mt-4 text-md text-blue-700 sm:text-3xl sm:mt-6 lg:mt-6 lg:text-2xl xl:text-2xl 2xl:text-xl 2xl:mt-4" onclick="forgot_password()">Forgot
-            Password?</a>
           <div class="flex justify-center">
             <button name="btn_login" class="bg-[#30559E] w-full mt-4 text-white border border-[#30559E] rounded-sm p-2 text-lg hover:bg-white hover:text-[#30559E] sm:h-20 sm:text-4xl sm:mt-6 lg:h-14 lg:text-2xl lg:rounded-lg lg:mt-6 xl:h-16 xl:text-2xl 2xl:w-[450px] 2xl:text-xl 2xl:h-12 2xl:mt-4" type="submit">
               Login
             </button>
           </div>
         </form>
-        <img src="Logo/OR_new.png" alt="" class="w-full mt-4 sm:mt-6 lg:mt-6 2xl:w-[450px] 2xl:mt-5" />
-        <div class="flex justify-between mt-4 sm:mt-8 lg:mt-8 2xl:mt-7">
-          <a href="https://www.facebook.com/"><img src="Logo/facebook.png" alt="" class="w-[50px] sm:w-[80px] lg:w-[70px] xl:w-[60px] 2xl:w-[50px]" /></a>
-          <a href="https://www.google.com/"><img src="Logo/google.png" alt="" class="w-[50px] sm:w-[80px] lg:w-[70px] xl:w-[60px] 2xl:w-[50px]" /></a>
-          <a href="https://www.twitter.com/"><img src="Logo/twitter.png" alt="" class="w-[50px] sm:w-[80px] lg:w-[70px] xl:w-[60px] 2xl:w-[50px]" /></a>
-          <a href="https://www.linkedin.com/"><img src="Logo/linkedin.png" alt="" class="w-[50px] sm:w-[80px] lg:w-[70px] xl:w-[60px] 2xl:w-[50px]" /></a>
-        </div>
         <div class="text-md mt-4 flex justify-center sm:text-3xl sm:mt-6 lg:mt-8 lg:text-2xl xl:text-2xl 2xl:text-xl 2xl:mt-8">
           <p>Don't have account? <a href="signup.php" class="text-blue-700">Create An Account</a></p>
         </div>

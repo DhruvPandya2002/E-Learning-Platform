@@ -228,14 +228,6 @@ if (isset($_POST['delete_btn_set'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="premium_content.php" class="nav-link">
-                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
-                <p>
-                  premium course
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="premium_course.php" class="nav-link">
                 <i class="fa-solid fa-gem"></i>
                 <p>
@@ -243,15 +235,22 @@ if (isset($_POST['delete_btn_set'])) {
                 </p>
               </a>
             </li>
-          </ul>
-          <li class="nav-item">
-            <a href="logout.php" class="nav-link">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              <p>
-                LogOut
-              </p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="premium_content.php" class="nav-link">
+                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <p>
+                  premium course
+                </p>
+              </a>
+            </li>
+            <li class="nav-item fixed-bottom">
+              <a href="logout.php" class="nav-link">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <p>
+                  LogOut
+                </p>
+              </a>
+            </li>
         </nav>
         <!-- /.sidebar-menu -->
       </div>

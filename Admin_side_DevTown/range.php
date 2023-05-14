@@ -8,6 +8,7 @@ if (!$conn) {
 <html>
 <header>
     <title>range</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <style>
         .meter {
             box-sizing: content-box;
@@ -98,8 +99,12 @@ if (!$conn) {
         }
 
         #page-wrap {
-            cursor: pointer;
-        }
+            cursor: pointer;			
+        }		
+		.card {
+				display: flex;
+				justify-content: center;
+		}
     </style>
 </header>
 
@@ -122,15 +127,19 @@ if (!$conn) {
 
                     //calculate the current value for the range input
                     $current_value = $watched_videos / $total_videos * 100;
-    ?>
-                    <div id="page-wrap">
-                        <p><?php echo $course_name ?></p>
-                        <abbr title="<?php echo $current_value; ?>%">
-                            <div class="meter orange nostripes">
-                                <span style="width: <?php echo $current_value; ?>%"></span>
-                            </div>
-                        </abbr>
-                    </div>
+    ?>                    
+					<div class="card" style="width: 18rem; border-radius: 10px; margin-left: 20px; margin-top: 20px;">
+						<ul class="list-group list-group-flush">
+								<li class="list-group-item" style="background-color:cadetblue;"><?php echo $course_name ?></li>
+								<li class="list-group-item" style="background-color:alicebstyle;">									
+											<abbr title="<?php echo $current_value; ?>%">
+												<div class="meter orange nostripes item">
+													<span style="width: <?php echo $current_value; ?>%"></span>
+												</div>
+											</abbr>			
+								</li>    
+						</ul>
+					</div>
     <?php
                 }
             } else {

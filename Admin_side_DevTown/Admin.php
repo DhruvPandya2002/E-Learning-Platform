@@ -68,30 +68,6 @@ if (!$con)
           <a href="" class="nav-link">Home</a>
         </li>
       </ul>
-
-      <!-- Right navbar links -->
-      <!-- <ul class="navbar-nav ml-auto">
-        <li class="nav-item mx-2">
-          <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-            <i class="fas fa-search"></i>
-          </a>
-          <div class="navbar-search-block">
-            <form class="form-inline">
-              <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                  <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li>
-      </ul> -->
     </nav>
     <!-- /.navbar -->
 
@@ -196,14 +172,6 @@ if (!$con)
               </a>
             </li>
             <li class="nav-item">
-              <a href="premium_content.php" class="nav-link">
-                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
-                <p>
-                  premium course
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="premium_course.php" class="nav-link">
                 <i class="fa-solid fa-gem"></i>
                 <p>
@@ -212,6 +180,14 @@ if (!$con)
               </a>
             </li>
             <li class="nav-item">
+              <a href="premium_content.php" class="nav-link">
+                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <p>
+                  premium course
+                </p>
+              </a>
+            </li>
+            <li class="nav-item fixed-bottom">
               <a href="logout.php" class="nav-link">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <p>
@@ -244,7 +220,7 @@ if (!$con)
                 <th>Email</th>
                 <th>Password</th>
                 <th>Mobile No</th>
-                <th>Options</th>
+                <!-- <th>Options</th> -->
               </tr>
             </thead>
             <tbody>
@@ -261,11 +237,11 @@ if (!$con)
                     <td><?php echo $row['a_Email']; ?></td>
                     <td><?php echo $row['a-Password']; ?></td>
                     <td><?php echo $row['a_MobileNo']; ?></td>
-                    <td>
+                    <!-- <td>
                       <abbr title="Edit"><a href="admin_server.php?edit=<?php echo $row['a_Id']; ?>"><i name="btn_course_edit" class="fas fa-user-edit text-lg" style="color: rgb(5, 182, 5); cursor: pointer;"></i></a></abbr>
                       <span><abbr title="Delete"><a class="del_id"><i class="fas fa-trash text-lg ml-4" style="color: red; cursor: pointer;"></i></a></abbr></span>
                     </td>
-                    <input type="hidden" class="delete_id" id="delete_id" value="<?php echo $row['a_Id']; ?>">
+                    <input type="hidden" class="delete_id" id="delete_id" value="<?php echo $row['a_Id']; ?>"> -->
                   </tr>
                   <?php
                   $count++;

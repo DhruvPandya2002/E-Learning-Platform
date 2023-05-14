@@ -82,7 +82,7 @@ $_SESSION['redirect'] = "Course.php";
                             DevTown
                         </p>
                     </li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about/about.php">About us</a></li>
+                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about.php">About us</a></li>
                     <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Course.php">Courses</a></li>
                     <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
                         <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
@@ -102,7 +102,7 @@ $_SESSION['redirect'] = "Course.php";
                         </div>
                     </li>
                     <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
+                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Blog.php">Blog</a></li>
                     <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="contact.php">Contact</a></li>
                     <?php
                     if (!$_SESSION['User']) {
@@ -164,7 +164,6 @@ $_SESSION['redirect'] = "Course.php";
                     }
 
                     ?>
-                    <!-- <li class="flex hidden md:block justify-center items-center mr-3"><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl md:text-xl md:font-medium md:px-5 md:py-1 w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-xl">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a></li> -->
                     <li class="flex justify-center items-center">
                         <input type="hidden" value="0" id="menu_toggle" />
                         <div class="relative flex h-[40px] w-[40px] cursor-pointer flex-col items-end justify-between p-[0.4rem] md:hidden" style="-webkit-tap-highlight-color: transparent" id="menu">
@@ -172,35 +171,14 @@ $_SESSION['redirect'] = "Course.php";
                             <span class="w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300" id="second"></span>
                             <span class="w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300" id="third"></span>
                         </div>
-                        <!-- <div class="mx-2 cursor-pointer" style="-webkit-tap-highlight-color: transparent">
-                            <div class="moon">
-                                <svg width="40px" height="40px" viewBox="0 0 24.00 24.00" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg" stroke="#30559E">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke="#CCCCCC" stroke-width="0.336" />
-                                    <g id="SVGRepo_iconCarrier">
-                                        <g id="Environment / Moon">
-                                            <path id="Vector"
-                                                d="M9 6C9 10.9706 13.0294 15 18 15C18.9093 15 19.787 14.8655 20.6144 14.6147C19.4943 18.3103 16.0613 20.9999 12 20.9999C7.02944 20.9999 3 16.9707 3 12.0001C3 7.93883 5.69007 4.50583 9.38561 3.38574C9.13484 4.21311 9 5.09074 9 6Z"
-                                                stroke="#30559E" stroke-width="2.4" stroke-linecap="round"
-                                                stroke-linejoin="round" />
-                                        </g>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div class="sun hidden">
-                                <img src="Logo/sun.svg" alt="Sun" width="40px" height="40px">
-                            </div>
-                        </div> -->
                     </li>
                 </ul>
             </nav>
             <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
                 <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
-                    <li class="text-center text-xl sm:text-2xl"><a href="about/about.php">About Us</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="about.php">About Us</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Blogs</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="Blog.php">Blogs</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="final_compiler/home.php">Programming Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="codeeditor/index.php">Web Design Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="contact.php">Contact</a></li>

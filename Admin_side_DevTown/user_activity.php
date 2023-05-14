@@ -214,6 +214,22 @@ $user_name_new = $row['name'];
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="premium_course.php" class="nav-link">
+                                <i class="fa-solid fa-gem"></i>
+                                <p>
+                                    premium
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="premium_content.php" class="nav-link">
+                                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                                <p>
+                                    premium course
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item fixed-bottom">
                             <a href="logout.php" class="nav-link">
                                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                 <p>
@@ -272,19 +288,11 @@ $user_name_new = $row['name'];
                                     }  ?>
                         </li>
                         <li>
-                            <p><?php echo $user_id; ?></p>
+                            <!-- <p><?php echo $user_id; ?></p> -->
                         </li>
                     </ul>
                 </div>
             </div>
-            <!-- progress bar -->
-
-            <!-- <div id="page-wrap">
-                <div class="meter orange nostripes">
-                    <span style="width: <?php echo $current_value; ?>%"></span>
-                </div>
-            </div> -->
-            <!-- progress bar -->
             <?php include('range.php') ?>
             <div id="graph">
                 <?php
@@ -303,9 +311,6 @@ $user_name_new = $row['name'];
 
                 while ($row = mysqli_fetch_assoc($result)) {
                     $date = $row["date"];
-                    // $login_time = strtotime($row["login"]);
-                    // $logout_time = strtotime($row["logout"]);
-                    // $active_time = ($logout_time - $login_time) / 60; // In minutes
                     $active_time =  $row['difference'];
 
                     if (!isset($data[$date])) {
@@ -353,7 +358,7 @@ $user_name_new = $row['name'];
         <footer class=" main-footer">
             <strong>Copyright &copy; 2022-2023 <a href="#">DevTown</a>.</strong>
             <div class="float-right d-none d-sm-inline-block">
-                <b>Version</b> 3.2.0
+                
         </footer>
     </div>
 
@@ -381,18 +386,18 @@ $user_name_new = $row['name'];
     <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
     <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
     <script>
-        // function userStatus() {
-        //     $.ajax({
-        //         url: 'userStatus.php',
-        //         success: function(result) {
-        //             jQuery('#main_div').html(result);
-        //         }
-        //     });
-        // }
+        function userStatus() {
+            $.ajax({
+                url: 'userStatus.php',
+                success: function(result) {
+                    jQuery('#main_div').html(result);
+                }
+            });
+        }
 
-        // setInterval(function() {
-        //     userStatus();
-        // }, 5000);
+        setInterval(function() {
+            userStatus();
+        }, 5000);
     </script>
 </body>
 

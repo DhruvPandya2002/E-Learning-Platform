@@ -41,8 +41,9 @@ if (isset($_POST['sub'])) {
   $CName;
   $SName;
   $CityName;
+  $today = date("Y-m-d");  
   if ($name != "" && $email != "" && $password != "" && $Mobileno != "" && $CName != "" && $SName != "" && $CityName != "") {
-    $sql = "INSERT INTO `users` (`name`, `email`, `password`, `mobile`,`Country`, `State`, `City`) VALUES ('$name','$email','$password','$Mobileno','$CName','$SName','$CityName')";
+    $sql = "INSERT INTO `users` (`name`, `email`, `password`, `mobile`,`Country`, `State`, `City`,`date`) VALUES ('$name','$email','$password','$Mobileno','$CName','$SName','$CityName','$today')";
     $result = mysqli_query($con, $sql);
     header('location:login.php');
   } else {

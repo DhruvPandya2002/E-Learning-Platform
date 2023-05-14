@@ -51,41 +51,16 @@ if (!$con)
 
 <body class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
+
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item mx-2">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
-        <li class="nav-item d-none d-sm-inline-block ">
+        <li class="nav-item d-none d-sm-inline-block">
           <a href="" class="nav-link">Dashboard</a>
         </li>
       </ul>
-
-      <!-- Right navbar links -->
-      <!-- Navbar Search -->
-      <!-- <ul class="navbar-nav ml-auto">
-        <li class="nav-item mx-2">
-          <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-            <i class="fas fa-search"></i>
-          </a>
-          <div class="navbar-search-block">
-            <form class="form-inline">
-              <div class="input-group input-group-sm">
-                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                  <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                  <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </li>
-      </ul> -->
     </nav>
     <!-- /.navbar -->
 
@@ -191,14 +166,6 @@ if (!$con)
               </a>
             </li>
             <li class="nav-item">
-              <a href="premium_content.php" class="nav-link">
-                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
-                <p>
-                  premium course
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="premium_course.php" class="nav-link">
                 <i class="fa-solid fa-gem"></i>
                 <p>
@@ -207,6 +174,14 @@ if (!$con)
               </a>
             </li>
             <li class="nav-item">
+              <a href="premium_content.php" class="nav-link">
+                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <p>
+                  premium course
+                </p>
+              </a>
+            </li>
+            <li class="nav-item fixed-bottom">
               <a href="logout.php" class="nav-link">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <p>
@@ -230,15 +205,21 @@ if (!$con)
           <div class="row">
             <div class="col-12 col-sm-6 col-md-3">
               <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">CPU Traffic</span>
-                  <span class="info-box-number">
-                    10
-                    <small>%</small>
-                  </span>
-                </div>
+                <span class="info-box-icon bg-info elevation-1"><i class="fa-solid fa-building-columns"></i></span>
+                <?php
+                $query = "SELECT COUNT(`course_name`) AS `total` FROM `premium`";
+                $result = mysqli_query($con, $query);
+                if (mysqli_num_rows($result)) {
+                  $row = mysqli_fetch_array($result);
+                ?>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Total Premium Courses</span>
+                    <span class="info-box-number"><?php echo $row['total']; ?></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                <?php
+                }
+                ?>
                 <!-- /.info-box-content -->
               </div>
               <!-- /.info-box -->
@@ -275,11 +256,23 @@ if (!$con)
             <div class="col-12 col-sm-6 col-md-3">
               <div class="info-box mb-3">
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">Sales</span>
-                  <span class="info-box-number">760</span>
-                </div>
+                <?php
+                $query = "SELECT COUNT(`transaction_id`) AS `sales` FROM `tbl_payment` WHERE `payment_status`='complete'";
+                // foreach ($query as $data) {
+                //   $active = $data['active'];
+                // }
+                $result = mysqli_query($con, $query);
+                if (mysqli_num_rows($result)) {
+                  $row = mysqli_fetch_array($result);
+                ?>
+                  <div class="info-box-content">
+                    <span class="info-box-text">Total Sales</span>
+                    <span class="info-box-number"><?php echo $row['sales']; ?></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                <?php
+                }
+                ?>
                 <!-- /.info-box-content -->
               </div>
               <!-- /.info-box -->
@@ -288,11 +281,19 @@ if (!$con)
             <div class="col-12 col-sm-6 col-md-3">
               <div class="info-box mb-3">
                 <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
-
+				<?php
+                $query = "SELECT COUNT(`name`) AS `member` FROM `users` WHERE `date`=CURDATE();";                
+                $result = mysqli_query($con, $query);
+                if (mysqli_num_rows($result)) {
+                 $row = mysqli_fetch_array($result);
+                ?>
                 <div class="info-box-content">
                   <span class="info-box-text">New Members</span>
-                  <span class="info-box-number">2,000</span>
+                  <span class="info-box-number"><?php echo $row['member']; ?></span>
                 </div>
+				<?php
+                }
+                ?>
                 <!-- /.info-box-content -->
               </div>
               <!-- /.info-box -->
@@ -351,14 +352,14 @@ if (!$con)
             plugins: {
               title: {
                 display: true,
-                text: 'Course Title',
+                text: 'Country from where Users are',
               },
             },
           },
         });
       </script>
       <?php
-      $product = $con->query("SELECT `product_name`, COUNT(*) AS `num_purchases` FROM `tbl_payment` GROUP BY `product_name` ORDER BY `num_purchases`");
+      $product = $con->query("SELECT `product_name`, COUNT(*) AS `num_purchases` FROM `tbl_payment` WHERE `payment_status`='complete' GROUP BY `product_name` ORDER BY `num_purchases`");
       foreach ($product as $data) {
         $num_purchases[] = $data['num_purchases'];
         $product_name[] = $data['product_name'];
@@ -371,7 +372,7 @@ if (!$con)
           data: {
             labels: <?php echo json_encode($product_name); ?>,
             datasets: [{
-              label: 'Purchases',
+              label: 'Course Purchase',
               data: <?php echo json_encode($num_purchases); ?>,
               backgroundColor: ['rgba(255, 99, 132, 0.2)',
                 'rgba(255, 159, 64, 0.2)',

@@ -25,16 +25,9 @@ if (mysqli_num_rows($result)) {
     $course_name = $row['premium_course_name'];
 }
 
-$final_sql = "SELECT * FROM `user_watched` WHERE `user_name`='$_SESSION[User]' AND `course_name`='$course_name'";
-$final_result = mysqli_query($conn, $final_sql);
-if (mysqli_num_rows($final_result)) {
-$row = mysqli_fetch_array($final_result);
-$total_video = $row['total_videos'];
-$watched_video = $row['watched_videos'];
-}
-echo $total_video;
-echo $watched_video;
+
 $username = isset($_SESSION['User']) ? $_SESSION['User'] : '';
+$user_email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 $watched = $_POST['watched'] === 'true' ? 1 : 0;
 $video_id = $_POST['video_id'];
 
@@ -51,35 +44,33 @@ if (mysqli_num_rows($check_result) > 0) {
     $stmt->bind_param("iss", $watched_videos, $username, $course_name);
 } else {
     // if there is no record, insert a new one
-    $stmt = $conn->prepare("INSERT INTO user_watched (user_name, total_videos, watched_videos, course_name) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("siss", $username, $total_videos, $watched, $course_name);
+    $stmt = $conn->prepare("INSERT INTO user_watched (user_name, user_email, total_videos, watched_videos, course_name) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssiss", $username, $user_email,$total_videos, $watched, $course_name);
 }
 
 // insert the video record into the videos table
 $stmt2 = $conn->prepare("INSERT INTO videos (user_name, watched, video_id) VALUES (?, ?, ?)");
 $stmt2->bind_param("sss", $username, $watched, $video_id);
 if ($stmt2->execute()) {
-    echo "ok";
+    // echo "ok";
 
     if ($stmt2->affected_rows == 1) {
         if ($stmt->execute()) {
             if ($stmt->affected_rows == 1) {
-                if($total_video == $watched_video){
-                    header("location:./certificate/form_certificate.php");
-                }
-                echo " Data inserted into user_watched table.";                                
+                
+                // echo " Data inserted into user_watched table.";                                
             } else {
-                echo "Error: Failed to update watched videos count";
+                // echo "Error: Failed to update watched videos count";
             }
         } else {
-            echo "Error: " . $stmt->error;
+            // echo "Error: " . $stmt->error;
         }
     }
 } else {
     if ($conn->errno == 1062) {
-        echo "data already exists";
+        // echo "data already exists";
     } else {
-        echo "Error: " . $stmt2->error;
+        // echo "Error: " . $stmt2->error;
     }
 }
 

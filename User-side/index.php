@@ -296,7 +296,7 @@ if (isset($_POST['logout'])) {
                             DevTown
                         </p>
                     </li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about/about.php">About us</a></li>
+                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about.php">About us</a></li>
                     <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Course.php">Courses</a></li>
                     <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
                         <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
@@ -315,7 +315,7 @@ if (isset($_POST['logout'])) {
                             </div>
                         </div>
                     </li>
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
+                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Blog.php">Blog</a></li>
                     <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="contact.php">Contact</a></li>
                     <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
                     <?php
@@ -364,13 +364,13 @@ if (isset($_POST['logout'])) {
                                 <li>
                                     <div class="border-b-2 border-gray-400 mx-3 h-1"></div>
                                 </li>
-                                <li>
-                                <a href="logout.php" class="hover:bg-gray-500">
-                                    <div class="flex justify-center items-center gap-3 py-3">
-                                        <img src="Logo/power.svg" alt="" class="w-7">
-                                        <h1 class="text-lg font-medium text-gray-700 hover:text-gray-950">Logout</h1>
-                                    </div>
-                                    </a>
+                                <li class="flex md:block justify-center items-center mr-3">                                
+                                    <form method="post">
+                                        <div class="flex justify-center items-center gap-3 py-3">
+                                            <img src="Logo/power.svg" alt="" class="w-7">
+                                            <input type="submit" value="Logout" name="logout" />
+                                        </div>
+                                    </form>
                                 </li>
                             </ul>
                         </div>
@@ -412,12 +412,12 @@ if (isset($_POST['logout'])) {
             </nav>
             <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
                 <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
-                    <li class="text-center text-xl sm:text-2xl"><a href="about/about.php">About Us</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="about.php">About Us</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Blogs</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="Blog.php">Blogs</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="final_compiler/home.php">Programming Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="codeeditor/index.php">Web Design Compiler</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="contact/contact.php">Contact</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="contact.php">Contact</a></li>
                     <?php
                     if (!$_SESSION['User']) {
                         echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
@@ -467,44 +467,44 @@ if (isset($_POST['logout'])) {
             </div>
         </div>
         <!-- Counter -->
-        <div class="bg-[#30559E] grid grid-rows-2 md:hidden counter_section">
+        <div class="bg-[#30559E] grid grid-rows-2 md:hidden " id="counter_mobile">
             <div class="grid grid-cols-2 px-8 pt-12 pb-6 gap-x-6 text-center text-white" style="background-image: url(Logo/counter_design_2.svg); background-repeat: no-repeat; background-position-x: right;">
                 <div class="text-4xl sm:text-5xl">
-                    <span class="courses">500</span>+
+                    <span class="counter-item" data-target="100">0</span>+
                     <div class="text-xl sm:text-2xl">Courses</div>
                 </div>
                 <div class="text-4xl sm:text-5xl">
-                    <span class="companies">350</span>+
+                    <span class="counter-item" data-target="350">0</span>+
                     <div class="text-xl sm:text-2xl">Companies</div>
                 </div>
             </div>
             <div class="grid grid-cols-2 px-8 pb-12 pt-6 gap-x-6 text-white" style="background-image: url(Logo/counter_design.svg); background-repeat: no-repeat; background-position-y: bottom;">
                 <div class="text-4xl text-center sm:text-5xl">
-                    <span class="users">300</span>+
+                    <span class="counter-item" data-target="300">0</span>+
                     <div class="text-xl sm:text-2xl">Active User</div>
                 </div>
                 <div class="text-4xl text-center sm:text-5xl">
-                    <span class="watch">400</span>Hr
+                    <span class="counter-item" data-target="400">0</span>Hr
                     <div class="text-xl sm:text-2xl">Watch Time</div>
                 </div>
             </div>
         </div>
-        <div class=" hidden md:block md:bg-[#30559E] grid grid-rows-1 counter_section">
+        <div class=" hidden md:block md:bg-[#30559E] grid grid-rows-1" id="counter_large">
             <div class="grid grid-cols-4 px-8 pt-12 pb-12 text-center text-white xl:py-20">
                 <div class="text-4xl sm:text-5xl px-5 py-3 xl:px-10 xl:py-6 xl:text-6xl">
-                    <span class="courses">500</span>+
+                    <span class="counter-item-lg" data-target="100">0</span>+
                     <div class="text-xl sm:text-2xl xl:text-3xl">Courses</div>
                 </div>
                 <div class="text-4xl sm:text-5xl border-x-2  border-white px-5 py-3 xl:px-10 xl:py-6 xl:text-6xl">
-                    <span class="companies">350</span>+
+                    <span class="counter-item-lg" data-target="350">0</span>+
                     <div class="text-xl sm:text-2xl xl:text-3xl">Companies</div>
                 </div>
                 <div class="text-4xl text-center sm:text-5xl border-r-2 border-white px-5 py-3 xl:px-10 xl:py-6 xl:text-6xl">
-                    <span class="users">300</span>+
+                    <span class="counter-item-lg" data-target="300">0</span>+
                     <div class="text-xl sm:text-2xl xl:text-3xl">Active User</div>
                 </div>
                 <div class="text-4xl text-center sm:text-5xl px-5 py-3 xl:px-10 xl:py-6 xl:text-6xl">
-                    <span class="watch">400</span>Hr
+                    <span class="counter-item-lg" data-target="400">0</span>Hr
                     <div class="text-xl sm:text-2xl xl:text-3xl">Watch Time</div>
                 </div>
             </div>
@@ -1023,16 +1023,16 @@ if (isset($_POST['logout'])) {
                             </h3>
                             <ul class="space-y-1 text-white text-md sm:text-lg sm:space-y-3 xl:text-2xl">
                                 <li>
-                                    <a rel="noopener noreferrer" href="about/about.php">About Us</a>
+                                    <a rel="noopener noreferrer" href="about.php">About Us</a>
                                 </li>
                                 <li>
-                                    <a rel="noopener noreferrer" href="contact/contact.php">Contact Us</a>
+                                    <a rel="noopener noreferrer" href="contact.php">Contact Us</a>
                                 </li>
                                 <li>
                                     <a rel="noopener noreferrer" href="Course.php">Courses</a>
                                 </li>
                                 <li>
-                                    <a rel="noopener noreferrer" href="#">Blog</a>
+                                    <a rel="noopener noreferrer" href="Blog.php">Blog</a>
                                 </li>
                             </ul>
                         </div>
@@ -1124,42 +1124,57 @@ if (isset($_POST['logout'])) {
             $('.typed-cursor').addClass('text-[#30559E]');
 
             // counter
-            var selector = document.querySelector(".counter_section");
-            var courses = document.querySelector(".courses");
-            var companies = document.querySelector(".companies");
-            var users = document.querySelector(".users");
-            var watch = document.querySelector(".watch");
-            let CounterObserver = new IntersectionObserver((entries, observer) => {
+            var selector_mobile = document.querySelector("#counter_mobile");
+            var counters = document.querySelectorAll('.counter-item');
+            // scroll timw counter work
+            let counterObserver = new IntersectionObserver((entries,observer) => {
                 let [entry] = entries;
-                if (!entry.isIntersecting) return;
-
-                let counter_courses = 1;
-                let counter_companies = 1;
-                let counter_users = 1;
-                let counter_watch = 1;
-                setInterval(() => {
-                    if (counter_courses < 500) {
-                        counter_courses++;
-                        courses.innerText = counter_courses;
+                if(!entry.isIntersecting) return;
+                let speed = 200;
+                counters.forEach((counter,index) =>{
+                    function updateCounter(){
+                        const targetNumber = +$(counter).attr("data-target"); 
+                        const initialNumber = +counter.innerText; 
+                        const incPerCount = targetNumber / speed;
+                        if(initialNumber < targetNumber){
+                            counter.innerText = Math.ceil(initialNumber + incPerCount);
+                            setTimeout(updateCounter,10);
+                        }
                     }
-                    if (counter_companies < 350) {
-                        counter_companies++;
-                        companies.innerText = counter_companies;
-                    }
-                    if (counter_users < 300) {
-                        counter_users++;
-                        users.innerText = counter_users;
-                    }
-                    if (counter_watch < 400) {
-                        counter_watch++;
-                        watch.innerText = counter_watch;
-                    }
-                }, 1);
-            }, {
-                root: null,
-                threshold: 0.4,
+                updateCounter();
+            })
+            },{
+                root:null,
+                threshold:0.4, 
             });
-            CounterObserver.observe(selector);
+            counterObserver.observe(selector_mobile);
+
+            // counter
+            var selector_large = document.querySelector("#counter_large");
+            var counters = document.querySelectorAll('.counter-item-lg');
+            // scroll timw counter work
+            let counterlgObserver = new IntersectionObserver((entries,observer) => {
+                let [entry] = entries;
+                if(!entry.isIntersecting) return;
+                let speedlg = 200;
+                counters.forEach((counter,index) =>{
+                    function lgupdateCounter(){
+                        const targetlgNumber = +$(counter).attr("data-target"); 
+                        const initiallgNumber = +counter.innerText; 
+                        const inclgPerCount = targetlgNumber / speedlg;
+                        if(initiallgNumber < targetlgNumber){
+                            counter.innerText = Math.ceil(initiallgNumber + inclgPerCount);
+                            setTimeout(lgupdateCounter,10);
+                        }
+                    }
+                lgupdateCounter();
+            })
+            },{
+                root:null,
+                threshold:0.4, 
+            });
+            counterlgObserver.observe(selector_large);
+            
         </script>
 
         <!-- Payment System Code -->
@@ -1270,43 +1285,6 @@ if (isset($_POST['logout'])) {
                 }
             });
 
-            // // Hamburger Menu Animate
-            // $(document).ready(function() {
-            //     $("#menu").click(function() {
-            //         var menu_toggle_click = $("#menu_toggle").val();
-            //         if (menu_toggle_click == 0) {
-            //             $("#first").removeClass();
-            //             $("#second").removeClass();
-            //             $("#third").removeClass();
-            //             $("#first").addClass(
-            //                 "w-10 rounded-md py-[2px] absolute top-1/2 rotate-45 bg-[#011229] transition-all duration-300"
-            //             );
-            //             $("#second").addClass(
-            //                 "w-10 absolute top-1/2 py-0 opacity-0 rounded-md bg-[#011229] transition-all duration-300"
-            //             );
-            //             $("#third").addClass(
-            //                 "w-10 absolute top-1/2 -rotate-45 bg-[#011229] rounded-md py-[2px] transition-all duration-300"
-            //             );
-            //             menu_toggle_click = $("#menu_toggle").val("1");
-            //             $(".menu").css('display', 'block');
-            //         } else {
-            //             $("#first").removeClass();
-            //             $("#second").removeClass();
-            //             $("#third").removeClass();
-            //             $("#first").addClass(
-            //                 "w-10 rounded-md py-[2px] false bg-[#011229] transition-all duration-300"
-            //             );
-            //             $("#second").addClass(
-            //                 "w-8 py-[2px] rounded-md bg-[#011229] transition-all duration-300"
-            //             );
-            //             $("#third").addClass(
-            //                 "w-6 false rounded-md bg-[#011229] py-[2px] transition-all duration-300"
-            //             );
-            //             menu_toggle_click = $("#menu_toggle").val("0");
-            //             $(".menu").css('display', 'none');
-            //         }
-            //     });
-            // });
         </script>
 </body>
 

@@ -31,6 +31,7 @@ if (!$con)
   <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- DataTable Style -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -107,7 +108,7 @@ if (!$con)
             <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-3" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php echo $_SESSION['User']; ?></a>
+            <a href="#" class="d-block"><?php echo $_SESSION['admin']; ?></a>
           </div>
         </div>
 
@@ -128,7 +129,7 @@ if (!$con)
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
+            <li class="nav-item">
               <a href="dashbord.php" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -178,9 +179,41 @@ if (!$con)
             </li>
             <li class="nav-item">
               <a href="comment.php" class="nav-link">
-              <i class="fa-sharp fa-solid fa-comments"></i>
+                <i class="fa-sharp fa-solid fa-comments"></i>
                 <p>
-                  comments
+                  Comment
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="payment_details.php" class="nav-link">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <p>
+                  courses purchased
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="premium_course.php" class="nav-link">
+                <i class="fa-solid fa-gem"></i>
+                <p>
+                  premium
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="premium_content.php" class="nav-link">
+                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <p>
+                  premium course
+                </p>
+              </a>
+            </li>
+            <li class="nav-item fixed-bottom">
+              <a href="logout.php" class="nav-link">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                <p>
+                  LogOut
                 </p>
               </a>
             </li>
@@ -214,7 +247,9 @@ if (!$con)
               $count = 1;
               if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_array($result)) { ?>
-                  <tr><td><?php echo $row['content']; ?></td></tr>
+                  <tr>
+                    <td><?php echo $row['content']; ?></td>
+                  </tr>
                   <?php
                   $count++;
                   if (!$count) {

@@ -196,14 +196,6 @@ if (!$con) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="premium_content.php" class="nav-link">
-                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
-                <p>
-                  premium course
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="premium_course.php" class="nav-link">
                 <i class="fa-solid fa-gem"></i>
                 <p>
@@ -212,6 +204,14 @@ if (!$con) {
               </a>
             </li>
             <li class="nav-item">
+              <a href="premium_content.php" class="nav-link">
+                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <p>
+                  premium course
+                </p>
+              </a>
+            </li>
+            <li class="nav-item fixed-bottom">
               <a href="logout.php" class="nav-link">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <p>
@@ -255,7 +255,21 @@ if (!$con) {
                   <tr>
                     <td><?php echo $count ?></td>
                     <td><?php echo $row['Title']; ?></td>
-                    <td><?php echo $row['Content']; ?></td>
+                    <td><?php
+                        $id = $row['Blog_id'];
+
+
+                        $content = $row['Content'];
+                        $string = strip_tags($content);
+                        if (strlen($string) > 200) :
+                          $stringCut = substr($string, 0, 200);
+                          $endPoint = strrpos($stringCut, ' ');
+                          $string = $endPoint ? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                          $string .= '...<a href="blog_content_detail.php?id=' . $id . '">Read More</a>';
+
+                        endif;
+                        echo $string;
+                        ?></td>
                     <td> <span><a href="Blog_server.php?edit=<?php echo $row['Blog_id']; ?>"><abbr title="Edit"><i class="fas fa-user-edit text-lg" style="color: rgb(5, 182, 5); cursor: pointer;"></i></abbr></a></span>
 
                       <span><a class="del_id"><abbr title="Delete"><i class="fas fa-trash text-lg ml-4" style="color: red; cursor: pointer;"></i></abbr></a></span>

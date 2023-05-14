@@ -953,7 +953,26 @@ $_SESSION['premium_course_id']=$premium_course_id;
     <!-- Overlay -->
     <div class="layout-overlay layout-menu-toggle"></div>
   </div>
+<?php
 
+$last = "SELECT `video_id` AS `vid` FROM `premium_course` WHERE `premium_course_id` = 1 AND `premium_course_name` = 'Data Structure and Algorithms' ORDER BY `premium_id` DESC LIMIT 1";
+$last_result = mysqli_query($conn, $last);
+if (mysqli_num_rows($last_result)) {
+  $row = mysqli_fetch_array($last_result);
+  $pre_id = $row['vid'];
+}
+
+// echo "premium table " . $pre_id;
+echo "<br>";
+$video_sql = "SELECT * FROM `videos` WHERE `user_name` = '$_SESSION[User]' ORDER BY `id`DESC LIMIT 1";
+$video_result = mysqli_query($conn, $video_sql);
+if (mysqli_num_rows($video_result)) {
+  $row = mysqli_fetch_array($video_result);
+  $video_result_id = $row['video_id'];
+  echo $video_result_id;
+}
+echo "video tabel " . $video_result_id;
+?>
   <!-- / Layout wrapper -->
 
   <!-- <div class="buy-now">
@@ -1051,8 +1070,10 @@ $_SESSION['premium_course_id']=$premium_course_id;
   <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         var id = "<?php echo $video_id; ?>";
+        var last_id = "<?php echo $pre_id;?>";
         var video = {
             id: id,
+            last_id : last_id,
             iframeId: "player",
             watched: false,
             player: null,
@@ -1073,6 +1094,9 @@ $_SESSION['premium_course_id']=$premium_course_id;
             }
             if (event.data == YT.PlayerState.ENDED) {
                 video.watched = true;
+                if (video.last_id == video.id) {
+                   window.location.href = "certificate/form_certificate.php";
+                }
                 saveWatchedState();
             }
         }
@@ -1086,7 +1110,7 @@ $_SESSION['premium_course_id']=$premium_course_id;
             );
             xhr.onload = function() {
                 if (xhr.status === 200 && xhr.responseText !== "OK") {
-                    alert("Error saving watched state: " + xhr.responseText);
+                   // alert("Error saving watched state: " + xhr.responseText);
                 }
             };
             xhr.send(
@@ -1097,6 +1121,27 @@ $_SESSION['premium_course_id']=$premium_course_id;
             );
         }
     </script>
+    <script>
+    var total_video = <?php echo $pre_id; ?>;
+    var watched_videos = <?php echo $video_result_id; ?>;
+    console.log(total_video);
+    console.log(watched_videos);
+    if (total_video === watched_videos) {
+      window.location.href = "certificate/form_certificate.php";
+  }
+ </script>
+ <!-- <script>function userStatus() {
+            $.ajax({
+                url: 'copy_content.php',
+                success: function(result) {
+                    jQuery('#player').html(result);
+                }
+            });
+        }
+
+        setInterval(function() {
+            userStatus();
+        }, 1000);</script> -->
 </body>
 
 </html>

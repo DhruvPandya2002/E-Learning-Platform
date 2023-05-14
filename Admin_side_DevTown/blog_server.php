@@ -308,7 +308,7 @@ if (isset($_POST['delete_btn_set'])) {
             <div class="mt-3 container-fluid d-flex flex-row">
               <div class="d-flex flex-column">
                 <label for="content" class="mx-2 text-gray-600">Blog Content</label>
-                <textarea name="content" id="content" class="form-control w-full h-96" value="<?php echo $content; ?>"><?php if (isset($content)) echo $content; ?></textarea>
+                <textarea name="content" id="content" class="form-control w-full h-96" value=""><?php if (isset($content)) echo $content; ?></textarea>
               </div>
             </div>
           </div>

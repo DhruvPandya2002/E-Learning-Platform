@@ -118,7 +118,7 @@ $reply_flag = 0;
                             DevTown
                         </p>
                     </li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about/about.php">About us</a></li>
+                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="about.php">About us</a></li>
                     <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Course.php">Courses</a></li>
                     <li class="flex justify-center items-center hidden md:inline-block md:text-xl xl:text-2xl relative">
                         <!--<div class="compiler bg-[#e0f1ff] shadow-lg rounded-2xl w-72 -ml-10 mt-6 absolute animate__animated" id="compiler">
@@ -137,8 +137,8 @@ $reply_flag = 0;
                             </div>
                         </div>
                     </li>
-                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl">Blog</li>
-                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="contact/contact.php">Contact</a></li>
+                    <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl"><a href="Blog.php">Blog</a></li>
+                    <li class="flex justify-center items-center hidden lg:block lg:text-xl xl:text-2xl"><a href="contact.php">Contact</a></li>
                     <!-- <li class="flex justify-center items-center hidden md:block md:text-xl xl:text-2xl "><a href="final_compiler/home.php" class="list-none">Compiler</a></li> -->
                     <?php
                     if (!$_SESSION['User']) {
@@ -234,12 +234,12 @@ $reply_flag = 0;
             </nav>
             <div class="animate__animated animate__fadeIn animate__faster absolute top-full left-0 right-0 z-[9998] backdrop-blur-lg pt-[8vh] pb-[8vh] font-rubik md:hidden  opacity-1 pointer-events-auto visible transition-all duration-300 menu" style="background-color: rgba(255, 255, 255, 0.25); box-shadow: rgba(157, 157, 157, 0.2) 0px 4px 10px; display: none;">
                 <ul class="flex flex-col items-center gap-y-6 md:hidden select-none">
-                    <li class="text-center text-xl sm:text-2xl"><a href="about/about.php">About Us</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="about.php">About Us</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="Course.php">Courses</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="#">Blogs</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="Blog.php">Blogs</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="final_compiler/home.php">Programming Compiler</a></li>
                     <li class="text-center text-xl sm:text-2xl"><a href="codeeditor/index.php">Web Design Compiler</a></li>
-                    <li class="text-center text-xl sm:text-2xl"><a href="contact/contact.php">Contact</a></li>
+                    <li class="text-center text-xl sm:text-2xl"><a href="contact.php">Contact</a></li>
                     <?php
                     if (!$_SESSION['User']) {
                         echo '<li><a href="login.php"><button class="bg-[#30559E] text-xl sm:text-2xl w-fit px-8 sm:px-10 py-2 text-white rounded-lg flex justify-center items-center shadow-lg active:outline-none active:ring-2 active:ring-[#30559E] active:ring-offset-2">Login<img src="Logo/icons8-login-64.png" alt="Login" width="38px" class="sm:w-[42px]"></button></a>
@@ -286,13 +286,13 @@ $reply_flag = 0;
             </div>
             <div class="nav-btn flex justify-center items-center my-5 lg:hidden">
                 <ul>
-                    <li class="active sm:text-3xl syllabus"><a href="#playlist">Syllabus</a></li>
-                    <li class="sm:text-3xl discussion"><a href="#discussion">Discussion</a></li>
+                    <li class="active sm:text-3xl syllabus" id="syllabus_label"><a href="#">Syllabus</a></li>
+                    <li class="sm:text-3xl discussion" id="discussion_label"><a href="#">Discussion</a></li>
                 </ul>
             </div>
             <!-- Playlist -->
-            <div id="playlist" class="bg-[#DCE1F9] mx-1 mb-5 py-4 px-2 text-lg sm:text-2xl sm:my-2 lg:text-lg lg:h-[61vh] xl:px-4 xl:py-4 flex flex-col xl:w-[27rem] xl:h-[60vh] xl:my-0 xl:mx-4 2xl:h-[70vh] rounded-xl overflow-y-auto ">
-                <h1 class="text-gray-900 text-xl sm:text-3xl lg:text-xl font-semibold ml-3">Playlist :</h1>
+            <div id="playlist" class="bg-[#DCE1F9] mx-1 mb-5 py-4 h-[500px] px-2 text-lg sm:text-2xl sm:my-2 lg:flex lg:text-lg lg:h-[61vh] xl:px-4 xl:py-4 flex flex-col xl:w-[27rem] xl:h-[60vh] xl:my-0 xl:mx-4 2xl:h-[70vh] rounded-xl overflow-y-auto">
+                <h1 class="text-gray-900 text-xl sm:text-3xl lg:text-xl font-semibold ml-3" sty>Playlist :</h1>
                 <?php
                 $sql = "SELECT * FROM `course_content` WHERE `course_id` = '$course_id' and `type`='Video' and `Flag` = 0";
                 $record = mysqli_query($conn, $sql);
@@ -308,12 +308,12 @@ $reply_flag = 0;
             </div>
         </div>
         <!-- Discussion -->
-        <div id="discussion" class="flex flex-col px-1 py-5 sm:py-7 sm:m-4 md:mt-5 lg:mt-2 lg:py-3 lg:px-2">
+        <div id="discussion" class="flex hidden flex-col px-2 sm:py-7 sm:m-4 md:py-0 lg:flex lg:flex-col lg:mt-2 lg:py-3 lg:px-2">
             <div class="flex justify-center items-center lg:w-[110vh] lg:bg-transparent rounded-xl mb-4">
                 <?php
                 letters_images();
                 ?>
-                <form id="comment-form" action="" method="post" id="commentForm" class="flex input-container relative w-full ml-10">
+                <form id="comment-form" action="" method="post" id="commentForm" class="flex input-container relative w-full ml-2">
                     <input type="text" id="input_comment" name="enter_comment" required="" class="comment_inserted text-xl sm:text-2xl w-full border-b-2 border-b-gray-300 pt-[14px] bg-transparent outline-none">
                     <label for="input" class="text-xl sm:text-2xl label absolute top-3 left-2 text-gray-400 transition-all duration-300 pointer-events-none">Add a Comment...</label>
                     <div class="underline"></div>
@@ -579,75 +579,22 @@ $reply_flag = 0;
             once: true
         });
     </script>
-    <!-- video monitoring system -->
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        var id = "<?php echo $video_id; ?>";
-        // var username = document.getElementById("username");
-        // console.log("dhruv");
-        var video = {
-            id: id,
-            // username: username,
-            iframeId: "player",
-            watched: false,
-            player: null,
-        };
-
-        function onYouTubeIframeAPIReady() {
-            video.player = new YT.Player(video.iframeId, {
-                videoId: video.id,
-                events: {
-                    onStateChange: onPlayerStateChange,
-                },
-            });
-        }
-
-        // function onYouTubeIframeAPIReadyuser() {
-        //     video.player = new YT.Player(video.iframeId, {
-        //         videousername: video.username,
-        //         events: {
-        //             onStateChange: onPlayerStateChange,
-        //         },
-        //     });
-        // }
-
-        function onPlayerStateChange(event) {
-            if (event.data == YT.PlayerState.PLAYING) {
-                video.watched = false;
-            }
-            if (event.data == YT.PlayerState.ENDED) {
-                video.watched = true;
-                saveWatchedState();
-            }
-        }
-
-        function saveWatchedState() {
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "save_watched_state.php");
-            xhr.setRequestHeader(
-                "Content-Type",
-                "application/x-www-form-urlencoded"
-            );
-            xhr.onload = function() {
-                if (xhr.status === 200 && xhr.responseText !== "OK") {
-                    alert("Error saving watched state: " + xhr.responseText);
-                }
-            };
-            xhr.send(
-                "video_id=" +
-                encodeURIComponent(video.id) +
-                "&watched=" +
-                encodeURIComponent(video.watched)
-                // "&username=" + encodeURIComponent(video.username)
-            );
-        }
-
-        function nextVideo() {
-            // TODO: Implement logic to get the next video ID from the database and load it
-            alert("Load next video!");
-        }
-
-        onYouTubeIframeAPIReady();
-        // onYouTubeIframeAPIReadyuser();
+        var syllabus_label = document.getElementById('syllabus_label');
+        var discussion_label = document.getElementById('discussion_label');
+        var playlist = document.getElementById('playlist');
+        var discussion = document.getElementById('discussion');
+        $('#discussion_label').click(function(){
+            $('#playlist').hide();
+            $('#discussion').show();
+        });
+        $('#syllabus_label').click(function(){
+            $('#discussion').hide();
+            $('#playlist').show();
+        });
+        // $('#syllabus_label').click(function(){
+        //     discussion.style.display = "none";
+        //     playlist.style.display = "flex";
+        // });
     </script>
 </body>

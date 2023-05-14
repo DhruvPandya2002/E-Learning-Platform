@@ -14,7 +14,7 @@ if (!$con)
 
 if (isset($_POST['content_submit'])) {
   $course_arr = $_POST['Course'];
-  $arr = explode(":",$course_arr);
+  $arr = explode(":", $course_arr);
   $course_id = $arr[0];
   $course_name = $arr[1];
   $type = $_POST['Type'];
@@ -231,14 +231,6 @@ if (isset($_POST['content_submit'])) {
               </a>
             </li>
             <li class="nav-item">
-              <a href="premium_content.php" class="nav-link">
-                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
-                <p>
-                  premium course
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="premium_course.php" class="nav-link">
                 <i class="fa-solid fa-gem"></i>
                 <p>
@@ -247,6 +239,14 @@ if (isset($_POST['content_submit'])) {
               </a>
             </li>
             <li class="nav-item">
+              <a href="premium_content.php" class="nav-link">
+                <i class="fa-sharp fa-solid fa-sack-dollar"></i>
+                <p>
+                  premium course
+                </p>
+              </a>
+            </li>
+            <li class="nav-item fixed-bottom">
               <a href="logout.php" class="nav-link">
                 <i class="fa-solid fa-arrow-right-from-bracket"></i>
                 <p>
@@ -282,7 +282,7 @@ if (isset($_POST['content_submit'])) {
                     // output data of each row
                     while ($row = mysqli_fetch_assoc($result)) {
                   ?>
-                      <option value="<?php echo $row['c_Id'];?>:<?php echo $row['c_Name']; ?>"><?php echo $row['c_Name']; ?></option>
+                      <option value="<?php echo $row['c_Id']; ?>:<?php echo $row['c_Name']; ?>"><?php echo $row['c_Name']; ?></option>
                   <?php
                     }
                   }
